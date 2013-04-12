@@ -46,7 +46,7 @@ class Tarea(models.Model):
 	fecha_registro = models.DateField(auto_now = False, auto_now_add = False) # Variable que almacena la fecha de registro de la tarea
 	fecha_limite = models.DateField(auto_now = False, auto_now_add = False) # Variable que almacena la fecha de entrega de la tarea
 	puntos = models.IntegerField() # Variable que almacena la calificacion de la tarea
-	curso = modesl.ForeignKey(Curso) # Variable que almacena el id de la Tarea
+	curso = models.ForeignKey(Curso) # Variable que almacena el id de la Tarea
 
 	# Vuelve al objeto un string
 	def __unicode__(self):
@@ -82,7 +82,7 @@ class Comentario_Tarea(models.Model):
 
 #################### CLASE LISTA ###########################
 class Lista(models.Model):
-	curso = model.ForeignKey(Curso) # Variable que almacena el id del curso
+	curso = models.ForeignKey(Curso) # Variable que almacena el id del curso
 	usuario = models.ForeignKey(User) # Variable que almacena el id del alumno
 	fecha = models.DateField() # Variable que almacena la fecha del pase de lista
 	asistencia = models.BooleanField() # Variable que almacena si el alumno asistio o no
