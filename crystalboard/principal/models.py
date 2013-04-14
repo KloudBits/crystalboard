@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 class Curso(models.Model):
 	nombre = models.CharField(max_length=30) # Variable que almacena el nombre del curso
 	docente = models.ForeignKey(User) # Variable que guarda el id del usuario (Solo puede ser DOCENTE)
+	alumnos = models.ManyToManyField(User, related_name='alumno') #Los alumnos
 
 	# Vuelve al objeto un string
 	def __unicode__(self):
@@ -24,7 +25,7 @@ class Aviso(models.Model):
 
 	# Vuelve al objeto un string
 	def __unicode__(self):
-		return self.curso
+		return self.texto
 
 ################################################
 
@@ -101,12 +102,9 @@ class UserProfile(models.Model):
 		(3, 'ALUMNO')
 	)
 	user = models.OneToOneField(User)
-	nombre = models.CharField(max_length=100) # Variable que guarda el nombre del usuario
-	usuario = models.CharField(max_length=16) # Variable que guarda el nickname del usuario
-	password = models.CharField(max_length=20) # Variable que guarda la contraseña del usuario
-	web = models.CharField(max_length=30) # Variable que guarda la direccion web del usuario
-	twitter = models.CharField(max_length=30) # Variable que guarda el hashtag del usuario
-	facebook = models.CharField(max_length=30) # Variable que guarda la direccion de facebook del usuario
+	web = models.CharField(max_length=30, blank=True) # Variable que guarda la direccion web del usuario
+	twitter = models.CharField(max_length=30, blank=True) # Variable que guarda el hashtag del usuario
+	facebook = models.CharField(max_length=30, blank=True) # Variable que guarda la direccion de facebook del usuario
 	tipo = models.IntegerField(default=3, choices=TIPO_CHOICES) # Variable que identifica el tipo de usuario
 
 	def __str__(self):  

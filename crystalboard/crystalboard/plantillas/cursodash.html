@@ -1,0 +1,17 @@
+
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8">
+</head>
+<body>
+	{% if user.userprofile.tipo == 1 or user.userprofile.tipo == 2 %}
+	<a href="/{{ curso }}/aviso/">Nuevo Aviso</a>
+	{% endif %}
+    <ul>
+    {% for aviso in avisos %}
+        <li>{{ aviso.texto }}</li>
+    {% endfor %}
+    </ul>
+    
+</body>
+</html>

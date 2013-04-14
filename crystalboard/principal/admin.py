@@ -19,7 +19,8 @@ class UserAdmin(UserAdmin):
 class CursoAdmin(admin.ModelAdmin):
 	fieldsets = [
 		('Nombre del Curso:', {'fields':['nombre']}),
-		('Docente que lo imparte:', {'fields':['docente']}) 
+		('Docente que lo imparte:', {'fields':['docente']}),
+		('Alumnos asignados al curso:', {'fields':['alumnos']}) 
 	]
 
 class AvisoAdmin(admin.ModelAdmin):

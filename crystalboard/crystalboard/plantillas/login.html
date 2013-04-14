@@ -1,0 +1,38 @@
+
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8">
+<style type="text/css">
+.container {
+    border: 15px solid rgba(255, 255, 255, 0.0);
+    background-color: rgba(255, 255, 255, 0.3);
+}
+#foot {
+    position: absolute;
+    bottom: 0;
+}
+</style>
+</head>
+<body>
+
+    <div id="negocio-basico-cabecera" style="background: #fff; text-align: center;">
+        <form id="formulario" class="form-horizontal" method="post" action="">{% csrf_token %}
+            <legend>Ingreso de usuario</legend>
+            <div class="control-group">
+                <label class="control-label" for="inputUser">Usuario</label>
+                <div class="controls">
+                    <input type="text" id="inputUser"  name="usuario" placeholder="Usuario...">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="inputPassword">Contrase&ntilde;a</label>
+                <div class="controls">
+                    <input type="password" id="inputPassword" name="password" placeholder="Contrase&ntilde;a">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-warning">Ingresar</button>
+        </form>
+    </div>
+
+</body>
+</html>
