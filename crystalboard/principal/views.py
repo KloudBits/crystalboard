@@ -7,12 +7,35 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from principal.forms import AvisoForm, ComentarioavisoForm
-from datetime import datetime
+from principal.forms import AvisoForm, ComentarioavisoForm, ListaForm
 from django.db.models import Avg, Count
 from django.template.defaultfilters import slugify
 from django.core import serializers
 from django.contrib import messages
+
+
+def nueva_lista(request, cur):
+	if not request.user.is_authenticated():
+		return redirect('/')
+
+	if request.method == 'POST':
+		crso = Curso.objects.get(pk=cur)
+		formulario = ListaForm(request.POST)
+		if formulario.is_valid():
+			nuevalista = formulario.save(commit=False)
+			neuevalista.curso = cur
+			nuevalista.save()
+
+			messages.add_message(request, messages.SUCCESS, 'Registro de aviso exitoso')
+			return HttpResponseRedirect('/' + cur + '/')
+	else:
+		formulario = ListaForm()
+	return render_to_response('lista.html', {'formulario':formulario}, context_instance=RequestContext(request))
+
+
+
+
+
 
 def nuevo_aviso(request, cur):
 	if not request.user.is_authenticated():
@@ -32,9 +55,12 @@ def nuevo_aviso(request, cur):
 		formulario = AvisoForm()
 	return render_to_response('aviso.html', {'formulario':formulario}, context_instance=RequestContext(request))
 
+
+
 def cursodash(request, cur):
 	avisos = Aviso.objects.filter(curso=cur)
 	return render_to_response('cursodash.html', {'avisos':avisos, 'curso':cur }, context_instance=RequestContext(request))
+
 
 
 def dashboard(request):
@@ -44,6 +70,8 @@ def dashboard(request):
 	else:
 		cursos = Curso.objects.filter(alumnos=request.user)
 	return render_to_response('dashboard.html', {'cursos':cursos}, context_instance=RequestContext(request))
+
+
 
 def ingreso_usuario(request):
 	if request.method == 'POST':

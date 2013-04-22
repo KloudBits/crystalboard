@@ -5,6 +5,7 @@
 </head>
 <body>
 	{% if user.userprofile.tipo == 1 or user.userprofile.tipo == 2 %}
+	<a href="/{{ curso }}/lista/">Nueva Lista</a>
 	<a href="/{{ curso }}/aviso/">Nuevo Aviso</a>
 	{% endif %}
     <ul>
