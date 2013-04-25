@@ -102,7 +102,7 @@ class UserProfile(models.Model):
 		(3, 'ALUMNO')
 	)
 	user = models.OneToOneField(User)
-	web = models.CharField(max_length=30, blank=True) # Variable que guarda la direccion web del usuario
+	web = models.URLField() # Variable que guarda la direccion web del usuario
 	twitter = models.CharField(max_length=30, blank=True) # Variable que guarda el hashtag del usuario
 	facebook = models.CharField(max_length=30, blank=True) # Variable que guarda la direccion de facebook del usuario
 	tipo = models.IntegerField(default=3, choices=TIPO_CHOICES) # Variable que identifica el tipo de usuario

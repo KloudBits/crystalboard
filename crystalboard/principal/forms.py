@@ -7,13 +7,16 @@ from django.forms import widgets
 
 
 
-
 class ListaForm(ModelForm):
+
 	class Meta:
 		model = Lista
 		exclude = ('curso')
 
 
+class TipoLista(ModelForm):
+    fecha = forms.DateField()
+    choices = forms.RadioInput()
 
 
 class AvisoForm(ModelForm):

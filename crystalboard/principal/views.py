@@ -23,7 +23,7 @@ def nueva_lista(request, cur):
 		formulario = ListaForm(request.POST)
 		if formulario.is_valid():
 			nuevalista = formulario.save(commit=False)
-			neuevalista.curso = cur
+			nuevalista.curso = cur
 			nuevalista.save()
 
 			messages.add_message(request, messages.SUCCESS, 'Registro de aviso exitoso')
