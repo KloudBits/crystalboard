@@ -13,6 +13,11 @@ from django.template.defaultfilters import slugify
 from django.core import serializers
 from django.contrib import messages
 
+def prueba(request, cur):
+    s = request.session['fecha']
+    r = request.session['seleccion']
+    return render(request, 'prueba.html', {'mensaje': s, 'seleccion': r})
+
 def listas(request, cur):
     curso = Curso.objects.get(pk=cur)
     if not request.user.is_authenticated():
@@ -22,8 +27,13 @@ def listas(request, cur):
         formulario = TipoListaForm(request.POST)
         if formulario.is_valid():
             campos = formulario.cleaned_data
-            campos['fecha']
-            campos['seleccion']
+
+            if int(campos['seleccion']) == 2:
+                request.session['fecha'] = campos['fecha']
+                return HttpResponseRedirect('/' + cur + '/prueba/')
+            if int(campos['seleccion']) == 1:
+                return HttpResponseRedirect('/')
+
     else:
         formulario = TipoListaForm()
     return render(request, 'listas.html', {'curso': curso, 'formulario': formulario})

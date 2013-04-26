@@ -22,4 +22,5 @@ urlpatterns = patterns('',
     url(r'^(?P<cur>[0-9]+)/$', 'principal.views.cursodash'),
     url(r'^dashboard/$', 'principal.views.dashboard'),
     url(r'^(?P<cur>[0-9]+)/listas/$', 'principal.views.listas'),
+    url(r'^(?P<cur>[0-9]+)/prueba/$', 'principal.views.prueba'),
 )

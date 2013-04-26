@@ -15,9 +15,9 @@ class TipoListaForm(forms.Form):
     seleccion = forms.ChoiceField(choices=CHOICES ,widget=RadioSelect)
 
 class AvisoForm(ModelForm):
-	texto = forms.CharField(error_messages={'required': 'Este campo es obligatorio'})
+    texto = forms.CharField(error_messages={'required': 'Este campo es obligatorio'})
 
-	class Meta:
+    class Meta:
 		model = Aviso
 		exclude = ('curso')
 
