@@ -6,19 +6,6 @@ from django.contrib.auth.models import User
 from django.forms import widgets
 
 
-
-class ListaForm(ModelForm):
-
-	class Meta:
-		model = Lista
-		exclude = ('curso')
-
-
-class TipoLista(ModelForm):
-    fecha = forms.DateField()
-    choices = forms.RadioInput()
-
-
 class AvisoForm(ModelForm):
 	texto = forms.CharField(error_messages={'required': 'Este campo es obligatorio'})
 

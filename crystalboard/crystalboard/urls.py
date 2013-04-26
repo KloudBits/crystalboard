@@ -16,7 +16,8 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^login/$', 'principal.views.ingreso_usuario'),
     url(r'^(?P<cur>[0-9]+)/aviso/$', 'principal.views.nuevo_aviso'),
-    url(r'^(?P<cur>[0-9]+)/lista/$', 'principal.views.nueva_lista'),
+    url(r'^(?P<cur>[0-9]+)/aviso/(?P<avso>[0-9]+)/$', 'principal.views.nuevo_comentario'),
+    url(r'^(?P<cur>[0-9]+)/aviso/(?P<avso>[0-9]+)/comentarios/$', 'principal.views.comentarios'),
     url(r'^(?P<cur>[0-9]+)/$', 'principal.views.cursodash'),
     url(r'^dashboard/$', 'principal.views.dashboard')
 )

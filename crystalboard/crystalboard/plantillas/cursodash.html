@@ -5,12 +5,15 @@
 </head>
 <body>
 	{% if user.userprofile.tipo == 1 or user.userprofile.tipo == 2 %}
-	<a href="/{{ curso }}/lista/">Nueva Lista</a>
 	<a href="/{{ curso }}/aviso/">Nuevo Aviso</a>
-	{% endif %}
+
+    {% endif %}
     <ul>
     {% for aviso in avisos %}
         <li>{{ aviso.texto }}</li>
+        <a href="/{{ curso }}/aviso/{{ aviso.pk }}/"> Comentar </a>
+        &nbsp;
+        <h4><a href="/{{ curso }}/aviso/{{ aviso.pk }}/comentarios/"> Ver comentarios </a> </h4>
     {% endfor %}
     </ul>
     
