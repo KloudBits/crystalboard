@@ -7,11 +7,27 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from principal.forms import AvisoForm, ComentarioavisoForm
+from principal.forms import AvisoForm, ComentarioavisoForm, TipoListaForm
 from django.db.models import Avg, Count
 from django.template.defaultfilters import slugify
 from django.core import serializers
 from django.contrib import messages
+
+def listas(request, cur):
+    curso = Curso.objects.get(pk=cur)
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/')
+
+    if request.method == 'POST':
+        formulario = TipoListaForm(request.POST)
+        if formulario.is_valid():
+            campos = formulario.cleaned_data
+            campos['fecha']
+            campos['seleccion']
+    else:
+        formulario = TipoListaForm()
+    return render(request, 'listas.html', {'curso': curso, 'formulario': formulario})
+
 
 def nuevo_comentario(request, cur, avso):
     if not request.user.is_authenticated():
