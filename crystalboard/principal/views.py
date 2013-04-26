@@ -59,7 +59,8 @@ def cursodash(request, cur):
 
 def comentarios(request, cur, avso):
     comentarios = Comentario_Aviso.objects.filter(aviso=avso)
-    return render(request, 'lista_comentarios_aviso.html', {'curso': cur, 'aviso': avso, 'comentarios': comentarios})
+    aviso = Aviso.objects.get(curso=Curso.objects.get(pk=cur))
+    return render(request, 'lista_comentarios_aviso.html', {'curso': cur, 'aviso': aviso, 'comentarios': comentarios})
 
 def dashboard(request):
     profile = UserProfile.objects.get(user=request.user)
@@ -67,7 +68,7 @@ def dashboard(request):
         cursos = Curso.objects.filter(docente=request.user)
     else:
         cursos = Curso.objects.filter(alumnos=request.user)
-    return render_to_response('dashboard.html', {'cursos':cursos}, context_instance=RequestContext(request))
+    return render_to_response('dashboard.html', {'cursos': cursos}, context_instance=RequestContext(request))
 
 
 
