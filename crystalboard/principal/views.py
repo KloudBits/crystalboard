@@ -15,8 +15,11 @@ from django.contrib import messages
 
 def prueba(request, cur):
     s = request.session['fecha']
-    r = request.session['seleccion']
-    return render(request, 'prueba.html', {'mensaje': s, 'seleccion': r})
+
+
+
+    return render(request, 'prueba.html', {'mensaje': s})
+
 
 def listas(request, cur):
     curso = Curso.objects.get(pk=cur)

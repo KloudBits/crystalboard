@@ -20,77 +20,77 @@ class Curso(models.Model):
 
 ############# CLASE AVISO ######################
 class Aviso(models.Model):
-	curso = models.ForeignKey(Curso) # Variable que almacena el id del curso
-	texto = models.TextField() # Variable que almacena el texto del Aviso
+    curso = models.ForeignKey(Curso) # Variable que almacena el id del curso
+    texto = models.TextField() # Variable que almacena el texto del Aviso
 
-	# Vuelve al objeto un string
-	def __unicode__(self):
-		return self.texto
+    # Vuelve al objeto un string
+    def __unicode__(self):
+        return self.texto
 
 ################################################
 
 ############# CLASE COMENTARIO_AVISO ###############
 class Comentario_Aviso(models.Model):
-	usuario = models.ForeignKey(User) # Variable que almacena el id del Usuario que comenta
-	texto = models.TextField() # Variable que almacena el comentario del usuario
-	aviso = models.ForeignKey(Aviso) # Variable que almacena el id del aviso donde se esta comentando
+    usuario = models.ForeignKey(User) # Variable que almacena el id del Usuario que comenta
+    texto = models.TextField() # Variable que almacena el comentario del usuario
+    aviso = models.ForeignKey(Aviso) # Variable que almacena el id del aviso donde se esta comentando
 
-	# Vuelve al objeto un string
-	def __unicode__(self):
-		return self.texto
-####################################################
+    # Vuelve al objeto un string
+    def __unicode__(self):
+        return self.texto
+    ####################################################
 
 ########### CLASE TAREA ############################
 class Tarea(models.Model):
-	titulo = models.CharField(max_length=30) # Variable que almacena el nombre de la Tarea
-	descripcion = models.TextField() # Variable que almacena la descripcion de la Tarea
-	fecha_registro = models.DateField(auto_now = False, auto_now_add = False) # Variable que almacena la fecha de registro de la tarea
-	fecha_limite = models.DateField(auto_now = False, auto_now_add = False) # Variable que almacena la fecha de entrega de la tarea
-	puntos = models.IntegerField() # Variable que almacena la calificacion de la tarea
-	curso = models.ForeignKey(Curso) # Variable que almacena el id de la Tarea
+    titulo = models.CharField(max_length=30) # Variable que almacena el nombre de la Tarea
+    descripcion = models.TextField() # Variable que almacena la descripcion de la Tarea
+    fecha_registro = models.DateField(auto_now = False, auto_now_add = False) # Variable que almacena la fecha de registro de la tarea
+    fecha_limite = models.DateField(auto_now = False, auto_now_add = False) # Variable que almacena la fecha de entrega de la tarea
+    puntos = models.IntegerField() # Variable que almacena la calificacion de la tarea
+    curso = models.ForeignKey(Curso) # Variable que almacena el id de la Tarea
 
-	# Vuelve al objeto un string
-	def __unicode__(self):
-		return self.titulo
+    # Vuelve al objeto un string
+    def __unicode__(self):
+        return self.titulo
 
 ###################################################
 
 ############## CLASE ENTREGA_TAREA ################
 class Entrega_Tarea(models.Model):
-	comentarios = models.TextField() # Variable que almacena los comentarios de la tarea
-	fecha = models.DateField() # Variable que almacena la fecha de entrega de la tarea
-	archivo = models.CharField(max_length=100) # Variable que almacena el nombre de la tarea y su ruta
-	tarea = models.ForeignKey(Tarea) # Variable que almacena el id de la tarea
+    comentarios = models.TextField() # Variable que almacena los comentarios de la tarea
+    fecha = models.DateField() # Variable que almacena la fecha de entrega de la tarea
+    archivo = models.CharField(max_length=100) # Variable que almacena el nombre de la tarea y su ruta
+    tarea = models.ForeignKey(Tarea) # Variable que almacena el id de la tarea
 
-	# Vuelve al objeto un string
-	def __unicode__(self):
-		return self.archivo
+    # Vuelve al objeto un string
+    def __unicode__(self):
+        return self.archivo
 
 ###################################################
 
 ############## CLASE COMENTARIO_TAREA ################
 class Comentario_Tarea(models.Model):
-	usuario = models.ForeignKey(User) # Variable que almacena el id del uasuario que comenta la tarea
-	texto = models.TextField() # Variable que almacena el comentario del usuario
-	tarea = models.ForeignKey(Tarea) # Variable que almacena el id de la tarea que se esta comentando
+    usuario = models.ForeignKey(User) # Variable que almacena el id del uasuario que comenta la tarea
+    texto = models.TextField() # Variable que almacena el comentario del usuario
+    tarea = models.ForeignKey(Tarea) # Variable que almacena el id de la tarea que se esta comentando
 
-	# Vuelve al objeto un string
-	def __unicode__(self):
-		return self.texto
+    # Vuelve al objeto un string
+    def __unicode__(self):
+        return self.texto
 
 ######################################################
 
 
 #################### CLASE LISTA ###########################
 class Lista(models.Model):
-	curso = models.ForeignKey(Curso) # Variable que almacena el id del curso
-	usuario = models.ForeignKey(User) # Variable que almacena el id del alumno
-	fecha = models.DateField() # Variable que almacena la fecha del pase de lista
-	asistencia = models.BooleanField() # Variable que almacena si el alumno asistio o no
+    curso = models.ForeignKey(Curso) # Variable que almacena el id del curso
+    usuario = models.ForeignKey(User) # Variable que almacena el id del alumno
+    fecha = models.DateField() # Variable que almacena la fecha del pase de lista
+    asistencia = models.BooleanField() # Variable que almacena si el alumno asistio o no
 
-	# Vuelve al objeto un string
-	def __unicode__(self):
-		return self.fecha
+    # Vuelve al objeto un string
+    def __unicode__(self):
+        return self.fecha
 
 ############################################################
 
