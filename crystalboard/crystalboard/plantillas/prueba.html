@@ -1,2 +1,11 @@
 <h1> Prueba {{ mensaje }}</h1>
 <h1> Seleccion {{ seleccion }}</h1>
+
+<form action="" method="POST" name>
+<ul>
+{% for alumno in alumnos %}
+    <li> <input type="checkbox" name="alumno_asistencia" value="alumno.pk" />
+        {{ alumno.pk }} </li>
+{% endfor %}
+</ul>
+</form>

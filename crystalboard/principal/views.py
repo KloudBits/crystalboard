@@ -14,11 +14,18 @@ from django.core import serializers
 from django.contrib import messages
 
 def prueba(request, cur):
-    s = request.session['fecha']
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/')
+    if request.method == 'POST':
+        lista_asistencia = request.POST.getlist('alumno_asistencia')
 
 
+    else:
+        s = request.session['fecha']
+        curso = Curso.objects.get(pk=cur) # se obtiene una referencia del curso
+        alumnos = curso.alumnos.all()  # Se obtienen todos los alumnos inscritos
 
-    return render(request, 'prueba.html', {'mensaje': s})
+    return render(request, 'prueba.html', {'mensaje': s, 'alumnos': alumnos})
 
 
 def listas(request, cur):
