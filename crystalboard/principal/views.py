@@ -18,7 +18,7 @@ def prueba(request, cur):
         return HttpResponseRedirect('/')
     if request.method == 'POST':
         lista_asistencia = request.POST.getlist('alumno_asistencia')
-
+        
 
     else:
         s = request.session['fecha']
