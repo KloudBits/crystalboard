@@ -8,11 +8,23 @@ from django.forms import widgets
 
 import datetime
 
-class TipoListaForm(forms.Form):
-    CHOICES = [(1, 'Evaluar'),
-               (2, 'Pase de Lista')]
-    fecha = forms.DateField(initial=datetime.date.today())
-    seleccion = forms.ChoiceField(choices=CHOICES ,widget=RadioSelect)
+#class TipoListaForm(forms.Form):
+#    CHOICES = [(1, 'Evaluar'),
+#               (2, 'Pase de Lista')]
+#    fecha = forms.DateField(initial=datetime.date.today())
+#    seleccion = forms.ChoiceField(choices=CHOICES ,widget=RadioSelect)
+
+class EntregaForm(ModelForm):
+	class Meta:
+		model = Entrega_Tarea
+		exclude = ('fecha', 'tarea', 'alumno')
+
+
+class TareaForm(ModelForm):
+	fecha_limite = forms.DateField(initial=datetime.date.today())
+	class Meta:
+		model = Tarea
+		exclude = ('fecha_registro', 'puntos', 'curso')
 
 class AvisoForm(ModelForm):
     texto = forms.CharField(error_messages={'required': 'Este campo es obligatorio'})

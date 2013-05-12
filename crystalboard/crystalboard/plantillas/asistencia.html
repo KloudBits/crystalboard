@@ -1,0 +1,57 @@
+<h1> Prueba {{ mensaje }}</h1>
+<h1> Seleccion {{ seleccion }}</h1>
+
+{% if user.userprofile.tipo == 1 or user.userprofile.tipo == 2 %}
+<form action="" method="POST">{% csrf_token %}
+<ul>
+{% for alumno in alumnos %}
+    <li> <input type="checkbox" name="inalumnos" value="{{alumno.pk}}" CHECKED="CHECKED"/>
+         {{alumno.username}} {{ alumno.last_name }} {{ alumno.first_name }} </li>
+{% endfor %}
+</ul>
+<button type="submit">Guardar</button>
+</form>
+
+<table>
+	<thead>
+		<th>Nombre</th>
+		{% for l in lista %}
+		<th>{{ l.fecha }}</th>
+		{% endfor %}
+	</thead>
+	<tbody>
+		{% for a in alumnos %}
+		<tr>
+			<td>{{ a.last_name }} {{ a.first_name }}</td>
+			{% for l in lista %}
+				{% for sis in asistencia %}
+					{% if sis.usuario == a and sis.lista.fecha == l.fecha %}
+						<td>{{ sis.asis }}</td>
+					{% endif %}
+				{% endfor %}
+			{% endfor %}
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endif %}
+
+{% if user.userprofile.tipo == 3 %}
+<table>
+	<thead>
+		<th>Nombre</th>
+		{% for l in lista %}
+		<th>{{ l.fecha }}</th>
+		{% endfor %}
+	</thead>
+	<tbody>
+		<tr>
+			<td>{{ user.last_name }} {{ user.first_name }}</td>
+			{% for sis in asistencia %}
+			<td>{{sis.asis}}</td>
+			{% endfor %}
+		</tr>
+	</tbody>
+</table>
+{% endif %}
+

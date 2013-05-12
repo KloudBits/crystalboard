@@ -3,12 +3,29 @@
     <meta http-equiv="content-type" content="text/html;charset=UTF-8">
 </head>
 <body>
-<ul>
-    <h3> Aviso: {{ aviso.texto }}</h3>
+
+    <div>
+        <p>Tarea: {{ tarea.titulo }}</p>
+        <p>Descripción: {{ tarea.descripcion }}</p>
+        <p>Fecha de entrega: {{ tarea.fecha_limite }}</p>
+
+    </div>
+    {% if user.userprofile.tipo == 1 or user.userprofile.tipo == 2 %}
+    {% for e in entregas %}
+        <div>
+            <p>Alumno: {{ e.alumno.last_name }} {{ e.alumno.first_name }}</p>
+            <p>Hora de entrega: {{ e.fecha }}</p>
+            <p>Comentarios: {{ e.comentarios }}</p>
+            <p>Archivo: {{ e.archivo }}</p>
+        </div>
+    {% endfor %}
+    {% endif %}
+
+    {% if user.userprofile.tipo == 3 %}
     <form id="validate" class="main" method="post" action="">{% csrf_token %}
         <fieldset>
             <div class="widget">
-                <div class="whead"><h6>Nuevo aviso</h6><div class="clear"></div></div>
+                <div class="whead"><h6>entregar tarea</h6><div class="clear"></div></div>
                 {% for field in formulario %}
                     {% if field.errors %}
                         <div class="field-block button-height">
@@ -32,13 +49,7 @@
             </div>
         </fieldset>
     </form>
-    
-    <ol>
-    {% for comentario in comentarios %}
-        <li>{{ comentario.texto }}</li>
-    {% endfor %}
-    </ol>
-</ul>
+    {% endif %}
 
 </body>
 </html>

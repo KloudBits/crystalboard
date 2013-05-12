@@ -1,5 +1,5 @@
 # encoding: utf-8
-from principal.models import Curso, Aviso, Comentario_Aviso, Tarea, Entrega_Tarea, Comentario_Tarea, Lista, UserProfile
+from principal.models import Asistencia, Curso, Aviso, Comentario_Aviso, Tarea, Entrega_Tarea, Comentario_Tarea, Lista, UserProfile
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
@@ -29,7 +29,7 @@ class AvisoAdmin(admin.ModelAdmin):
 		('Aviso:', {'fields':['texto']})
 	]
 
-class Comnentario_AvisoAdmin(admin.ModelAdmin):
+class Comentario_AvisoAdmin(admin.ModelAdmin):
 	fieldsets = [
 		('Comentario de:', {'fields':['usuario']}),
 		('Aviso comentado:', {'fields':['aviso']}),
@@ -64,20 +64,24 @@ class Comentario_TareaAdmin(admin.ModelAdmin):
 class ListaAdmin(admin.ModelAdmin):
 	fieldsets = [
 		('Lista del Curso:', {'fields':['curso']}),
-		('Fecha de Asistencia', {'fields':['fecha']}),
-		('Alumno', {'fields':['usuario', 'asistencia']})
+		('Fecha de Asistencia', {'fields':['fecha']})
 	]
+
+
+
+
 
 # Re-register UserAdmin
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 admin.site.register(Curso, CursoAdmin)
 admin.site.register(Aviso, AvisoAdmin)
-admin.site.register(Comentario_Aviso, Comnentario_AvisoAdmin)
+admin.site.register(Comentario_Aviso, Comentario_AvisoAdmin)
 admin.site.register(Tarea, TareaAdmin)
 admin.site.register(Entrega_Tarea, Entrega_TareaAdmin)
 admin.site.register(Comentario_Tarea, Comentario_TareaAdmin)
 admin.site.register(Lista, ListaAdmin)
+admin.site.register(Asistencia)
 admin.site.register(UserProfile)
 
 
