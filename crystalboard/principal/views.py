@@ -1,5 +1,5 @@
 #encoding:utf-8
-from django.shortcuts import render_to_response, render
+from django.shortcuts import render_to_response, render, redirect
 from principal.models import Asistencia, UserProfile, Lista, Comentario_Tarea, Curso, Aviso, Comentario_Aviso, Tarea, Entrega_Tarea
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
@@ -13,6 +13,17 @@ from django.template.defaultfilters import slugify
 from django.core import serializers
 from django.contrib import messages
 from datetime import datetime
+from dropbox import client, rest, session
+
+# Get your app key and secret from the Dropbox developer website
+APP_KEY = 'bzs0qqplfq66m0i'
+APP_SECRET = '6udw3310r6n2yx9'
+
+# ACCESS_TYPE should be 'dropbox' or 'app_folder' as configured for your app
+ACCESS_TYPE = 'app_folder'
+sess = session.DropboxSession(APP_KEY, APP_SECRET, ACCESS_TYPE)
+
+
 
 # def prueba(request, cur):
 #     curso = Curso.objects.get(pk=cur)
@@ -31,6 +42,14 @@ from datetime import datetime
 #         alumnos = curso.alumnos.all()  # Se obtienen todos los alumnos inscritos
 
 #     return render(request, 'prueba.html', {'mensaje': s, 'alumnos': alumnos})
+
+def perfil(request):
+    return render(request, 'perfil.html')
+
+def conectar_dropbox(request):
+    #request_token = sess.obtain_request_token()
+    #url = sess.build_authorize_url(request_token, oauth_callback='http://google.com')
+    #return redirect(url)
 
 def tarea(request, cur, tar):
     tarea = Tarea.objects.get(pk=tar)
@@ -57,7 +76,8 @@ def tarea(request, cur, tar):
 
 def tareas(request, cur):
     if not request.user.is_authenticated():
-        return HttpResponseRedirect('/')
+        raise HttpResponseRedirect('/')
+
     curso = Curso.objects.get(pk=cur)
     tareas = Tarea.objects.filter(curso=curso)
     if request.method == 'POST':
@@ -72,6 +92,9 @@ def tareas(request, cur):
             return HttpResponseRedirect('/'+cur+'/')
     else:
         formulario = TareaForm()
+        request_token = sess.obtain_request_token()
+        url = sess.build_authorize_url(request_token, oauth_callback='http://google.com')
+        return redirect(url)
 
     return render(request, 'tareas.html', { 'tareas': tareas, 'curso':curso, 'formulario':formulario })
 
