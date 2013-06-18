@@ -12,7 +12,7 @@ class UserProfileInline(admin.StackedInline):
 
 # Definimos un  nuevo User admin
 class UserAdmin(UserAdmin):
-     inlines = (UserProfileInline, )
+    inlines = (UserProfileInline, )
 
 
 #Definicion de un nuevo curso

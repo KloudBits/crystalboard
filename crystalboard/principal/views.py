@@ -7,36 +7,19 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from principal.forms import EntregaForm, TareaForm ,AvisoForm, ComentarioavisoForm#, TipoListaForm
+from principal.forms import EntregaForm, TareaForm, AvisoForm, ComentarioavisoForm#, TipoListaForm
 from django.db.models import Avg, Count
 from django.template.defaultfilters import slugify
 from django.core import serializers
 from django.contrib import messages
 from datetime import datetime
 
-# def prueba(request, cur):
-#     curso = Curso.objects.get(pk=cur)
-#     if not request.user.is_authenticated():
-#         return HttpResponseRedirect('/')
-#     if request.method == 'POST':
-#         lista_inasistencia = request.POST.getlist('inalumnos')
-#         for ia in lista_inasistencia:
-#             u = User.objects.get(pk=ia)
-#             reg = Lista(curso=curso,usuario=u,fecha=datetime.today())
-#             reg.save()
-#             return HttpResponseRedirect('/')
-#     else:
-#         s = request.session['fecha']
-#         curso = Curso.objects.get(pk=cur) # se obtiene una referencia del curso
-#         alumnos = curso.alumnos.all()  # Se obtienen todos los alumnos inscritos
-
-#     return render(request, 'prueba.html', {'mensaje': s, 'alumnos': alumnos})
 
 def tarea(request, cur, tar):
     tarea = Tarea.objects.get(pk=tar)
     if request.user.get_profile().tipo == 1 or request.user.get_profile().tipo == 2:
         entregas = Entrega_Tarea.objects.filter(tarea=tarea)
-        return render(request, 'tarea.html', { 'tarea': tarea, 'entregas':entregas })
+        return render(request, 'tarea.html', {'tarea': tarea, 'entregas': entregas})
 
     if request.method == 'POST':
         formulario = EntregaForm(request.POST)
@@ -48,11 +31,10 @@ def tarea(request, cur, tar):
             f.save()
 
             messages.add_message(request, messages.SUCCESS, 'Entrega de tarea exitoso.')
-            return HttpResponseRedirect('/'+cur+'/')
+            return HttpResponseRedirect('/' + cur + '/')
     else:
         formulario = EntregaForm()
-    return render(request, 'tarea.html', { 'tarea': tarea, 'formulario':formulario })
-    
+    return render(request, 'tarea.html', {'tarea': tarea, 'formulario': formulario})
 
 
 def tareas(request, cur):
@@ -69,11 +51,11 @@ def tareas(request, cur):
             f.save()
 
             messages.add_message(request, messages.SUCCESS, 'Registro de tarea exitoso.')
-            return HttpResponseRedirect('/'+cur+'/')
+            return HttpResponseRedirect('/' + cur + '/')
     else:
         formulario = TareaForm()
 
-    return render(request, 'tareas.html', { 'tareas': tareas, 'curso':curso, 'formulario':formulario })
+    return render(request, 'tareas.html', {'tareas': tareas, 'curso': curso, 'formulario': formulario})
 
 
 def listas(request, cur):
@@ -81,27 +63,15 @@ def listas(request, cur):
         return HttpResponseRedirect('/')
 
     curso = Curso.objects.get(pk=cur)
-    if request.user.get_profile().tipo == 3:
+    profile = UserProfile.objects.get(user=request.user)
+    #if request.user.get_profile().tipo == 3:
+    if profile.tipo == 3: ## Lo cambie porque me mandaba un error
         lista = Lista.objects.filter(curso=curso)
         asistencia = Asistencia.objects.filter(usuario=request.user)
-        return render(request, 'asistencia.html', {'asistencia':asistencia, 'lista':lista})
+        return render(request, 'asistencia.html', {'asistencia': asistencia, 'lista': lista})
 
-    # Se obtiene una referencia del curso
     alumnos = curso.alumnos.all()
 
-    #if request.method == 'POST':
-    #    formulario = TipoListaForm(request.POST)
-    #    if formulario.is_valid():
-    #        campos = formulario.cleaned_data
-
-    #        if int(campos['seleccion']) == 2:
-    #            request.session['fecha'] = campos['fecha']
-    #            return HttpResponseRedirect('/' + cur + '/prueba/')
-    #        if int(campos['seleccion']) == 1:
-    #            return HttpResponseRedirect('/')
-
-    #else:
-    #    formulario = TipoListaForm()
     if request.method == 'POST':
         l = Lista(curso=curso, fecha=datetime.today())
         l.save()
@@ -112,21 +82,17 @@ def listas(request, cur):
             for ia in lista:
                 u = User.objects.get(pk=ia)
                 if alumno == u:
-                    reg = Asistencia(lista=l,usuario=alumno,asis=True)
+                    reg = Asistencia(lista=l, usuario=alumno, asis=True)
                     encontrado = True
             if encontrado == False:
-                reg = Asistencia(lista=l, usuario= alumno, asis=False)
+                reg = Asistencia(lista=l, usuario=alumno, asis=False)
             reg.save()
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('/' + cur + '/')
     else:
         asistencia = Asistencia.objects.filter(lista__curso=curso)
         lista = Lista.objects.filter(curso=curso)
-        #s = request.session['fecha']
-        #alumnos = curso.alumnos.all()  # Se obtienen todos los alumnos inscritos
 
-    return render(request, 'asistencia.html', {'alumnos': alumnos, 'asistencia':asistencia, 'lista':lista})
-
-
+    return render(request, 'asistencia.html', {'alumnos': alumnos, 'asistencia': asistencia, 'lista': lista})
 
 
 def nuevo_aviso(request, cur):
@@ -142,10 +108,11 @@ def nuevo_aviso(request, cur):
             nuevoaviso.save()
 
             messages.add_message(request, messages.SUCCESS, 'Registro de aviso exitoso.')
-            return HttpResponseRedirect('/'+cur+'/')
+            return HttpResponseRedirect('/' + cur + '/')
     else:
         formulario = AvisoForm()
-    return render_to_response('aviso.html', {'formulario':formulario}, context_instance=RequestContext(request))
+    return render_to_response('aviso.html', {'formulario': formulario}, context_instance=RequestContext(request))
+
 
 def cursodash(request, cur):
     if not request.user.is_authenticated():
@@ -161,11 +128,12 @@ def cursodash(request, cur):
             nuevoaviso.save()
 
             messages.add_message(request, messages.SUCCESS, 'Registro de aviso exitoso.')
-            return HttpResponseRedirect('/'+cur+'/')
+            return HttpResponseRedirect('/' + cur + '/')
     else:
         formulario = AvisoForm()
 
-    return render_to_response('cursodash.html', {'avisos':avisos, 'curso':curso,'formulario':formulario }, context_instance=RequestContext(request))
+    return render_to_response('cursodash.html', {'avisos': avisos, 'curso': curso, 'formulario': formulario},
+                              context_instance=RequestContext(request))
 
 
 def comentarios(request, cur, avso):
@@ -185,10 +153,12 @@ def comentarios(request, cur, avso):
             nuevo_comentario.save()
 
             messages.add_message(request, messages.SUCCESS, 'Registro de comentario exitoso')
-            return HttpResponseRedirect('/'+cur+'/')
+            return HttpResponseRedirect('/' + cur + '/')
     else:
         formulario = ComentarioavisoForm()
-    return render(request, 'lista_comentarios_aviso.html', {'formulario': formulario, 'curso': curso, 'aviso': aviso, 'comentarios': comentarios})
+    return render(request, 'lista_comentarios_aviso.html',
+                  {'formulario': formulario, 'curso': curso, 'aviso': aviso, 'comentarios': comentarios})
+
 
 def nuevo_comentario(request, cur, avso):
     if not request.user.is_authenticated():
@@ -205,12 +175,10 @@ def nuevo_comentario(request, cur, avso):
             nuevo_comentario.save()
 
             messages.add_message(request, messages.SUCCESS, 'Registro de comentario exitoso')
-            return HttpResponseRedirect('/'+cur+'/')
+            return HttpResponseRedirect('/' + cur + '/')
     else:
         formulario = ComentarioavisoForm()
     return render(request, 'nuevo_comentario.html', {'formulario': formulario})
-
-
 
 
 def dashboard(request):
@@ -220,7 +188,6 @@ def dashboard(request):
     else:
         cursos = Curso.objects.filter(alumnos=request.user)
     return render_to_response('dashboard.html', {'cursos': cursos}, context_instance=RequestContext(request))
-
 
 
 def ingreso_usuario(request):
