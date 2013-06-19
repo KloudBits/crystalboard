@@ -7,21 +7,21 @@ from django.contrib.auth.models import User
 
 ############### CLASE CURSO ####################
 class Curso(models.Model):
-	nombre = models.CharField(max_length=30) # Variable que almacena el nombre del curso
-	docente = models.ForeignKey(User) # Variable que guarda el id del usuario (Solo puede ser DOCENTE)
-	alumnos = models.ManyToManyField(User, related_name='alumno') #Los alumnos
+    nombre = models.CharField(max_length=30)  # Variable que almacena el nombre del curso
+    docente = models.ForeignKey(User)  # Variable que guarda el id del usuario (Solo puede ser DOCENTE)
+    alumnos = models.ManyToManyField(User, related_name='alumno')  #Los alumnos
 
-	# Vuelve al objeto un string
-	def __unicode__(self):
-		return self.nombre
+    # Vuelve al objeto un string
+    def __unicode__(self):
+        return self.nombre
 
 ################################################
 
 
 ############# CLASE AVISO ######################
 class Aviso(models.Model):
-    curso = models.ForeignKey(Curso) # Variable que almacena el id del curso
-    texto = models.TextField() # Variable que almacena el texto del Aviso
+    curso = models.ForeignKey(Curso)  # Variable que almacena el id del curso
+    texto = models.TextField()  # Variable que almacena el texto del Aviso
 
     # Vuelve al objeto un string
     def __unicode__(self):
@@ -31,23 +31,26 @@ class Aviso(models.Model):
 
 ############# CLASE COMENTARIO_AVISO ###############
 class Comentario_Aviso(models.Model):
-    usuario = models.ForeignKey(User) # Variable que almacena el id del Usuario que comenta
-    texto = models.TextField() # Variable que almacena el comentario del usuario
-    aviso = models.ForeignKey(Aviso) # Variable que almacena el id del aviso donde se esta comentando
+    usuario = models.ForeignKey(User)  # Variable que almacena el id del Usuario que comenta
+    texto = models.TextField()  # Variable que almacena el comentario del usuario
+    aviso = models.ForeignKey(Aviso)  # Variable que almacena el id del aviso donde se esta comentando
 
     # Vuelve al objeto un string
     def __unicode__(self):
         return self.texto
-    ####################################################
+
+####################################################
 
 ########### CLASE TAREA ############################
 class Tarea(models.Model):
-    titulo = models.CharField(max_length=30) # Variable que almacena el nombre de la Tarea
-    descripcion = models.TextField() # Variable que almacena la descripcion de la Tarea
-    fecha_registro = models.DateField(auto_now = False, auto_now_add = False) # Variable que almacena la fecha de registro de la tarea
-    fecha_limite = models.DateField(auto_now = False, auto_now_add = False) # Variable que almacena la fecha de entrega de la tarea
-    puntos = models.IntegerField(blank=True, null=True) # Variable que almacena la calificacion de la tarea
-    curso = models.ForeignKey(Curso) # Variable que almacena el id de la Tarea
+    titulo = models.CharField(max_length=30)  # Variable que almacena el nombre de la Tarea
+    descripcion = models.TextField()  # Variable que almacena la descripcion de la Tarea
+    fecha_registro = models.DateField(auto_now=False,
+                                      auto_now_add=False)  # Variable que almacena la fecha de registro de la tarea
+    fecha_limite = models.DateField(auto_now=False,
+                                    auto_now_add=False)  # Variable que almacena la fecha de entrega de la tarea
+    puntos = models.IntegerField(blank=True, null=True)  # Variable que almacena la calificacion de la tarea
+    curso = models.ForeignKey(Curso)  # Variable que almacena el id de la Tarea
 
     # Vuelve al objeto un string
     def __unicode__(self):
@@ -57,11 +60,12 @@ class Tarea(models.Model):
 
 ############## CLASE ENTREGA_TAREA ################
 class Entrega_Tarea(models.Model):
-    comentarios = models.TextField() # Variable que almacena los comentarios de la tarea
-    fecha = models.DateTimeField() # Variable que almacena la fecha y hora de entrega de la tarea
-    archivo = models.CharField(max_length=100) # Variable que almacena el nombre de la tarea y su ruta
-    tarea = models.ForeignKey(Tarea) # Variable que almacena el id de la tarea
-    alumno = models.ForeignKey(User)
+    comentarios = models.TextField()  # Variable que almacena los comentarios de la tarea
+    fecha = models.DateTimeField()  # Variable que almacena la fecha y hora de entrega de la tarea
+    archivo = models.CharField(max_length=100)  # Variable que almacena el nombre de la tarea y su ruta
+    tarea = models.ForeignKey(Tarea)  # Variable que almacena el id de la tarea
+    alumno = models.ForeignKey(User)  # Variable que almacena el id del Alumno
+    link_dp = models.URLField()  # Variable que almacena el link del archivo en la carpeta publica de dropbox
 
     # Vuelve al objeto un string
     def __unicode__(self):
@@ -71,9 +75,9 @@ class Entrega_Tarea(models.Model):
 
 ############## CLASE COMENTARIO_TAREA ################
 class Comentario_Tarea(models.Model):
-    usuario = models.ForeignKey(User) # Variable que almacena el id del uasuario que comenta la tarea
-    texto = models.TextField() # Variable que almacena el comentario del usuario
-    tarea = models.ForeignKey(Tarea) # Variable que almacena el id de la tarea que se esta comentando
+    usuario = models.ForeignKey(User)  # Variable que almacena el id del uasuario que comenta la tarea
+    texto = models.TextField()  # Variable que almacena el comentario del usuario
+    tarea = models.ForeignKey(Tarea)  # Variable que almacena el id de la tarea que se esta comentando
 
     # Vuelve al objeto un string
     def __unicode__(self):
@@ -84,17 +88,21 @@ class Comentario_Tarea(models.Model):
 
 #################### CLASE LISTA ###########################
 class Lista(models.Model):
-    curso = models.ForeignKey(Curso) # Variable que almacena el id del curso
-    fecha = models.DateField() # Variable que almacena la fecha del pase de lista
-    
+    curso = models.ForeignKey(Curso)  # Variable que almacena el id del curso
+    fecha = models.DateField()  # Variable que almacena la fecha del pase de lista
+
     # Vuelve al objeto un string
     def __str__(self):
         return "%s" % self.fecha
 
+#############################################################
+
+###################### CLASE ASISTENCIA ########################
+
 class Asistencia(models.Model):
-    lista = models.ForeignKey(Lista)
-    usuario = models.ForeignKey(User) # Variable que almacena el id del alumno
-    asis = models.BooleanField(default=True)
+    lista = models.ForeignKey(Lista)  # Variable que almacena el id de la lista
+    usuario = models.ForeignKey(User)  # Variable que almacena el id del alumno
+    asis = models.BooleanField(default=True)  # Variable que almacena si asistio o no el alumno
 
     # Vuelve al objeto un string
     def __unicode__(self):
@@ -102,19 +110,22 @@ class Asistencia(models.Model):
 
 ############################################################
 
-
+###################### CLASE USERPROFILE ######################
 class UserProfile(models.Model):
-	TIPO_CHOICES = (
-		(1, 'DOCENTE'),
-		(2, 'DIRECTOR'),
-		(3, 'ALUMNO')
-	)
 
-	user = models.OneToOneField(User)
-	web = models.URLField() # Variable que guarda la direccion web del usuario
-	twitter = models.CharField(max_length=30, blank=True) # Variable que guarda el hashtag del usuario
-	facebook = models.CharField(max_length=30, blank=True) # Variable que guarda la direccion de facebook del usuario
-	tipo = models.IntegerField(default=3, choices=TIPO_CHOICES) # Variable que identifica el tipo de usuario
+#Tipo de Perfiles existentes
+    TIPO_CHOICES = (
+        (1, 'DOCENTE'),
+        (2, 'DIRECTOR'),
+        (3, 'ALUMNO')
+    )
 
-	def __str__(self):  
-		return "%s's perfil" % self.user
+    user = models.OneToOneField(User)
+    web = models.URLField()  # Variable que guarda la direccion web del usuario
+    twitter = models.CharField(max_length=30, blank=True)  # Variable que guarda el hashtag del usuario
+    facebook = models.CharField(max_length=30, blank=True)  # Variable que guarda la direccion de facebook del usuario
+    tipo = models.IntegerField(default=3, choices=TIPO_CHOICES)  # Variable que identifica el tipo de usuario
+
+    def __str__(self):
+        return "%s's perfil" % self.user
+        ##################################################################

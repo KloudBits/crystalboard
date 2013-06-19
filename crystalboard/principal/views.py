@@ -7,12 +7,13 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from principal.forms import EntregaForm, TareaForm ,AvisoForm, ComentarioavisoForm#, TipoListaForm
+from principal.forms import EntregaForm, TareaForm, AvisoForm, ComentarioavisoForm#, TipoListaForm
 from django.db.models import Avg, Count
 from django.template.defaultfilters import slugify
 from django.core import serializers
 from django.contrib import messages
 from datetime import datetime
+<<<<<<< HEAD
 from dropbox import client, rest, session
 
 # Get your app key and secret from the Dropbox developer website
@@ -42,6 +43,9 @@ sess = session.DropboxSession(APP_KEY, APP_SECRET, ACCESS_TYPE)
 #         alumnos = curso.alumnos.all()  # Se obtienen todos los alumnos inscritos
 
 #     return render(request, 'prueba.html', {'mensaje': s, 'alumnos': alumnos})
+=======
+from django.core.mail import send_mail
+>>>>>>> 3cc38394c2f2b5ffd272de6eda8fbcea39329ed7
 
 def perfil(request):
     return render(request, 'perfil.html')
@@ -53,9 +57,11 @@ def conectar_dropbox(request):
 
 def tarea(request, cur, tar):
     tarea = Tarea.objects.get(pk=tar)
-    if request.user.get_profile().tipo == 1 or request.user.get_profile().tipo == 2:
+    #if request.user.get_profile().tipo == 1 or request.user.get_profile().tipo == 2:
+    profile = UserProfile.objects.get(user=request.user)
+    if profile.tipo == 1 or profile.tipo == 2: ## Agrege estas lineas porque me marcaba un error
         entregas = Entrega_Tarea.objects.filter(tarea=tarea)
-        return render(request, 'tarea.html', { 'tarea': tarea, 'entregas':entregas })
+        return render(request, 'tarea.html', {'tarea': tarea, 'entregas': entregas})
 
     if request.method == 'POST':
         formulario = EntregaForm(request.POST)
@@ -67,11 +73,10 @@ def tarea(request, cur, tar):
             f.save()
 
             messages.add_message(request, messages.SUCCESS, 'Entrega de tarea exitoso.')
-            return HttpResponseRedirect('/'+cur+'/')
+            return HttpResponseRedirect('/' + cur + '/')
     else:
         formulario = EntregaForm()
-    return render(request, 'tarea.html', { 'tarea': tarea, 'formulario':formulario })
-    
+    return render(request, 'tarea.html', {'tarea': tarea, 'formulario': formulario})
 
 
 def tareas(request, cur):
@@ -88,68 +93,61 @@ def tareas(request, cur):
             f.fecha_registro = datetime.today()
             f.save()
 
+            #se obtienen todos los Usuarios inscritos al curso
+            alumnos = User.objects.filter(curso=curso)
+            # Se crea una lista de destinatarios
+            para = []
+            for alumno in alumnos: # Se itera atravez de la lista
+                if UserProfile.objects.get(user=alumno).tipo == 3: # Se verifica que sea un alumno
+                    para.append(alumno.email) # Se agrega el correo del alumno a la lista de destinatarios
+            ## Se manda el correo
+            send_mail("Nueva Tarea agregada", "Se agrego una nueva tarea al curso " + curso.nombre, "webmaster@crystalboard.com",
+                      para)
+
             messages.add_message(request, messages.SUCCESS, 'Registro de tarea exitoso.')
-            return HttpResponseRedirect('/'+cur+'/')
+            return HttpResponseRedirect('/' + cur + '/')
     else:
         formulario = TareaForm()
         request_token = sess.obtain_request_token()
         url = sess.build_authorize_url(request_token, oauth_callback='http://google.com')
         return redirect(url)
 
-    return render(request, 'tareas.html', { 'tareas': tareas, 'curso':curso, 'formulario':formulario })
+    return render(request, 'tareas.html', {'tareas': tareas, 'curso': curso, 'formulario': formulario})
 
 
 def listas(request, cur):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/')
-
     curso = Curso.objects.get(pk=cur)
-    if request.user.get_profile().tipo == 3:
+    #if request.user.get_profile().tipo == 3:
+    profile = UserProfile.objects.get(user=request.user)
+    if profile.tipo == 3: ## Lo cambie porque me mandaba un error
         lista = Lista.objects.filter(curso=curso)
         asistencia = Asistencia.objects.filter(usuario=request.user)
-        return render(request, 'asistencia.html', {'asistencia':asistencia, 'lista':lista})
+        return render(request, 'asistencia.html', {'asistencia': asistencia, 'lista': lista})
 
-    # Se obtiene una referencia del curso
     alumnos = curso.alumnos.all()
 
-    #if request.method == 'POST':
-    #    formulario = TipoListaForm(request.POST)
-    #    if formulario.is_valid():
-    #        campos = formulario.cleaned_data
-
-    #        if int(campos['seleccion']) == 2:
-    #            request.session['fecha'] = campos['fecha']
-    #            return HttpResponseRedirect('/' + cur + '/prueba/')
-    #        if int(campos['seleccion']) == 1:
-    #            return HttpResponseRedirect('/')
-
-    #else:
-    #    formulario = TipoListaForm()
     if request.method == 'POST':
         l = Lista(curso=curso, fecha=datetime.today())
         l.save()
         encontrado = False #Una bandera para registrar en caso de que no lo lleve el getlist
-
         lista = request.POST.getlist('inalumnos')
         for alumno in alumnos:
             for ia in lista:
                 u = User.objects.get(pk=ia)
                 if alumno == u:
-                    reg = Asistencia(lista=l,usuario=alumno,asis=True)
+                    reg = Asistencia(lista=l, usuario=alumno, asis=True)
                     encontrado = True
             if encontrado == False:
-                reg = Asistencia(lista=l, usuario= alumno, asis=False)
+                reg = Asistencia(lista=l, usuario=alumno, asis=False)
             reg.save()
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('/' + cur + '/')
     else:
         asistencia = Asistencia.objects.filter(lista__curso=curso)
         lista = Lista.objects.filter(curso=curso)
-        #s = request.session['fecha']
-        #alumnos = curso.alumnos.all()  # Se obtienen todos los alumnos inscritos
 
-    return render(request, 'asistencia.html', {'alumnos': alumnos, 'asistencia':asistencia, 'lista':lista})
-
-
+    return render(request, 'asistencia.html', {'alumnos': alumnos, 'asistencia': asistencia, 'lista': lista})
 
 
 def nuevo_aviso(request, cur):
@@ -164,11 +162,23 @@ def nuevo_aviso(request, cur):
             nuevoaviso.curso = crso
             nuevoaviso.save()
 
+            #se obtienen todos los Usuarios inscritos al curso
+            alumnos = User.objects.filter(curso=crso)
+            # Se crea una lista de destinatarios
+            para = []
+            for alumno in alumnos: # Se itera atravez de la lista
+                if UserProfile.objects.get(user=alumno).tipo == 3: # Se verifica que sea un alumno
+                    para.append(alumno.email) # Se agrega el correo del alumno a la lista de destinatarios
+                ## Se manda el correo
+            send_mail("Nueva Tarea agregada", "Se agrego un nuevo aviso al curso " + crso.nombre, "webmaster@crystalboard.com",
+                      para)
+
             messages.add_message(request, messages.SUCCESS, 'Registro de aviso exitoso.')
-            return HttpResponseRedirect('/'+cur+'/')
+            return HttpResponseRedirect('/' + cur + '/')
     else:
         formulario = AvisoForm()
-    return render_to_response('aviso.html', {'formulario':formulario}, context_instance=RequestContext(request))
+    return render_to_response('aviso.html', {'formulario': formulario}, context_instance=RequestContext(request))
+
 
 def cursodash(request, cur):
     if not request.user.is_authenticated():
@@ -184,11 +194,12 @@ def cursodash(request, cur):
             nuevoaviso.save()
 
             messages.add_message(request, messages.SUCCESS, 'Registro de aviso exitoso.')
-            return HttpResponseRedirect('/'+cur+'/')
+            return HttpResponseRedirect('/' + cur + '/')
     else:
         formulario = AvisoForm()
 
-    return render_to_response('cursodash.html', {'avisos':avisos, 'curso':curso,'formulario':formulario }, context_instance=RequestContext(request))
+    return render_to_response('cursodash.html', {'avisos': avisos, 'curso': curso, 'formulario': formulario},
+                              context_instance=RequestContext(request))
 
 
 def comentarios(request, cur, avso):
@@ -208,10 +219,12 @@ def comentarios(request, cur, avso):
             nuevo_comentario.save()
 
             messages.add_message(request, messages.SUCCESS, 'Registro de comentario exitoso')
-            return HttpResponseRedirect('/'+cur+'/')
+            return HttpResponseRedirect('/' + cur + '/')
     else:
         formulario = ComentarioavisoForm()
-    return render(request, 'lista_comentarios_aviso.html', {'formulario': formulario, 'curso': curso, 'aviso': aviso, 'comentarios': comentarios})
+    return render(request, 'lista_comentarios_aviso.html',
+                  {'formulario': formulario, 'curso': curso, 'aviso': aviso, 'comentarios': comentarios})
+
 
 def nuevo_comentario(request, cur, avso):
     if not request.user.is_authenticated():
@@ -228,12 +241,10 @@ def nuevo_comentario(request, cur, avso):
             nuevo_comentario.save()
 
             messages.add_message(request, messages.SUCCESS, 'Registro de comentario exitoso')
-            return HttpResponseRedirect('/'+cur+'/')
+            return HttpResponseRedirect('/' + cur + '/')
     else:
         formulario = ComentarioavisoForm()
     return render(request, 'nuevo_comentario.html', {'formulario': formulario})
-
-
 
 
 def dashboard(request):
@@ -243,7 +254,6 @@ def dashboard(request):
     else:
         cursos = Curso.objects.filter(alumnos=request.user)
     return render_to_response('dashboard.html', {'cursos': cursos}, context_instance=RequestContext(request))
-
 
 
 def ingreso_usuario(request):
