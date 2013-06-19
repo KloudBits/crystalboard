@@ -13,7 +13,7 @@ from django.template.defaultfilters import slugify
 from django.core import serializers
 from django.contrib import messages
 from datetime import datetime
-
+from django.core.mail import send_mail
 
 def tarea(request, cur, tar):
     tarea = Tarea.objects.get(pk=tar)
@@ -51,6 +51,17 @@ def tareas(request, cur):
             f.curso = curso
             f.fecha_registro = datetime.today()
             f.save()
+
+            #se obtienen todos los Usuarios inscritos al curso
+            alumnos = User.objects.filter(curso=curso)
+            # Se crea una lista de destinatarios
+            para = []
+            for alumno in alumnos: # Se itera atravez de la lista
+                if UserProfile.objects.get(user=alumno).tipo == 3: # Se verifica que sea un alumno
+                    para.append(alumno.email) # Se agrega el correo del alumno a la lista de destinatarios
+            ## Se manda el correo
+            send_mail("Nueva Tarea agregada", "Se agrego una nueva tarea al curso " + curso.nombre, "webmaster@crystalboard.com",
+                      para)
 
             messages.add_message(request, messages.SUCCESS, 'Registro de tarea exitoso.')
             return HttpResponseRedirect('/' + cur + '/')
@@ -106,6 +117,17 @@ def nuevo_aviso(request, cur):
             nuevoaviso = formulario.save(commit=False)
             nuevoaviso.curso = crso
             nuevoaviso.save()
+
+            #se obtienen todos los Usuarios inscritos al curso
+            alumnos = User.objects.filter(curso=crso)
+            # Se crea una lista de destinatarios
+            para = []
+            for alumno in alumnos: # Se itera atravez de la lista
+                if UserProfile.objects.get(user=alumno).tipo == 3: # Se verifica que sea un alumno
+                    para.append(alumno.email) # Se agrega el correo del alumno a la lista de destinatarios
+                ## Se manda el correo
+            send_mail("Nueva Tarea agregada", "Se agrego un nuevo aviso al curso " + crso.nombre, "webmaster@crystalboard.com",
+                      para)
 
             messages.add_message(request, messages.SUCCESS, 'Registro de aviso exitoso.')
             return HttpResponseRedirect('/' + cur + '/')
