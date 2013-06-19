@@ -17,7 +17,9 @@ from datetime import datetime
 
 def tarea(request, cur, tar):
     tarea = Tarea.objects.get(pk=tar)
-    if request.user.get_profile().tipo == 1 or request.user.get_profile().tipo == 2:
+    #if request.user.get_profile().tipo == 1 or request.user.get_profile().tipo == 2:
+    profile = UserProfile.objects.get(user=request.user)
+    if profile.tipo == 1 or profile.tipo == 2: ## Agrege estas lineas porque me marcaba un error
         entregas = Entrega_Tarea.objects.filter(tarea=tarea)
         return render(request, 'tarea.html', {'tarea': tarea, 'entregas': entregas})
 
@@ -61,10 +63,9 @@ def tareas(request, cur):
 def listas(request, cur):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/')
-
     curso = Curso.objects.get(pk=cur)
-    profile = UserProfile.objects.get(user=request.user)
     #if request.user.get_profile().tipo == 3:
+    profile = UserProfile.objects.get(user=request.user)
     if profile.tipo == 3: ## Lo cambie porque me mandaba un error
         lista = Lista.objects.filter(curso=curso)
         asistencia = Asistencia.objects.filter(usuario=request.user)
@@ -76,7 +77,6 @@ def listas(request, cur):
         l = Lista(curso=curso, fecha=datetime.today())
         l.save()
         encontrado = False #Una bandera para registrar en caso de que no lo lleve el getlist
-
         lista = request.POST.getlist('inalumnos')
         for alumno in alumnos:
             for ia in lista:
