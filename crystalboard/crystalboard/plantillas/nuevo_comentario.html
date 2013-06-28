@@ -1,5 +1,9 @@
-<html>
-<body>
+{% extends "base.html" %}
+
+{% block contenido %}
+
+
+
 <div class="fluid">
     <form id="validate" class="main" method="post" action="">{% csrf_token %}
         <fieldset>
@@ -29,5 +33,5 @@
         </fieldset>
     </form>
 </div>
-</body>
-</html>
+
+{% endblock %}

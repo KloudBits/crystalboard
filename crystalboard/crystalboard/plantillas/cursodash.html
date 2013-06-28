@@ -1,53 +1,67 @@
+{% extends "base.html" %}
 
-<html>
-<head>
-<meta http-equiv="content-type" content="text/html;charset=UTF-8">
-</head>
-<body>
-    <h1>{{ curso.nombre }} - {{ curso.docente.first_name }} {{ curso.docente.last_name }}</h1>
-	
+{% block contenido %}
+
+
+
 {% if user.userprofile.tipo == 1 or user.userprofile.tipo == 2 %}
-<form id="validate" class="main" method="post" action="">{% csrf_token %}
-                <fieldset>
-                    <div class="widget">
-                        <div class="whead"><h6>Nuevo aviso</h6><div class="clear"></div></div>
-                        {% for field in formulario %}
-                        {% if field.errors %}
-                        <div class="field-block button-height">
-                            <label for="login" class="label"><b>{{ field.label }}</b></label>
-                            {{ field }}
-                        </div>
-                        {% for error in  field.errors %}{{ error }}{% endfor %}
-                        {% else %}
-                        <div class="formRow">
-                            <div class="grid3"><label>{{ field.label }}:</label></div>
-                            <div class="grid9">{{ field }}</div><div class="clear"></div>
-                        </div>
-                        {% if field.help_text %}
-                            {{ field.help_text }}
-                        {% endif %}
 
-                        {% endif %}
-                        {% endfor %}
-                        <div class="formRow"><input type="submit" value="Guardar" class="buttonM bBlack formSubmit" /><div class="clear"></div></div>
-                        <div class="clear"></div>
-                    </div>
-                </fieldset>
-            </form>
-    {% endif %}
-    <a href="/{{ curso.pk }}/listas/">Asistencia</a>
-    <a href="/{{ curso.pk }}/tareas/">Tareas</a>
-    <ul>
+<div class="accordion span9" id="accordion2">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+        Nuevo aviso
+      </a>
+    </div>
+    <div id="collapseOne" class="accordion-body collapse out">
+      <div class="accordion-inner">
+        
+
+        <form method="post" action="">{% csrf_token %}
+            {% for field in formulario %}
+            {% if field.errors %}
+                <label for="texto"><b>{{ field.label }}</b></label>
+                {{ field }}
+            {% for error in  field.errors %}{{ error }}{% endfor %}
+            {% else %}
+                <label>{{ field.label }}:</label>
+                {{ field }}
+            {% if field.help_text %}
+                {{ field.help_text }}
+            {% endif %}
+
+            {% endif %}
+            {% endfor %}
+            <p><input type="submit" value="Enviar" class="btn" /></p>
+            
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endif %}
+
+
+<table class="table table-hover span9">
     {% for aviso in avisos %}
-        <li><a href="/{{ curso.pk }}/{{ aviso.pk }}/">{{ aviso.texto }}</a></li>
-        {% if aviso.num > 1 %}
-        <h4><a href="/{{ curso.pk }}/{{ aviso.pk }}/"> Ver {{ aviso.num}} comentarios </a> </h4>
-        {% endif %}
-        {% if aviso.num == 1 %}
-        <h4><a href="/{{ curso.pk }}/{{ aviso.pk }}/"> Ver {{ aviso.num}} comentario </a> </h4>
-        {% endif %}
+        <tr>
+            <td>
+                {{ aviso.texto }}
+                {% if aviso.num > 1 %}
+                <p><small><a href="/{{ curso.pk }}/{{ aviso.pk }}/"> Ver {{ aviso.num}} comentarios</a></small></p>
+                {% endif %}
+                {% if aviso.num == 1 %}
+                <p><small><a href="/{{ curso.pk }}/{{ aviso.pk }}/"> Ver {{ aviso.num}} comentario</a></small></p>
+                {% endif %}
+                {% if aviso.num == 0 %}
+                <p><small><a href="/{{ curso.pk }}/{{ aviso.pk }}/">Comentar</a></small></p>
+                {% endif %}
+            </td>
+        </tr>
     {% endfor %}
-    </ul>
+</table>
+
     
-</body>
-</html>
+{% endblock %}

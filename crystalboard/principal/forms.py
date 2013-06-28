@@ -8,9 +8,6 @@ from django.forms import widgets
 from django.core.exceptions import ValidationError ### libreria para validar datos
 import datetime
 
-
-
-
 class EntregaForm(ModelForm):
 	class Meta:
 		model = Entrega_Tarea
@@ -23,7 +20,7 @@ class TareaForm(ModelForm):
 		exclude = ('fecha_registro', 'puntos', 'curso')
 
 class AvisoForm(ModelForm):
-	texto = forms.CharField(error_messages={'required': 'Este campo es obligatorio'})
+	texto = forms.CharField(label="Aviso", widget=forms.Textarea ,error_messages={'required': 'Este campo es obligatorio'})
 
 	class Meta:
 		model = Aviso

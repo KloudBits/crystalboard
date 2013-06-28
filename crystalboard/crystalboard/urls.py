@@ -17,7 +17,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^login/$', 'principal.views.ingreso_usuario'),
     url(r'^perfil/$', 'principal.views.perfil'),
-    url(r'^conectar/dropbox/$', 'principal.views.conectar_dropbox'),
+    #url(r'^conectar/dropbox/$', 'principal.views.conectar_dropbox'),
 
     url(r'^(?P<cur>[0-9]+)/(?P<avso>[0-9]+)/$', 'principal.views.comentarios'),
     url(r'^(?P<cur>[0-9]+)/$', 'principal.views.cursodash'),

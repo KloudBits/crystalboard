@@ -2,7 +2,5 @@
 *.pot
 *.pyc
 local_settings.py
-
-crystalboard/crystalboard/settings.py
-
-crystalboard/crystalboard/settings.py
+*.DS_Store
+venv

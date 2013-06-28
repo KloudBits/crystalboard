@@ -1,15 +1,21 @@
+{% extends "base.html" %}
+
+{% block contenido %}
 <h1> Seleccion {{ seleccion }}</h1>
 
 {% if user.userprofile.tipo == 1 or user.userprofile.tipo == 2 %}
+
+<div class="span9">
 <form action="" method="POST">{% csrf_token %}
-<ul>
 {% for alumno in alumnos %}
-    <li> <input type="checkbox" name="inalumnos" value="{{alumno.pk}}" CHECKED="CHECKED"/>
-         {{alumno.username}} {{ alumno.last_name }} {{ alumno.first_name }} </li>
+    <label class="checkbox"><input type="checkbox" name="inalumnos" value="{{alumno.pk}}" CHECKED="CHECKED"/>{{alumno.username}} {{ alumno.last_name }} {{ alumno.first_name }} </label>
 {% endfor %}
-</ul>
-<button type="submit">Guardar</button>
+<button type="submit" class="btn">Guardar</button>
 </form>
+</div>
+
+
+
 
 <table>
 	<thead>
@@ -53,4 +59,5 @@
 	</tbody>
 </table>
 {% endif %}
+{% endblock %}
 

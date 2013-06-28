@@ -13,16 +13,17 @@ from django.template.defaultfilters import slugify
 from django.core import serializers
 from django.contrib import messages
 from datetime import datetime
-<<<<<<< HEAD
 from dropbox import client, rest, session
+from django.core.mail import send_mail
+
 
 # Get your app key and secret from the Dropbox developer website
-APP_KEY = 'bzs0qqplfq66m0i'
-APP_SECRET = '6udw3310r6n2yx9'
+#APP_KEY = 'bzs0qqplfq66m0i'
+#APP_SECRET = '6udw3310r6n2yx9'
 
 # ACCESS_TYPE should be 'dropbox' or 'app_folder' as configured for your app
-ACCESS_TYPE = 'app_folder'
-sess = session.DropboxSession(APP_KEY, APP_SECRET, ACCESS_TYPE)
+#ACCESS_TYPE = 'app_folder'
+#sess = session.DropboxSession(APP_KEY, APP_SECRET, ACCESS_TYPE)
 
 
 
@@ -43,14 +44,11 @@ sess = session.DropboxSession(APP_KEY, APP_SECRET, ACCESS_TYPE)
 #         alumnos = curso.alumnos.all()  # Se obtienen todos los alumnos inscritos
 
 #     return render(request, 'prueba.html', {'mensaje': s, 'alumnos': alumnos})
-=======
-from django.core.mail import send_mail
->>>>>>> 3cc38394c2f2b5ffd272de6eda8fbcea39329ed7
 
 def perfil(request):
     return render(request, 'perfil.html')
 
-def conectar_dropbox(request):
+#def conectar_dropbox(request):
     #request_token = sess.obtain_request_token()
     #url = sess.build_authorize_url(request_token, oauth_callback='http://google.com')
     #return redirect(url)
@@ -108,9 +106,9 @@ def tareas(request, cur):
             return HttpResponseRedirect('/' + cur + '/')
     else:
         formulario = TareaForm()
-        request_token = sess.obtain_request_token()
-        url = sess.build_authorize_url(request_token, oauth_callback='http://google.com')
-        return redirect(url)
+        #request_token = sess.obtain_request_token()
+        #url = sess.build_authorize_url(request_token, oauth_callback='http://google.com')
+        #return redirect(url)
 
     return render(request, 'tareas.html', {'tareas': tareas, 'curso': curso, 'formulario': formulario})
 
