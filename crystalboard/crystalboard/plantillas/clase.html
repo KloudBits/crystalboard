@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+
+{% if user.userprofile.tipo == 1 or user.userprofile.tipo == 2 %}
+<div class="btn-group">
+  <a href="/{{ curso.pk }}/clases/{{ clase.pk }}/editar/" class="btn btn-success">Editar</a>
+</div>
+{% endif %}
+
+<h2>{{ clase.titulo }}</h2>
+<hr>
+<p><b>Resumen:</b></p> {{ clase.resumen }}
+<hr>
+<p><b>Stream:</b></p>  {{ clase.stream|safe }}
+<hr>
+<p><b>Slideshare:</b></p>  {{ clase.slideshare|safe }}
+<hr>
+<p><b>Recursos:</b></p>  {{ clase.recursos }}
+<hr>
+<p><b>Código:</b></p>  {{ clase.codigo }}
+
+    
+{% endblock %}

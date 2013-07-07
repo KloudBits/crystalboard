@@ -2,11 +2,21 @@
 from django.forms import ModelForm
 from django.forms.widgets import RadioSelect
 from django import forms
-from principal.models import UserProfile, Lista, Comentario_Tarea, Curso, Aviso, Comentario_Aviso, Tarea, Entrega_Tarea
+from principal.models import Clase, Infocurso, UserProfile, Lista, Comentario_Tarea, Curso, Aviso, Comentario_Aviso, Tarea, Entrega_Tarea
 from django.contrib.auth.models import User
 from django.forms import widgets
 from django.core.exceptions import ValidationError ### libreria para validar datos
 import datetime
+
+class ClaseEditarFormulario(ModelForm):
+	class Meta:
+		model = Clase
+		exclude = ('clase','curso', 'titulo')
+
+class InfocursoForm(ModelForm):
+	class Meta:
+		model = Infocurso
+		exclude = ('curso',)
 
 class EntregaForm(ModelForm):
 	class Meta:

@@ -1,6 +1,7 @@
 #encoding:utf-8
 import os
-RUTA_PROYECTO = os.path.dirname(os.path.realpath(__file__))
+#RUTA_PROYECTO = os.path.dirname(os.path.realpath(__file__))
+RUTA_PROYECTO = os.path.dirname(os.path.abspath(__file__))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG

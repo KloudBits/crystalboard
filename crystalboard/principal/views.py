@@ -1,19 +1,20 @@
 #encoding:utf-8
-from django.shortcuts import render_to_response, render, redirect
-from principal.models import Asistencia, UserProfile, Lista, Comentario_Tarea, Curso, Aviso, Comentario_Aviso, Tarea, Entrega_Tarea
+from django.shortcuts import render_to_response, render, redirect,get_object_or_404
+from principal.models import Clase, Infocurso, Asistencia, UserProfile, Lista, Comentario_Tarea, Curso, Aviso, Comentario_Aviso, Tarea, Entrega_Tarea
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from principal.forms import EntregaForm, TareaForm, AvisoForm, ComentarioavisoForm#, TipoListaForm
+from principal.forms import ClaseEditarFormulario, InfocursoForm, EntregaForm, TareaForm, AvisoForm, ComentarioavisoForm#, TipoListaForm
 from django.db.models import Avg, Count
 from django.template.defaultfilters import slugify
 from django.core import serializers
 from django.contrib import messages
 from datetime import datetime
-from dropbox import client, rest, session
+from django.http import Http404
+#from dropbox import client, rest, session
 from django.core.mail import send_mail
 
 
@@ -52,10 +53,70 @@ def perfil(request):
     #request_token = sess.obtain_request_token()
     #url = sess.build_authorize_url(request_token, oauth_callback='http://google.com')
     #return redirect(url)
+def docente(request, cur):
+    if not request.user.is_authenticated():
+        raise Http404
+
+    curso = get_object_or_404(Curso, pk=cur)
+    return render(request, 'docente.html', {'curso' : curso})
+
+def clase(request, cur, cls):
+    if not request.user.is_authenticated():
+        raise Http404
+
+    curso = get_object_or_404(Curso, pk=cur)
+    clase = get_object_or_404(Clase, pk=cls)
+    return render(request, 'clase.html', { 'curso' : curso, 'clase' : clase })
+
+def editar_clase(request, cur, cls):
+    if not request.user.is_authenticated():
+        raise Http404
+    if not request.user.get_profile().tipo == 1 and not request.user.get_profile().tipo == 2:
+        raise Http404
+
+    curso = get_object_or_404(Curso, pk=cur)
+    clase = get_object_or_404(Clase, pk=cls)
+
+    if request.method == 'POST':
+        formulario = ClaseEditarFormulario(request.POST, instance=clase)
+        if formulario.is_valid():
+            formulario.save()
+            messages.add_message(request, messages.SUCCESS, 'Se editó esta clase')
+            return HttpResponseRedirect('/' + cur + '/clases/'+cls+'/')
+    else:
+        formulario = ClaseEditarFormulario(instance=clase)
+    return render(request, 'editar-clase.html', { 'formulario': formulario, 'curso' : curso, 'clase' : clase })    
+
+def directorio(request, cur):
+    if not request.user.is_authenticated():
+        raise Http404
+
+    curso = get_object_or_404(Curso, pk=cur)
+    return render(request, 'directorio.html', {'curso' : curso}) 
+
+def informacion(request, cur):
+    if not request.user.is_authenticated():
+        raise Http404
+
+    curso = get_object_or_404(Curso, pk=cur)
+    informacion = Infocurso.objects.filter(curso=curso)
+
+    if request.method == 'POST':
+        formulario = InfocursoForm(request.POST)
+        if formulario.is_valid():
+            f = formulario.save(commit=False)
+            f.curso = curso
+            f.save()
+
+            messages.add_message(request, messages.SUCCESS, 'Se registro nueva información')
+            return HttpResponseRedirect('/' + cur + '/')
+    else:
+        formulario = InfocursoForm()
+
+    return render(request, 'informacion.html', { 'informacion' : informacion, 'formulario' : formulario })
 
 def tarea(request, cur, tar):
-    tarea = Tarea.objects.get(pk=tar)
-    #if request.user.get_profile().tipo == 1 or request.user.get_profile().tipo == 2:
+    tarea = get_object_or_404(Tarea, pk=tar)
     profile = UserProfile.objects.get(user=request.user)
     if profile.tipo == 1 or profile.tipo == 2: ## Agrege estas lineas porque me marcaba un error
         entregas = Entrega_Tarea.objects.filter(tarea=tarea)
@@ -66,7 +127,6 @@ def tarea(request, cur, tar):
         if formulario.is_valid():
             f = formulario.save(commit=False)
             f.tarea = tarea
-            f.fecha = datetime.now()
             f.alumno = request.user
             f.save()
 
@@ -81,7 +141,7 @@ def tareas(request, cur):
     if not request.user.is_authenticated():
         raise HttpResponseRedirect('/')
 
-    curso = Curso.objects.get(pk=cur)
+    curso = get_object_or_404(Curso, pk=cur)
     tareas = Tarea.objects.filter(curso=curso)
     if request.method == 'POST':
         formulario = TareaForm(request.POST)
@@ -116,7 +176,8 @@ def tareas(request, cur):
 def listas(request, cur):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/')
-    curso = Curso.objects.get(pk=cur)
+
+    curso = get_object_or_404(Curso, pk=cur)
     #if request.user.get_profile().tipo == 3:
     profile = UserProfile.objects.get(user=request.user)
     if profile.tipo == 3: ## Lo cambie porque me mandaba un error
@@ -133,7 +194,7 @@ def listas(request, cur):
         lista = request.POST.getlist('inalumnos')
         for alumno in alumnos:
             for ia in lista:
-                u = User.objects.get(pk=ia)
+                u = get_object_or_404(User, pk=ia)
                 if alumno == u:
                     reg = Asistencia(lista=l, usuario=alumno, asis=True)
                     encontrado = True
@@ -150,10 +211,12 @@ def listas(request, cur):
 
 def nuevo_aviso(request, cur):
     if not request.user.is_authenticated():
-        return HttpResponseRedirect('/')
+        raise Http404
+    if not request.user.get_profile().tipo == 1 and not request.user.get_profile().tipo == 2:
+        raise Http404
 
     if request.method == 'POST':
-        crso = Curso.objects.get(pk=cur)
+        crso = get_object_or_404(Curso, pk=cur)
         formulario = AvisoForm(request.POST)
         if formulario.is_valid():
             nuevoaviso = formulario.save(commit=False)
@@ -180,11 +243,11 @@ def nuevo_aviso(request, cur):
 
 def cursodash(request, cur):
     if not request.user.is_authenticated():
-        return HttpResponseRedirect('/')
-    curso = Curso.objects.get(pk=cur)
+        raise Http404
+
+    curso = get_object_or_404(Curso, pk=cur)
     avisos = Aviso.objects.filter(curso=cur).annotate(num=Count('comentario_aviso'))
     if request.method == 'POST':
-        crso = Curso.objects.get(pk=cur)
         formulario = AvisoForm(request.POST)
         if formulario.is_valid():
             nuevoaviso = formulario.save(commit=False)
@@ -202,10 +265,11 @@ def cursodash(request, cur):
 
 def comentarios(request, cur, avso):
     if not request.user.is_authenticated():
-        return HttpResponseRedirect('/')
+        raise Http404
 
-    curso = Curso.objects.get(pk=cur)
-    aviso = Aviso.objects.get(pk=avso)
+    crso = get_object_or_404(Curso, pk=cur)
+    aviso = get_object_or_404(Aviso, pk=avso)
+
     comentarios = Comentario_Aviso.objects.filter(aviso=avso)
 
     if request.method == 'POST':
@@ -226,11 +290,11 @@ def comentarios(request, cur, avso):
 
 def nuevo_comentario(request, cur, avso):
     if not request.user.is_authenticated():
-        return HttpResponseRedirect('/')
+        raise Http404
 
     if request.method == 'POST':
-        crso = Curso.objects.get(pk=cur)
-        aviso = Aviso.objects.get(pk=avso)
+        crso = get_object_or_404(Curso, pk=cur)
+        aviso = get_object_or_404(Aviso, pk=avso)
         formulario = ComentarioavisoForm(request.POST)
         if formulario.is_valid():
             nuevo_comentario = formulario.save(commit=False)
@@ -246,6 +310,9 @@ def nuevo_comentario(request, cur, avso):
 
 
 def dashboard(request):
+    if not request.user.is_authenticated():
+        raise Http404
+
     profile = UserProfile.objects.get(user=request.user)
     if profile.tipo == 1 or profile.tipo == 2:
         cursos = Curso.objects.filter(docente=request.user)

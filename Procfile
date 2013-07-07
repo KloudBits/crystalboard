@@ -1,0 +1,1 @@
+web: gunicorn crystalboard/crystalboard.wsgi

@@ -25,7 +25,7 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ STATIC_URL }}assets/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ STATIC_URL }}assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="{{ STATIC_URL }}assets/ico/apple-touch-icon-57-precomposed.png">
-	<style type="text/css">
+	  <style type="text/css">
 	      body {
 	        padding-top: 60px;
 	        padding-bottom: 40px;
@@ -33,7 +33,7 @@
 	      .sidebar-nav {
 	        padding: 9px 0;
 	      }
-	    </style>
+	  </style>
 </head>
 <body>
     <!--[if lt IE 7]>
@@ -63,22 +63,20 @@
       </div>
     </div>
 
+
     <div class="container-fluid">
       <div class="row-fluid">
         <div class="span3">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
               <li class="nav-header">General</li>
-              <li><a href="#">Información del curso</a></li>
-              <li><a href="#">Información del docente</a></li>
-              <li><a href="#">Compañeros (Directorio)</a></li>
+              <li><a href="/{{ curso.pk }}/info/">Información del curso</a></li>
+              <li><a href="/{{ curso.pk }}/docente/">Información del docente</a></li>
+              <li><a href="/{{ curso.pk }}/directorio/">Compañeros (Directorio)</a></li>
               <li class="nav-header">Sesiones (Clases)</li>
-              <li><a href="#">Clase 1</a></li>
-              <li><a href="#">Clase 2</a></li>
-              <li><a href="#">Clase 3</a></li>
-              <li><a href="#">Clase 4</a></li>
-              <li><a href="#">Clase 5</a></li>
-              <li><a href="#">Clase 6</a></li>
+              {% for clase in curso.clase_set.all %}
+                <li><a href="/{{ curso.pk }}/clases/{{ clase.pk }}/">{{ clase.titulo }}</a></li>
+              {% endfor %}
               <li class="nav-header">Misc</li>
               <li class="active"><a href="#">Avisos</a></li>
               <li><a href="/{{ curso.pk }}/tareas/">Tareas</a></li>
@@ -88,10 +86,12 @@
           </div><!--/.well -->
         </div><!--/span-->
 
+<div class="span9">
 {% block contenido %}
 
 {% endblock %}
-
+</div>
+    </div><!--/.row-fluid-->
       <hr>
 
       <footer>
