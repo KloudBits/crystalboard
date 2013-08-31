@@ -8,10 +8,10 @@ from django.contrib.auth.models import User
 ############### CLASE CURSO ####################
 class Curso(models.Model):
     nombre = models.CharField(max_length=200)  # Variable que almacena el nombre del curso
-    descripcion = models.TextField()
+    descripcion = models.TextField() #Descripción del curso
     imagen = models.ImageField(upload_to='cursos_logo')
     docente = models.OneToOneField(User)  # Variable que guarda el id del usuario (Solo puede ser DOCENTE)
-    alumnos = models.ManyToManyField(User, related_name='alumnos')  #Los alumnos
+    alumnos = models.ManyToManyField(User, related_name='alumnos')  #Los alumnos asignados a este curso
 
     # Vuelve al objeto un string
     def __unicode__(self):
@@ -111,7 +111,7 @@ class Comentario_Tarea(models.Model):
 
 #################### CLASE LISTA ###########################
 class Lista(models.Model):
-    curso = models.ForeignKey(Curso)  # Variable que almacena el id del curso
+    clase = models.ForeignKey(Clase)  # Variable que almacena el id del curso
     fecha = models.DateField()  # Variable que almacena la fecha del pase de lista
 
     # Vuelve al objeto un string
@@ -121,7 +121,7 @@ class Lista(models.Model):
 #############################################################
 
 ###################### CLASE ASISTENCIA ########################
-
+###Esta tabla es la que se forma de la relación muchos a muchos en la relación de lista y alumnos
 class Asistencia(models.Model):
     lista = models.ForeignKey(Lista)  # Variable que almacena el id de la lista
     usuario = models.ForeignKey(User)  # Variable que almacena el id del alumno
@@ -135,7 +135,6 @@ class Asistencia(models.Model):
 
 ###################### CLASE USERPROFILE ######################
 class UserProfile(models.Model):
-
 #Tipo de Perfiles existentes
     TIPO_CHOICES = (
         (1, 'DOCENTE'),
@@ -153,4 +152,35 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return "%s's perfil" % self.user
-        ##################################################################
+##################################################################
+
+class Foro(models.Model):
+    fecha = models.DateField(auto_now=True)
+    curso = models.ForeignKey(Curso)
+    titulo = models.CharField(max_length=300)
+    texto = models.TextField()
+
+    def __unicode__(self):
+        return self.titulo
+
+### Respuestas al foro
+class Respuesta(models.Model):
+    fecha = models.DateField(auto_now=True)
+    foro = models.ForeignKey(Foro)
+    usuario = models.ForeignKey(User)
+    texto = models.TextField()
+
+    def __unicode__(self):
+        return self.usuario.username
+
+### Comentarios a las respuestas del foro
+class Comentario(models.Model):
+    fecha = models.DateField(auto_now=True)
+    respuesta = models.ForeignKey(Respuesta)
+    usuario = models.ForeignKey(User)
+    texto = models.TextField()
+
+    def __unicode__(self):
+        return self.usuario.username
+
+

@@ -53,6 +53,7 @@ def perfil(request):
     #request_token = sess.obtain_request_token()
     #url = sess.build_authorize_url(request_token, oauth_callback='http://google.com')
     #return redirect(url)
+    
 def docente(request, cur):
     if not request.user.is_authenticated():
         raise Http404
