@@ -45,7 +45,6 @@ from django.core.mail import send_mail
 #         alumnos = curso.alumnos.all()  # Se obtienen todos los alumnos inscritos
 
 #     return render(request, 'prueba.html', {'mensaje': s, 'alumnos': alumnos})
-
 def perfil(request):
     return render(request, 'perfil.html')
 
@@ -268,7 +267,7 @@ def comentarios(request, cur, avso):
     if not request.user.is_authenticated():
         raise Http404
 
-    crso = get_object_or_404(Curso, pk=cur)
+    curso = get_object_or_404(Curso, pk=cur)
     aviso = get_object_or_404(Aviso, pk=avso)
 
     comentarios = Comentario_Aviso.objects.filter(aviso=avso)

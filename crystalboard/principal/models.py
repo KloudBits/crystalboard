@@ -4,6 +4,16 @@ import datetime
 from django.utils import timezone
 from django.contrib.auth.models import User
 
+############### CLASE INSTITUTO ################
+class Instituto(models.Model):
+    nombre = models.CharField(max_length=200)
+    descripcion = models.TextField()
+    logo = models.ImageField(upload_to='instituto_logo')
+
+    def __unicode__(self):
+        return self.nombre
+################################################
+
 
 ############### CLASE CURSO ####################
 class Curso(models.Model):
@@ -12,7 +22,7 @@ class Curso(models.Model):
     imagen = models.ImageField(upload_to='cursos_logo')
     docente = models.OneToOneField(User)  # Variable que guarda el id del usuario (Solo puede ser DOCENTE)
     alumnos = models.ManyToManyField(User, related_name='alumnos')  #Los alumnos asignados a este curso
-
+    instituto = models.ForeignKey(Instituto) # Instituto al cual pertenece el curso
     # Vuelve al objeto un string
     def __unicode__(self):
         return self.nombre
