@@ -56,7 +56,7 @@ class Comentario_TareaAdmin(admin.ModelAdmin):
 
 class ListaAdmin(admin.ModelAdmin):
 	fieldsets = [
-		('Lista del Curso:', {'fields':['curso']}),
+		('Lista de la clase:', {'fields':['clase']}),
 		('Fecha de Asistencia', {'fields':['fecha']})
 	]
 
