@@ -1,9 +1,16 @@
 # encoding: utf-8
-from principal.models import Infocurso, Clase, Asistencia, Curso, Aviso, Comentario_Aviso, Tarea, Entrega_Tarea, Comentario_Tarea, Lista, UserProfile
+from principal.models import Instituto,Infocurso, Clase, Asistencia, Curso, Aviso, Comentario_Aviso, Tarea, Entrega_Tarea, Comentario_Tarea, Lista, UserProfile
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
+
+class InstitutoAdmin(admin.ModelAdmin):
+    fieldsets = [
+        ('Nombre de la Institucion:', {'fields': ['nombre']}),
+        ('Logo de la Institucion:', {'fields' : ['logo']}),
+        ('Descripcion de la Institucion:', {'fields':['descripcion']}),
+    ]
 
 class UserProfileInline(admin.StackedInline):
     model = UserProfile
@@ -54,11 +61,19 @@ class Comentario_TareaAdmin(admin.ModelAdmin):
 		('Comentarios:', {'fields':['texto']})
 	]
 
+<<<<<<< HEAD
 class ListaAdmin(admin.ModelAdmin):
 	fieldsets = [
 		('Lista de la clase:', {'fields':['clase']}),
 		('Fecha de Asistencia', {'fields':['fecha']})
 	]
+=======
+#class ListaAdmin(admin.ModelAdmin):
+#	fieldsets = [
+#		('Lista del Curso:', {'fields': ['curso']}),
+#		('Fecha de Asistencia', {'fields': ['fecha']})
+#	]
+>>>>>>> c1a2cc8ab3204fe07b1c865214542a167b69193c
 
 
 
@@ -71,7 +86,8 @@ admin.site.register(Comentario_Aviso, Comentario_AvisoAdmin)
 admin.site.register(Tarea, TareaAdmin)
 admin.site.register(Entrega_Tarea, Entrega_TareaAdmin)
 admin.site.register(Comentario_Tarea, Comentario_TareaAdmin)
-admin.site.register(Lista, ListaAdmin)
+admin.site.register(Instituto, InstitutoAdmin) # Crear formulario personalizado para institutos en la admin page
+#admin.site.register(Lista, ListaAdmin)
 admin.site.register(Asistencia)
 admin.site.register(UserProfile)
 admin.site.register(Infocurso)
