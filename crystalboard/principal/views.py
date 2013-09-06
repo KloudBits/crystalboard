@@ -1,13 +1,13 @@
 #encoding:utf-8
 from django.shortcuts import render_to_response, render, redirect,get_object_or_404
-from principal.models import Clase, Infocurso, Asistencia, UserProfile, Lista, Comentario_Tarea, Curso, Aviso, Comentario_Aviso, Tarea, Entrega_Tarea
+from principal.models import Respuesta, Comentario, Foro, Clase, Infocurso, Asistencia, UserProfile, Lista, Comentario_Tarea, Curso, Aviso, Comentario_Aviso, Tarea, Entrega_Tarea
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from principal.forms import ClaseEditarFormulario, InfocursoForm, EntregaForm, TareaForm, AvisoForm, ComentarioavisoForm#, TipoListaForm
+from principal.forms import ClaseForm, ComentarioForm, RespuestaForm, ForoForm, ClaseEditarFormulario, InfocursoForm, EntregaForm, TareaForm, AvisoForm, ComentarioavisoForm#, TipoListaForm
 from django.db.models import Avg, Count
 from django.template.defaultfilters import slugify
 from django.core import serializers
@@ -172,41 +172,87 @@ def tareas(request, cur):
 
     return render(request, 'tareas.html', {'tareas': tareas, 'curso': curso, 'formulario': formulario})
 
+def nuevo_lista(request, cur, clse):
+    clase = get_object_or_404(Clase, pk=clse)
+    try:
+        if clase.lista:
+            return redirect('/'+cur+'/clases/'+clse+'/lista/')
+    except:
+        if request.method == 'POST':
+            fecha = request.POST['fecha']
+            lista = Lista(clase=clase, fecha=fecha)
+            lista.save()
 
-def listas(request, cur):
-    if not request.user.is_authenticated():
-        return HttpResponseRedirect('/')
+            curso = get_object_or_404(Curso, pk=cur)
+            alumnos = curso.alumnos.all()
+            for a in alumnos:
+                asistencia = Asistencia(lista=lista, usuario=a)
+                asistencia.save()
 
-    curso = get_object_or_404(Curso, pk=cur)
-    #if request.user.get_profile().tipo == 3:
-    profile = UserProfile.objects.get(user=request.user)
-    if profile.tipo == 3: ## Lo cambie porque me mandaba un error
-        lista = Lista.objects.filter(curso=curso)
-        asistencia = Asistencia.objects.filter(usuario=request.user)
-        return render(request, 'asistencia.html', {'asistencia': asistencia, 'lista': lista})
+            return redirect('/'+cur+'/clases/'+clse+'/lista/')
+    return render(request, 'nueva-asistencia.html')
 
-    alumnos = curso.alumnos.all()
-
+def lista(request, cur, clse):
+    clase = get_object_or_404(Clase, pk=clse)
     if request.method == 'POST':
-        l = Lista(curso=curso, fecha=datetime.today())
-        l.save()
-        encontrado = False #Una bandera para registrar en caso de que no lo lleve el getlist
         lista = request.POST.getlist('inalumnos')
-        for alumno in alumnos:
-            for ia in lista:
-                u = get_object_or_404(User, pk=ia)
-                if alumno == u:
-                    reg = Asistencia(lista=l, usuario=alumno, asis=True)
+        alumnos = Asistencia.objects.filter(lista=clase.lista)
+        for a in alumnos:
+            encontrado = False
+            for l in lista:
+                u = get_object_or_404(User, pk=l)
+                if a.usuario == u:
+                    a.asis = True
+                    a.save()
                     encontrado = True
-            if encontrado == False:
-                reg = Asistencia(lista=l, usuario=alumno, asis=False)
-            reg.save()
-        return HttpResponseRedirect('/' + cur + '/')
-    else:
-        asistencia = Asistencia.objects.filter(lista__curso=curso)
-        lista = Lista.objects.filter(curso=curso)
+            if not encontrado:
+                a.asis = False
+                a.save()
 
-    return render(request, 'asistencia.html', {'alumnos': alumnos, 'asistencia': asistencia, 'lista': lista})
+        return redirect('/'+cur+'/clases/'+clse+'/lista/')
+    else:
+        try:
+            if clase.lista:
+                asistencia = Asistencia.objects.filter(lista=clase.lista)
+                return render(request,'asistencia.html',{'alumnos':asistencia, 'clase':clase})
+        except:
+            return redirect('/'+cur+'/clases/'+clse+'/lista/nuevo/')
+
+
+# def lista(request, cur, clase):
+#     if not request.user.is_authenticated():
+#         return HttpResponseRedirect('/')
+
+#     clase = get_object_or_404(Clase, pk=clase)
+#     #if request.user.get_profile().tipo == 3:
+#     profile = UserProfile.objects.get(user=request.user)
+#     if profile.tipo == 3: ## Lo cambie porque me mandaba un error
+#         lista = get_object_or_404(Lista, clase=clase)
+#         asistencia = Asistencia.objects.filter(usuario=request.user)
+#         return render(request, 'asistencia.html', {'asistencia': asistencia, 'lista': lista})
+
+#     alumnos = clase.alumnos.all()
+
+#     if request.method == 'POST':
+#         l = Lista(clase=clase, fecha=datetime.today())
+#         l.save()
+#         encontrado = False #Una bandera para registrar en caso de que no lo lleve el getlist
+#         lista = request.POST.getlist('inalumnos')
+#         for alumno in alumnos:
+#             for ia in lista:
+#                 u = get_object_or_404(User, pk=ia)
+#                 if alumno == u:
+#                     reg = Asistencia(lista=l, usuario=alumno, asis=True)
+#                     encontrado = True
+#             if encontrado == False:
+#                 reg = Asistencia(lista=l, usuario=alumno, asis=False)
+#             reg.save()
+#         return HttpResponseRedirect('/' + cur + '/')
+#     else:
+#         asistencia = Asistencia.objects.filter(lista__clase=clase)
+#         lista = get_object_or_404(Lista, clase=clase)
+
+#     return render(request, 'asistencia.html', {'alumnos': alumnos, 'asistencia': asistencia, 'lista': lista})
 
 
 def nuevo_aviso(request, cur):
@@ -337,3 +383,123 @@ def ingreso_usuario(request):
     else:
         formulario = AuthenticationForm()
     return render_to_response('login.html', {'formulario': formulario}, context_instance=RequestContext(request))
+
+def foro(request, cur):
+    curso = get_object_or_404(Curso, pk=cur)
+    foros = Foro.objects.filter(curso=cur)
+    return render(request, 'foro.html', {'foros':foros, 'curso':curso})
+
+def nuevo_foro(request, cur):
+    curso = get_object_or_404(Curso, pk=cur)
+    if request.method=='POST':
+        formulario = ForoForm(request.POST)
+        if formulario.is_valid():
+            f = formulario.save(commit=False)
+            f.curso = curso
+            f.save()
+
+            messages.add_message(request, messages.SUCCESS, 'Registro de foro de discusión exitoso.')
+            return redirect('/' + cur + '/foro/')
+    else:
+        formulario = ForoForm()
+    return render(request, 'nuevo_comentario.html', {'formulario':formulario})
+
+def ver_foro(request, cur, forr):
+    foro = get_object_or_404(Foro, pk=forr)
+    return render(request, 'un-foro.html', {'foro':foro})
+
+
+def nuevo_respuesta(request, cur, forr):
+    foro = get_object_or_404(Foro, pk=forr)
+    if request.method=='POST':
+        formulario = RespuestaForm(request.POST)
+        if formulario.is_valid():
+            f = formulario.save(commit=False)
+            f.foro = foro
+            f.usuario = request.user
+            f.save()
+
+            messages.add_message(request, messages.SUCCESS, 'Registro de respuesta en discusión exitoso.')
+            return redirect('/' + cur + '/foro/'+forr+'/respuesta/')
+    else:
+        formulario = RespuestaForm()
+    return render(request, 'nuevo_comentario.html', {'formulario':formulario})
+
+def ver_comentarios(request, cur, forr, res):
+    respuesta = get_object_or_404(Respuesta, pk=res)
+    if request.method=='POST':
+        formulario = ComentarioForm(request.POST)
+        if formulario.is_valid():
+            f = formulario.save(commit=False)
+            f.respuesta = respuesta
+            f.usuario = request.user
+            f.save()
+
+            messages.add_message(request, messages.SUCCESS, 'Registro de comentario respuesta exitoso.')
+            return redirect('/' + cur + '/foro/'+forr+'/respuesta/'+res+'/comentarios/')
+    else:
+        formulario = ComentarioForm()
+    return render(request, 'nuevo_com_foro.html', {'respuesta':respuesta, 'formulario':formulario})
+
+
+def panel_asistencia(request, cur):
+    listas = Lista.objects.filter(clase__curso=cur)
+    return render(request, 'panel-control/asistencia.html', {'listas':listas})
+
+
+
+def nuevo_envivo(request, cur, clse):
+    curso = get_object_or_404(Curso, pk=cur)
+    clase = get_object_or_404(Clase, pk=clse)
+    embed = request.POST['envivo']
+    clase.stream = embed
+    clase.save()
+    return redirect('/'+cur+'/clases/'+clse+'/')
+
+def nuevo_presentacion(request, cur, clse):
+    curso = get_object_or_404(Curso, pk=cur)
+    clase = get_object_or_404(Clase, pk=clse)
+    embed = request.POST['slideshare']
+    clase.slideshare = embed
+    clase.save()
+    return redirect('/'+cur+'/clases/'+clse+'/')
+
+def nuevo_recursos(request, cur, clse):
+    curso = get_object_or_404(Curso, pk=cur)
+    clase = get_object_or_404(Clase, pk=clse)
+    embed = request.POST['texto']
+    clase.recursos = embed
+    clase.save()
+    return redirect('/'+cur+'/clases/'+clse+'/')
+
+def nuevo_codigo(request, cur, clse):
+    curso = get_object_or_404(Curso, pk=cur)
+    clase = get_object_or_404(Clase, pk=clse)
+    embed = request.POST['codigo']
+    clase.codigo = embed
+    clase.save()
+    return redirect('/'+cur+'/clases/'+clse+'/')
+
+
+
+
+def clases(request, cur):
+    curso = get_object_or_404(Curso, pk=cur)
+    clases = Clase.objects.filter(curso=curso)
+    return render(request, 'clases.html', {'clases':clases, 'curso':curso})
+
+def nuevo_clase(request, cur):
+    curso = get_object_or_404(Curso, pk=cur)
+    if request.method=='POST':
+        formulario = ClaseForm(request.POST)
+        if formulario.is_valid():
+            f = formulario.save(commit=False)
+            f.curso = curso
+            f.save()
+
+            messages.add_message(request, messages.SUCCESS, 'Registro de clase exitoso.')
+            return redirect('/' + cur +'/')
+    else:
+        formulario = ClaseForm()
+    return render(request, 'nuevo_comentario.html', {'formulario':formulario})
+

@@ -34,8 +34,8 @@ class Clase(models.Model):
     curso = models.ForeignKey(Curso)
     titulo = models.CharField(max_length=30)
     resumen = models.TextField(blank=True)
-    stream = models.CharField(max_length=300, blank=True) #Embed de ustream, livestream o hangout
-    slideshare = models.CharField(max_length=300, blank=True) #Embed de slideshare
+    stream = models.TextField(max_length=300, blank=True) #Embed de ustream, livestream o hangout
+    slideshare = models.TextField(max_length=300, blank=True) #Embed de slideshare
     recursos = models.TextField(blank=True) #Texto y enlaces de dropbox (material)
     codigo = models.TextField(blank=True) #Para clases de programación
 
@@ -121,7 +121,7 @@ class Comentario_Tarea(models.Model):
 
 #################### CLASE LISTA ###########################
 class Lista(models.Model):
-    clase = models.ForeignKey(Clase)  # Variable que almacena el id del curso
+    clase = models.OneToOneField(Clase)  # Variable que almacena el id del curso
     fecha = models.DateField()  # Variable que almacena la fecha del pase de lista
 
     # Vuelve al objeto un string
@@ -135,7 +135,7 @@ class Lista(models.Model):
 class Asistencia(models.Model):
     lista = models.ForeignKey(Lista)  # Variable que almacena el id de la lista
     usuario = models.ForeignKey(User)  # Variable que almacena el id del alumno
-    asis = models.BooleanField(default=True)  # Variable que almacena si asistio o no el alumno
+    asis = models.BooleanField(default=False)  # Variable que almacena si asistio o no el alumno
 
     # Vuelve al objeto un string
     def __unicode__(self):

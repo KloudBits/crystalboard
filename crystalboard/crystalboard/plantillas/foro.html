@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+
+{% for foro in foros %}    
+<div class="span12">
+  <div class="hero-unit">
+        <h2>{{ foro.titulo }}</h2>
+        <p>{{ foro.texto }}</p>
+        <p><a href="/{{ curso.pk }}/foro/{{ foro.pk }}/" class="btn btn-primary btn-large">Ver foro &raquo;</a></p>
+  </div>
+</div><!--/span-->
+{% endfor %}
+
+{% endblock %}

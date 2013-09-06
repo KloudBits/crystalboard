@@ -25,6 +25,7 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ STATIC_URL }}assets/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ STATIC_URL }}assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="{{ STATIC_URL }}assets/ico/apple-touch-icon-57-precomposed.png">
+
 	  <style type="text/css">
 	      body {
 	        padding-top: 60px;
@@ -33,6 +34,7 @@
 	      .sidebar-nav {
 	        padding: 9px 0;
 	      }
+        {% block css %}{% endblock %}
 	  </style>
 </head>
 <body>
@@ -55,6 +57,7 @@
             </p>
             <ul class="nav">
               <li class="active"><a href="#">Inicio</a></li>
+              <li><a href="/{{ curso.pk }}/clases/">Clases</a></li>
               <li><a href="#about">About</a></li>
               <li><a href="#contact">Contact</a></li>
             </ul>
@@ -80,8 +83,13 @@
               <li class="nav-header">Misc</li>
               <li class="active"><a href="#">Avisos</a></li>
               <li><a href="/{{ curso.pk }}/tareas/">Tareas</a></li>
-              <li><a href="/{{ curso.pk }}/listas/">Asistencia</a></li>
               <li><a href="#">Calendario</a></li>
+              <li><a href="/{{ curso.pk }}/foro/">Foro</a></li>
+
+              {% if user.get_profile.tipo == 1 %}
+              <li class="nav-header">Panel de control</li>
+              <li><a href="/panel-control/{{ curso.pk }}/asistencia/">Asistencia</a></li>
+              {% endif %}
             </ul>
           </div><!--/.well -->
         </div><!--/span-->
@@ -114,6 +122,7 @@
     <script src="{{ STATIC_URL }}assets/js/bootstrap-collapse.js"></script>
     <script src="{{ STATIC_URL }}assets/js/bootstrap-carousel.js"></script>
     <script src="{{ STATIC_URL }}assets/js/bootstrap-typeahead.js"></script>
+    <script type="text/javascript">{% block js %}{% endblock %}</script>
 
 </body>
 </html>

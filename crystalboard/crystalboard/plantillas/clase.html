@@ -4,7 +4,21 @@
 
 {% if user.userprofile.tipo == 1 or user.userprofile.tipo == 2 %}
 <div class="btn-group">
+  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+    Agregar...
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu">
+    <li><a href="#hangout" role="button" data-toggle="modal">En vivo</a></li>
+    <li><a href="#slideshare" role="button" data-toggle="modal">Presentación</a></li>
+    <li><a href="#recursos" role="button" data-toggle="modal">Recursos</a></li>
+    <li><a href="#codigo" role="button" data-toggle="modal">Código</a></li>
+  </ul>
+</div>
+
+<div class="btn-group">
   <a href="/{{ curso.pk }}/clases/{{ clase.pk }}/editar/" class="btn btn-success">Editar</a>
+  <a href="/{{ curso.pk }}/clases/{{ clase.pk }}/lista/" class="btn btn-success">Lista</a>
 </div>
 {% endif %}
 
@@ -20,5 +34,87 @@
 <hr>
 <p><b>Código:</b></p>  {{ clase.codigo }}
 
-    
+
+
+
+<!-- Modal -->
+<div id="hangout" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Clase en tiempo real</h3>
+  </div>
+  <div class="modal-body">
+    <form action="/{{ curso.pk }}/clases/{{ clase.pk }}/nuevo-envivo/" method="POST">{% csrf_token %}
+    	<label>Código embebido:</label>
+    	<input type="text" name="envivo">
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+    <button type="submit" class="btn btn-primary">Crear</button>
+    </form>
+  </div>
+</div>
+
+
+
+
+<!-- Modal -->
+<div id="slideshare" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Presentación</h3>
+  </div>
+  <div class="modal-body">
+    <form action="/{{ curso.pk }}/clases/{{ clase.pk }}/nuevo-presentacion/" method="POST">{% csrf_token %}
+    	<label>Código embebido:</label>
+    	<input type="text" name="slideshare">
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+    <button type="submit" class="btn btn-primary">Crear</button>
+    </form>
+  </div>
+</div>
+
+
+
+
+<!-- Modal -->
+<div id="recursos" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Recursos</h3>
+  </div>
+  <div class="modal-body">
+    <form action="/{{ curso.pk }}/clases/{{ clase.pk }}/nuevo-recursos/" method="POST">{% csrf_token %}
+      <label>Texto:</label>
+      <input type="text" name="texto">
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+    <button type="submit" class="btn btn-primary">Crear</button>
+    </form>
+  </div>
+</div>
+
+
+
+
+<!-- Modal -->
+<div id="codigo" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Código</h3>
+  </div>
+  <div class="modal-body">
+    <form action="/{{ curso.pk }}/clases/{{ clase.pk }}/nuevo-codigo/" method="POST">{% csrf_token %}
+      <label>Código:</label>
+      <input type="text" name="codigo">
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+    <button type="submit" class="btn btn-primary">Crear</button>
+    </form>
+  </div>
+</div>
 {% endblock %}
