@@ -1,13 +1,13 @@
 #encoding:utf-8
 from django.shortcuts import render_to_response, render, redirect,get_object_or_404
-from principal.models import Respuesta, Comentario, Foro, Clase, Infocurso, Asistencia, UserProfile, Lista, Comentario_Tarea, Curso, Aviso, Comentario_Aviso, Tarea, Entrega_Tarea
+from principal.models import Instituto, Respuesta, Comentario, Foro, Clase, Infocurso, Asistencia, UserProfile, Lista, Comentario_Tarea, Curso, Aviso, Comentario_Aviso, Tarea, Entrega_Tarea
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from principal.forms import ClaseForm, ComentarioForm, RespuestaForm, ForoForm, ClaseEditarFormulario, InfocursoForm, EntregaForm, TareaForm, AvisoForm, ComentarioavisoForm#, TipoListaForm
+from principal.forms import NuevoCursoFormulario, ClaseForm, ComentarioForm, RespuestaForm, ForoForm, ClaseEditarFormulario, InfocursoForm, EntregaForm, TareaForm, AvisoForm, ComentarioavisoForm#, TipoListaForm
 from django.db.models import Avg, Count
 from django.template.defaultfilters import slugify
 from django.core import serializers
@@ -353,14 +353,41 @@ def nuevo_comentario(request, cur, avso):
     else:
         formulario = ComentarioavisoForm()
     return render(request, 'nuevo_comentario.html', {'formulario': formulario})
+##################################
+# Funcion para Crear Nuevo Curso #
+##################################
+def nuevo_curso(request):
+    if not request.user.is_authenticated():
+        raise Http404
+    profile = UserProfile.objects.get(user=request.user)
+    if profile.tipo != 2:
+        raise Http404
+    else:
+        instituto = profile.instituto
+        if request.method == 'POST':
+            formulario = NuevoCursoFormulario(request.POST)
+            if formulario.is_valid():
+                nuevo_curso = formulario.save(commit=False)
+                nuevo_curso.instituto = profile.instituto
+                nuevo_curso.save()
+                messages.add_message(request, messages.SUCCESS, 'Registro de curso exitoso')
+                return HttpResponseRedirect('/dashboard/')
+        else:
+            formulario = NuevoCursoFormulario()
+    return render(request, "nuevo_curso.html", {'formulario' : formulario})
 
-
+################################################
 def dashboard(request):
     if not request.user.is_authenticated():
         raise Http404
 
     profile = UserProfile.objects.get(user=request.user)
-    if profile.tipo == 1 or profile.tipo == 2:
+
+    if profile.tipo == 2: # Verificar si es director
+        cursos = Curso.objects.filter(instituto=profile.instituto)
+        return render(request, 'dashboard_director.html', {'cursos':cursos}) # Mostrar plantilla del director
+    ################################################
+    elif profile.tipo == 1:
         cursos = Curso.objects.filter(docente=request.user)
     else:
         cursos = Curso.objects.filter(alumnos=request.user)
