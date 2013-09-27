@@ -199,7 +199,7 @@ class Comentario(models.Model):
 #########################################
 ## Clase prueba
 #########################################
-class Prueba:
+class Prueba(models.Model):
     #Nombre de la prueba
     nombre = models.CharField(max_length=150)
     fecha_creacion = models.DateTimeField()
@@ -208,7 +208,7 @@ class Prueba:
 ##########################################
 ## Clase Pregunta
 ##########################################
-class Pregunta_Prueba:
+class Pregunta_Prueba(models.Model):
     #Pregunta
     nombre = models.CharField(max_length=100)
     prueba = models.ForeignKey(Prueba) ## La pregunta le pertenece a la prueba x
@@ -216,15 +216,15 @@ class Pregunta_Prueba:
 ##########################################
 ## Clase Respuesta
 ##########################################
-class Respuesta_Prueba:
+class Respuesta_Prueba(models.Model):
     respuesta = models.CharField(max_length=100)
     correcta = models.BooleanField() ## la respuesta es correcta
-    pregunta = models.ForeignKey(Pregunta) # La respuesta le pertenece a la pregunta x
+    pregunta = models.ForeignKey(Pregunta_Prueba) # La respuesta le pertenece a la pregunta x
 
 ##########################################
 ## Clase Aplicar
 ##########################################
-class Aplicar_Prueba:
+class Aplicar_Prueba(models.Model):
     usuario = models.ForeignKey(User) ### Aplicar prueba al usuario
     prueba = models.ForeignKey(Prueba) ### Que prueba se le esta aplicando
     fecha_inicio = models.DateTimeField()
@@ -233,7 +233,7 @@ class Aplicar_Prueba:
 ###########################################
 ### Respuesta_Aplicar
 ###########################################
-class Aplicar_Respuesta:
+class Aplicar_Respuesta(models.Model):
     examen = models.ForeignKey(Aplicar_Prueba) ## Examen el cual se esta contestando
     pregunta = models.ForeignKey(Pregunta_Prueba) ## Pregunta a la cual se respondio
     respuesta = models.ForeignKey(Respuesta_Prueba) ## Respuesta que se eligio
