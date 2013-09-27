@@ -18,7 +18,6 @@ from django.http import Http404
 from django.core.mail import send_mail
 
 
-
 # Get your app key and secret from the Dropbox developer website
 #APP_KEY = 'bzs0qqplfq66m0i'
 #APP_SECRET = '6udw3310r6n2yx9'
@@ -367,8 +366,8 @@ def nuevo_curso(request):
     else:
         instituto = profile.instituto
         if request.method == 'POST':
-            formulario = NuevoCursoFormulario(request.POST)
-            if formulario.is_valid():
+            formulario = NuevoCursoFormulario(request.POST, request.FILES)
+            if formulario.is_valid() and formulario.is_multipart():
                 nuevo_curso = formulario.save(commit=False)
                 nuevo_curso.instituto = profile.instituto
                 nuevo_curso.save()
@@ -379,6 +378,12 @@ def nuevo_curso(request):
     return render(request, "nuevo_curso.html", {'formulario' : formulario})
 
 ################################################
+
+####################################################
+
+
+#####################################################
+
 @login_required(login_url='/login/') ### Se indica que tiene que iniciar sesion
 def dashboard(request):
     if not request.user.is_authenticated():
