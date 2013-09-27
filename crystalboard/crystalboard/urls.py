@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     url(r'^$', 'principal.views.ingreso_usuario'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^login/$', 'principal.views.ingreso_usuario'),
+    url(r'^logout/$', 'principal.views.egreso_usuario'),
     url(r'^perfil/$', 'principal.views.perfil'),
     #url(r'^conectar/dropbox/$', 'principal.views.conectar_dropbox'),
 

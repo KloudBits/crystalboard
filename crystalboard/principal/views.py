@@ -18,6 +18,7 @@ from django.http import Http404
 from django.core.mail import send_mail
 
 
+
 # Get your app key and secret from the Dropbox developer website
 #APP_KEY = 'bzs0qqplfq66m0i'
 #APP_SECRET = '6udw3310r6n2yx9'
@@ -45,6 +46,7 @@ from django.core.mail import send_mail
 #         alumnos = curso.alumnos.all()  # Se obtienen todos los alumnos inscritos
 
 #     return render(request, 'prueba.html', {'mensaje': s, 'alumnos': alumnos})
+@login_required(login_url='/login/') ### Se indica que tiene que iniciar sesion
 def perfil(request):
     return render(request, 'perfil.html')
 
@@ -286,7 +288,7 @@ def nuevo_aviso(request, cur):
         formulario = AvisoForm()
     return render_to_response('aviso.html', {'formulario': formulario}, context_instance=RequestContext(request))
 
-
+@login_required(login_url='/login/') ### Se indica que tiene que iniciar sesion
 def cursodash(request, cur):
     if not request.user.is_authenticated():
         raise Http404
@@ -377,6 +379,7 @@ def nuevo_curso(request):
     return render(request, "nuevo_curso.html", {'formulario' : formulario})
 
 ################################################
+@login_required(login_url='/login/') ### Se indica que tiene que iniciar sesion
 def dashboard(request):
     if not request.user.is_authenticated():
         raise Http404
@@ -394,6 +397,10 @@ def dashboard(request):
     return render_to_response('dashboard.html', {'cursos': cursos}, context_instance=RequestContext(request))
 
 
+def egreso_usuario(request):  ### View para cerrar sesion ###
+    logout(request)
+    return HttpResponseRedirect('/login/')
+
 def ingreso_usuario(request):
     if request.method == 'POST':
         formulario = AuthenticationForm(request.POST)
@@ -408,7 +415,10 @@ def ingreso_usuario(request):
                 messages.add_message(request, messages.ERROR, 'El usuario o contraseña son incorrectos')
                 return HttpResponseRedirect('/login/')
     else:
-        formulario = AuthenticationForm()
+        if not request.user.is_authenticated(): ### Checa si el usuario ya inicio sesion ###
+            formulario = AuthenticationForm()
+        else:
+            return HttpResponseRedirect('/dashboard/')
     return render_to_response('login.html', {'formulario': formulario}, context_instance=RequestContext(request))
 
 def foro(request, cur):
