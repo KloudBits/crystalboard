@@ -503,3 +503,8 @@ def nuevo_clase(request, cur):
         formulario = ClaseForm()
     return render(request, 'nuevo_comentario.html', {'formulario':formulario})
 
+def clase_eliminar(request, cur, clse):
+    clase = get_object_or_404(Clase, pk=clse)
+    clase.delete()
+
+    return redirect('/'+cur+'/')
