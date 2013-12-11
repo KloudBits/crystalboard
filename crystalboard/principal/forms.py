@@ -2,7 +2,7 @@
 from django.forms import ModelForm
 from django.forms.widgets import RadioSelect
 from django import forms
-from principal.models import Comentario, Respuesta, Foro, Clase, Infocurso, UserProfile, Lista, Comentario_Tarea, Curso, Aviso, Comentario_Aviso, Tarea, Entrega_Tarea
+from principal.models import Prueba, Comentario, Respuesta, Foro, Clase, Infocurso, UserProfile, Lista, Comentario_Tarea, Curso, Aviso, Comentario_Aviso, Tarea, Entrega_Tarea
 from django.contrib.auth.models import User
 from django.forms import widgets
 from django.core.exceptions import ValidationError ### libreria para validar datos
@@ -11,12 +11,12 @@ import datetime
 class NuevoCursoFormulario(ModelForm):
     class Meta:
         model = Curso
-        exclude = ('instituto')
+        exclude = ('instituto', )
 
 class ClaseEditarFormulario(ModelForm):
 	class Meta:
 		model = Clase
-		exclude = ('clase','curso', 'titulo')
+		exclude = ('clase','curso', 'titulo', )
 
 class InfocursoForm(ModelForm):
 	class Meta:
@@ -26,25 +26,25 @@ class InfocursoForm(ModelForm):
 class EntregaForm(ModelForm):
 	class Meta:
 		model = Entrega_Tarea
-		exclude = ('fecha', 'tarea', 'alumno')
+		exclude = ('fecha', 'tarea', 'alumno', )
 
 class TareaForm(ModelForm):
 	fecha_limite = forms.DateField(initial=datetime.date.today())
 	class Meta:
 		model = Tarea
-		exclude = ('fecha_registro', 'puntos', 'curso')
+		exclude = ('fecha_registro', 'puntos', 'curso', )
 
 class AvisoForm(ModelForm):
 	texto = forms.CharField(label="Aviso", widget=forms.Textarea ,error_messages={'required': 'Este campo es obligatorio'})
 
 	class Meta:
 		model = Aviso
-		exclude = ('curso')
+		exclude = ('curso', )
 
 class ForoForm(ModelForm):
     class Meta:
         model = Foro
-        exclude = ('curso')
+        exclude = ('curso', )
     
 #Hay problemas en la comprensión de este form y no lo estamos usando aún
 class ComentarioavisoForm(ModelForm):
@@ -52,20 +52,28 @@ class ComentarioavisoForm(ModelForm):
 
 	class Meta:
 		model = Comentario_Aviso
-		exclude = ('usuario','aviso')
+		exclude = ('usuario','aviso', )
 
 class RespuestaForm(ModelForm):
 	class Meta:
 		model = Respuesta
-		exclude = ('foro','usuario')
+		exclude = ('foro','usuario', )
 
 class ComentarioForm(ModelForm):
 	class Meta:
 		model = Comentario
-		exclude = ('respuesta', 'usuario')
+		exclude = ('respuesta', 'usuario', )
 
 class ClaseForm(ModelForm):
 	class Meta:
 		model = Clase
-		exclude = ('curso')
+		exclude = ('curso', )
 
+###################################
+########## LO NUEVO ##############
+#################################
+
+class PruebaForm(ModelForm):
+    class Meta:
+        model = Prueba
+        exclude = ('curso', 'fecha_creacion', )

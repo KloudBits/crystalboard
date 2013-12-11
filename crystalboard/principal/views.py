@@ -1,13 +1,13 @@
 #encoding:utf-8
 from django.shortcuts import render_to_response, render, redirect,get_object_or_404
-from principal.models import Instituto, Respuesta, Comentario, Foro, Clase, Infocurso, Asistencia, UserProfile, Lista, Comentario_Tarea, Curso, Aviso, Comentario_Aviso, Tarea, Entrega_Tarea
+from principal.models import Prueba, Instituto, Respuesta, Comentario, Foro, Clase, Infocurso, Asistencia, UserProfile, Lista, Comentario_Tarea, Curso, Aviso, Comentario_Aviso, Tarea, Entrega_Tarea
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from principal.forms import NuevoCursoFormulario, ClaseForm, ComentarioForm, RespuestaForm, ForoForm, ClaseEditarFormulario, InfocursoForm, EntregaForm, TareaForm, AvisoForm, ComentarioavisoForm#, TipoListaForm
+from principal.forms import PruebaForm, NuevoCursoFormulario, ClaseForm, ComentarioForm, RespuestaForm, ForoForm, ClaseEditarFormulario, InfocursoForm, EntregaForm, TareaForm, AvisoForm, ComentarioavisoForm#, TipoListaForm
 from django.db.models import Avg, Count
 from django.template.defaultfilters import slugify
 from django.core import serializers
@@ -486,6 +486,7 @@ def ver_comentarios(request, cur, forr, res):
 
 def panel_asistencia(request, cur):
     listas = Lista.objects.filter(clase__curso=cur)
+
     return render(request, 'panel-control/asistencia.html', {'listas':listas})
 
 
@@ -550,3 +551,29 @@ def clase_eliminar(request, cur, clse):
     clase.delete()
 
     return redirect('/'+cur+'/')
+
+
+##################################################################
+################ Elementos creados apartir del 12-10-2013 ########
+##################################################################
+
+def pruebas(request, cur):
+    curso = get_object_or_404(Curso, pk=cur)
+    pruebas_curso = Prueba.objects.filter(curso=curso)
+    profile = UserProfile.objects.get(user=request.user)
+    return render(request, 'pruebas.html', {'pruebas':pruebas_curso, "curso":curso})
+
+def nueva_prueba(request, cur):
+    curso = get_object_or_404(Curso, pk=cur)
+    if request.method=='POST':
+        formulario = PruebaForm(request.POST)
+        if formulario.is_valid():
+            f = formulario.save(commit=False)
+            f.curso = curso
+            f.fecha_creacion = datetime.today()
+            f.save()
+            messages.add_message(request, messages.SUCCESS, 'Registro de prueba exitoso.')
+            return redirect('/' + cur +'/prueba/')
+    else:
+        formulario = PruebaForm()
+    return render(request, 'nueva_prueba.html', {'formulario':formulario})

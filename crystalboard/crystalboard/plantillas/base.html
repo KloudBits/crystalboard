@@ -86,10 +86,12 @@
               <li><a href="/{{ curso.pk }}/tareas/">Tareas</a></li>
               <li><a href="#">Calendario</a></li>
               <li><a href="/{{ curso.pk }}/foro/">Foro</a></li>
+            <li><a href="/{{ curso.pk }}/prueba/">Pruebas</a></li>
 
               {% if user.get_profile.tipo == 1 %}
               <li class="nav-header">Panel de control</li>
               <li><a href="/panel-control/{{ curso.pk }}/asistencia/">Asistencia</a></li>
+
               {% endif %}
             </ul>
           </div><!--/.well -->

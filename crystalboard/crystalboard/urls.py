@@ -58,4 +58,11 @@ urlpatterns = patterns('',
 
     url(r'^media/(?P<path>.*)$','django.views.static.serve', 
         {'document_root':settings.MEDIA_ROOT,}),
+
+    #################################################
+    #### URLS PARA PRUEBAS #########################
+    ################################################
+
+    url(r'^(?P<cur>[0-9]+)/prueba/$', 'principal.views.pruebas'),
+    url(r'^(?P<cur>[0-9]+)/prueba/nueva/$', 'principal.views.nueva_prueba'),
 )

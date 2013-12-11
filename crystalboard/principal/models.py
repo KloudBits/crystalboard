@@ -128,7 +128,8 @@ class Lista(models.Model):
     def __str__(self):
         return "%s" % self.fecha
 
-#############################################################
+############################################################
+
 
 ###################### CLASE ASISTENCIA ########################
 ###Esta tabla es la que se forma de la relación muchos a muchos en la relación de lista y alumnos
@@ -161,6 +162,7 @@ class UserProfile(models.Model):
     tipo = models.IntegerField(default=3, choices=TIPO_CHOICES)  # Variable que identifica el tipo de usuario
 
     instituto = models.ForeignKey(Instituto)  ## Variable que establece, a que instituto pertenece el usuario
+    creditos = models.IntegerField() ## Variable que establece los creditos del usuario usandos con el director
 
     def __str__(self):
         return "%s's perfil" % self.user
@@ -200,10 +202,14 @@ class Comentario(models.Model):
 ## Clase prueba
 #########################################
 class Prueba(models.Model):
-    #Nombre de la prueba
-    nombre = models.CharField(max_length=150)
-    fecha_creacion = models.DateTimeField()
-    intentos = models.IntegerField() # intentos para presentar la prueba
+    curso = models.ForeignKey(Curso) # A que curso perteneces
+    nombre = models.CharField(max_length=150)#Nombre de la prueba
+    fecha_creacion = models.DateTimeField() # Fecha en que fue creada
+    fecha_limite = models.DateTimeField() # Fecha Limite de acceso
+    intentos = models.IntegerField() # Intentos para presentar la prueba
+
+    def __unicode__(self):
+        return self.nombre
 
 ##########################################
 ## Clase Pregunta
@@ -227,8 +233,9 @@ class Respuesta_Prueba(models.Model):
 class Aplicar_Prueba(models.Model):
     usuario = models.ForeignKey(User) ### Aplicar prueba al usuario
     prueba = models.ForeignKey(Prueba) ### Que prueba se le esta aplicando
-    fecha_inicio = models.DateTimeField()
-    fecha_termino = models.DateTimeField()
+    intento = models.IntegerField() ## Cantidad de intentos que lleva
+    fecha_inicio = models.DateTimeField()  ## A que hora empezo
+    fecha_termino = models.DateTimeField() ## A que hora termino
 
 ###########################################
 ### Respuesta_Aplicar

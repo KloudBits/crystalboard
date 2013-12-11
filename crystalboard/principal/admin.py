@@ -1,5 +1,5 @@
 # encoding: utf-8
-from principal.models import Respuesta, Comentario, Foro, Instituto, Infocurso, Clase, Asistencia, Curso, Aviso, Comentario_Aviso, Tarea, Entrega_Tarea, Comentario_Tarea, Lista, UserProfile
+from principal.models import  Aplicar_Respuesta,Aplicar_Prueba,Respuesta_Prueba,Pregunta_Prueba,Prueba, Respuesta, Comentario, Foro, Instituto, Infocurso, Clase, Asistencia, Curso, Aviso, Comentario_Aviso, Tarea, Entrega_Tarea, Comentario_Tarea, Lista, UserProfile
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
@@ -89,5 +89,15 @@ admin.site.register(Clase)
 admin.site.register(Foro)
 admin.site.register(Respuesta)
 admin.site.register(Comentario)
+
+
+##############################################
+############# Registro de la pruebas ##########
+
+admin.site.register(Prueba)
+admin.site.register(Pregunta_Prueba)
+admin.site.register(Respuesta_Prueba)
+admin.site.register(Aplicar_Prueba)
+admin.site.register(Aplicar_Respuesta)
 
 
