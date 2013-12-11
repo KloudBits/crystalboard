@@ -160,6 +160,8 @@ class UserProfile(models.Model):
     foto = models.ImageField(upload_to='perfiles', blank=True)
     tipo = models.IntegerField(default=3, choices=TIPO_CHOICES)  # Variable que identifica el tipo de usuario
 
+    instituto = models.ForeignKey(Instituto)  ## Variable que establece, a que instituto pertenece el usuario
+
     def __str__(self):
         return "%s's perfil" % self.user
 ##################################################################
@@ -192,5 +194,49 @@ class Comentario(models.Model):
 
     def __unicode__(self):
         return self.usuario.username
+
+
+#########################################
+## Clase prueba
+#########################################
+class Prueba(models.Model):
+    #Nombre de la prueba
+    nombre = models.CharField(max_length=150)
+    fecha_creacion = models.DateTimeField()
+    intentos = models.IntegerField() # intentos para presentar la prueba
+
+##########################################
+## Clase Pregunta
+##########################################
+class Pregunta_Prueba(models.Model):
+    #Pregunta
+    nombre = models.CharField(max_length=100)
+    prueba = models.ForeignKey(Prueba) ## La pregunta le pertenece a la prueba x
+
+##########################################
+## Clase Respuesta
+##########################################
+class Respuesta_Prueba(models.Model):
+    respuesta = models.CharField(max_length=100)
+    correcta = models.BooleanField() ## la respuesta es correcta
+    pregunta = models.ForeignKey(Pregunta_Prueba) # La respuesta le pertenece a la pregunta x
+
+##########################################
+## Clase Aplicar
+##########################################
+class Aplicar_Prueba(models.Model):
+    usuario = models.ForeignKey(User) ### Aplicar prueba al usuario
+    prueba = models.ForeignKey(Prueba) ### Que prueba se le esta aplicando
+    fecha_inicio = models.DateTimeField()
+    fecha_termino = models.DateTimeField()
+
+###########################################
+### Respuesta_Aplicar
+###########################################
+class Aplicar_Respuesta(models.Model):
+    examen = models.ForeignKey(Aplicar_Prueba) ## Examen el cual se esta contestando
+    pregunta = models.ForeignKey(Pregunta_Prueba) ## Pregunta a la cual se respondio
+    respuesta = models.ForeignKey(Respuesta_Prueba) ## Respuesta que se eligio
+
 
 

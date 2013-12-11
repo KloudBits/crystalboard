@@ -8,6 +8,11 @@ from django.forms import widgets
 from django.core.exceptions import ValidationError ### libreria para validar datos
 import datetime
 
+class NuevoCursoFormulario(ModelForm):
+    class Meta:
+        model = Curso
+        exclude = ('instituto')
+
 class ClaseEditarFormulario(ModelForm):
 	class Meta:
 		model = Clase

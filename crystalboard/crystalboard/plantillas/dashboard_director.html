@@ -65,6 +65,10 @@
     </div>
 
     <div class="container-fluid">
+      <!-- DATOS -->
+      <div class="row-fluid">
+        <h3><a href="/nuevo_curso/">Nuevo Curso</a></h3>
+      </div>
       <div class="row-fluid">
 
         {% for curso in cursos %}    
@@ -77,7 +81,8 @@
               <div class="media-body">
                 <h2>{{ curso.nombre }}</h2>
                 <p>{{ curso.descripcion }}</p>
-                <p><a href="/{{ curso.pk }}/" class="btn btn-primary btn-large">Ir al curso &raquo;</a></p>
+                <p><a href="/{{ curso.pk }}/" class="btn btn-primary btn-large">Ir al curso &raquo;</a>
+                <a href="/{{ curso.pk }}/editar/" class="btn btn-primary btn-large">Editar &raquo;</a></p>
               </div>
             </div>
           </div>
@@ -86,6 +91,7 @@
         {% endfor %}
 
       </div><!--/row-->
+
 
       <hr>
 
