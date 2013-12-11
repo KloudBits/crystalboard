@@ -2,7 +2,7 @@
 from django.forms import ModelForm
 from django.forms.widgets import RadioSelect
 from django import forms
-from principal.models import Pregunta_Prueba, Prueba, Comentario, Respuesta, Foro, Clase, Infocurso, UserProfile, Lista, Comentario_Tarea, Curso, Aviso, Comentario_Aviso, Tarea, Entrega_Tarea
+from principal.models import Respuesta_Prueba, Pregunta_Prueba, Prueba, Comentario, Respuesta, Foro, Clase, Infocurso, UserProfile, Lista, Comentario_Tarea, Curso, Aviso, Comentario_Aviso, Tarea, Entrega_Tarea
 from django.contrib.auth.models import User
 from django.forms import widgets
 from django.core.exceptions import ValidationError ### libreria para validar datos
@@ -82,3 +82,8 @@ class Pregunta_PruebaForm(ModelForm):
     class Meta:
         model = Pregunta_Prueba
         exclude = ('prueba', )
+
+class Respuesta_PruebaForm(ModelForm):
+    class Meta:
+        model = Respuesta_Prueba
+        exclude = ('pregunta', )

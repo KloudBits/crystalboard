@@ -66,5 +66,10 @@ urlpatterns = patterns('',
     url(r'^(?P<cur>[0-9]+)/prueba/$', 'principal.views.pruebas'),
     url(r'^(?P<cur>[0-9]+)/prueba/nueva/$', 'principal.views.nueva_prueba'),
     url(r'^(?P<cur>[0-9]+)/prueba/(?P<prueba>[0-9]+)/pregunta/$', 'principal.views.preguntas'),
-    url(r'^(?P<cur>[0-9]+)/prueba/(?P<prueba>[0-9]+)/pregunta/nueva/$', 'principal.views.nueva_pregunta')
+    url(r'^(?P<cur>[0-9]+)/prueba/(?P<prueba>[0-9]+)/pregunta/nueva/$', 'principal.views.nueva_pregunta'),
+    url(r'^(?P<cur>[0-9]+)/prueba/(?P<prueba>[0-9]+)/pregunta/(?P<preg>[0-9]+)/editar/$', 'principal.views.editar_pregunta'),
+    url(r'^(?P<cur>[0-9]+)/prueba/(?P<prueba>[0-9]+)/pregunta/(?P<preg>[0-9]+)/borrar/$', 'principal.views.borrar_pregunta'),
+    url(r'^(?P<cur>[0-9]+)/prueba/(?P<prueba>[0-9]+)/pregunta/(?P<preg>[0-9]+)/respuesta/nueva/$', 'principal.views.nueva_respuesta'),
+    url(r'^(?P<cur>[0-9]+)/prueba/(?P<prueba>[0-9]+)/pregunta/(?P<preg>[0-9]+)/respuesta/(?P<res>[0-9]+)/editar/$', 'principal.views.editar_respuesta'),
+    url(r'^(?P<cur>[0-9]+)/prueba/(?P<prueba>[0-9]+)/pregunta/(?P<preg>[0-9]+)/respuesta/(?P<res>[0-9]+)/borrar/$', 'principal.views.borrar_respuesta'),
 )

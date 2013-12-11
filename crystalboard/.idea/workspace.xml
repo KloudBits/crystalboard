@@ -4,10 +4,10 @@
     <list default="true" id="71bd96da-ba0a-4617-8762-9dd510fbdbcc" name="Default" comment="" />
     <ignored path="crystalboard.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/views.py" changelist="71bd96da-ba0a-4617-8762-9dd510fbdbcc" time="1386741463006" ignored="false" />
-    <file path="/forms.py" changelist="71bd96da-ba0a-4617-8762-9dd510fbdbcc" time="1386741270541" ignored="false" />
+    <file path="/views.py" changelist="71bd96da-ba0a-4617-8762-9dd510fbdbcc" time="1386751197911" ignored="false" />
+    <file path="/forms.py" changelist="71bd96da-ba0a-4617-8762-9dd510fbdbcc" time="1386750224346" ignored="false" />
     <file path="/cursodash.html" changelist="71bd96da-ba0a-4617-8762-9dd510fbdbcc" time="1366979717243" ignored="false" />
-    <file path="/urls.py" changelist="71bd96da-ba0a-4617-8762-9dd510fbdbcc" time="1366988680455" ignored="false" />
+    <file path="/urls.py" changelist="71bd96da-ba0a-4617-8762-9dd510fbdbcc" time="1386748206062" ignored="false" />
     <file path="/aviso.html" changelist="71bd96da-ba0a-4617-8762-9dd510fbdbcc" time="1366979192180" ignored="false" />
     <file path="/lista_comentarios_aviso.html" changelist="71bd96da-ba0a-4617-8762-9dd510fbdbcc" time="1366981417326" ignored="false" />
     <file path="/listas.html" changelist="71bd96da-ba0a-4617-8762-9dd510fbdbcc" time="1366984071906" ignored="false" />
@@ -40,34 +40,7 @@
       <file leaf-file-name="preguntas.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/crystalboard/plantillas/preguntas.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="142" selection-start="257" selection-end="257" vertical-scroll-proportion="0.20460358">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="dashboard.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/crystalboard/plantillas/dashboard.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="72" column="13" selection-start="3377" selection-end="3377" vertical-scroll-proportion="-8.275862">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="nueva_prueba.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/crystalboard/plantillas/nueva_prueba.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="39" selection-start="0" selection-end="1423" vertical-scroll-proportion="-5.5172415">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="nueva_pregunta.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/crystalboard/plantillas/nueva_pregunta.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="53" selection-start="252" selection-end="252" vertical-scroll-proportion="-4.827586">
+            <state line="29" column="146" selection-start="1760" selection-end="1760" vertical-scroll-proportion="0.605598">
               <folding />
             </state>
           </provider>
@@ -76,9 +49,10 @@
       <file leaf-file-name="models.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/principal/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="237" column="29" selection-start="9424" selection-end="9424" vertical-scroll-proportion="0.0">
+            <state line="234" column="13" selection-start="9286" selection-end="9286" vertical-scroll-proportion="0.0">
               <folding>
                 <marker date="1386739354308" expanded="true" signature="8717:8858" placeholder="..." />
+                <marker date="1386739354308" expanded="true" signature="9158:9366" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -87,9 +61,9 @@
       <file leaf-file-name="forms.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/principal/forms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="83" column="29" selection-start="2289" selection-end="2289" vertical-scroll-proportion="0.0">
+            <state line="88" column="28" selection-start="2426" selection-end="2426" vertical-scroll-proportion="0.0">
               <folding>
-                <element signature="e#16#50#0" expanded="true" />
+                <marker date="1386750265153" expanded="true" signature="1914:1967" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -98,7 +72,7 @@
       <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/principal/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="567" column="45" selection-start="22508" selection-end="22508" vertical-scroll-proportion="0.0">
+            <state line="654" column="58" selection-start="26604" selection-end="26604" vertical-scroll-proportion="-149.0">
               <folding>
                 <element signature="e#16#99#0" expanded="true" />
               </folding>
@@ -109,16 +83,7 @@
       <file leaf-file-name="urls.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/crystalboard/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="68" column="11" selection-start="3720" selection-end="3777" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pruebas.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/crystalboard/plantillas/pruebas.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="81" selection-start="881" selection-end="881" vertical-scroll-proportion="-4.965517">
+            <state line="73" column="111" selection-start="4467" selection-end="4467" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -134,7 +99,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/crystalboard/plantillas/lista_comentarios_aviso.html" />
         <option value="$PROJECT_DIR$/crystalboard/plantillas/listas.html" />
         <option value="$PROJECT_DIR$/crystalboard/plantillas/prueba" />
         <option value="$PROJECT_DIR$/crystalboard/plantillas/prueba.html" />
@@ -145,10 +109,11 @@
         <option value="$PROJECT_DIR$/crystalboard/plantillas/nueva_prueba.html" />
         <option value="$PROJECT_DIR$/principal/models.py" />
         <option value="$PROJECT_DIR$/crystalboard/plantillas/pruebas.html" />
-        <option value="$PROJECT_DIR$/crystalboard/urls.py" />
         <option value="$PROJECT_DIR$/crystalboard/plantillas/nueva_pregunta.html" />
         <option value="$PROJECT_DIR$/principal/forms.py" />
+        <option value="$PROJECT_DIR$/crystalboard/plantillas/nueva_respuesta.html" />
         <option value="$PROJECT_DIR$/principal/views.py" />
+        <option value="$PROJECT_DIR$/crystalboard/urls.py" />
         <option value="$PROJECT_DIR$/crystalboard/plantillas/preguntas.html" />
       </list>
     </option>
@@ -276,13 +241,13 @@
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="options.lastSelected" value="editor.preferences.appearance" />
     <property name="recentsLimit" value="5" />
+    <property name="options.lastSelected" value="appearance" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/manage.py" />
     <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -310,29 +275,6 @@
       <option name="PARAMETERS" value="" />
       <method />
     </configuration>
-    <configuration default="true" type="Python.DjangoServer" factoryName="Django server">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="crystalboard" />
-      <option name="launchJavascriptDebuger" value="false" />
-      <option name="port" value="8000" />
-      <option name="host" value="" />
-      <option name="additionalOptions" value="" />
-      <option name="browserUrl" value="" />
-      <option name="runTestServer" value="false" />
-      <option name="runNoReload" value="false" />
-      <option name="useCustomRunCommand" value="false" />
-      <option name="customRunCommand" value="" />
-      <method />
-    </configuration>
     <configuration default="true" type="tests" factoryName="Unittests">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -354,6 +296,29 @@
       <option name="PUREUNITTEST" value="true" />
       <option name="PARAMS" value="" />
       <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Python.DjangoServer" factoryName="Django server">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="crystalboard" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
       <method />
     </configuration>
     <configuration default="true" type="tests" factoryName="Doctests">
@@ -477,18 +442,18 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16969697" sideWeight="0.78327644" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1719697" sideWeight="0.78424656" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32764506" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21672355" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21575342" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -562,23 +527,14 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://C:/Python27/Lib/site-packages/django/db/models/fields/related.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1185" column="8" selection-start="55705" selection-end="55705" vertical-scroll-proportion="0.1927966" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/principal/admin.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="22" selection-start="762" selection-end="762" vertical-scroll-proportion="0.7619048">
-          <folding />
-        </state>
+        <state line="16" column="22" selection-start="762" selection-end="762" vertical-scroll-proportion="0.7619048" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/crystalboard/plantillas/asistencia.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/crystalboard/plantillas/base.html">
@@ -597,83 +553,87 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/crystalboard/plantillas/cursodash.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="62" selection-start="55" selection-end="114" vertical-scroll-proportion="-1.8712871">
-          <folding />
-        </state>
+        <state line="6" column="62" selection-start="55" selection-end="114" vertical-scroll-proportion="-1.8712871" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/crystalboard/plantillas/nuevo_comentario.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="14" selection-start="0" selection-end="1425" vertical-scroll-proportion="-11.413794">
+        <state line="36" column="14" selection-start="0" selection-end="1425" vertical-scroll-proportion="-11.413794" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crystalboard/plantillas/pruebas.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="81" selection-start="881" selection-end="881" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crystalboard/plantillas/nueva_pregunta.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="53" selection-start="252" selection-end="252" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/crystalboard/plantillas/dashboard.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="72" column="13" selection-start="3377" selection-end="3377" vertical-scroll-proportion="-8.275862">
+        <state line="72" column="13" selection-start="3377" selection-end="3377" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/crystalboard/plantillas/nueva_prueba.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="39" selection-start="0" selection-end="1423" vertical-scroll-proportion="-5.5172415">
+        <state line="8" column="39" selection-start="0" selection-end="1423" vertical-scroll-proportion="-0.65384614">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/principal/forms.py">
+    <entry file="file://$PROJECT_DIR$/crystalboard/plantillas/nueva_respuesta.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="83" column="29" selection-start="2289" selection-end="2289" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#16#50#0" expanded="true" />
-          </folding>
+        <state line="7" column="54" selection-start="253" selection-end="253" vertical-scroll-proportion="-4.576923">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/principal/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="567" column="45" selection-start="22508" selection-end="22508" vertical-scroll-proportion="0.0">
+        <state line="654" column="58" selection-start="26604" selection-end="26604" vertical-scroll-proportion="-149.0">
           <folding>
             <element signature="e#16#99#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/crystalboard/plantillas/nueva_pregunta.html">
+    <entry file="file://$PROJECT_DIR$/crystalboard/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="53" selection-start="252" selection-end="252" vertical-scroll-proportion="-4.827586">
+        <state line="73" column="111" selection-start="4467" selection-end="4467" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/principal/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="88" column="28" selection-start="2426" selection-end="2426" vertical-scroll-proportion="0.0">
+          <folding>
+            <marker date="1386750265153" expanded="true" signature="1914:1967" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/principal/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="237" column="29" selection-start="9424" selection-end="9424" vertical-scroll-proportion="0.0">
+        <state line="234" column="13" selection-start="9286" selection-end="9286" vertical-scroll-proportion="0.0">
           <folding>
             <marker date="1386739354308" expanded="true" signature="8717:8858" placeholder="..." />
+            <marker date="1386739354308" expanded="true" signature="9158:9366" placeholder="..." />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/crystalboard/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="68" column="11" selection-start="3720" selection-end="3777" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/crystalboard/plantillas/pruebas.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="81" selection-start="881" selection-end="881" vertical-scroll-proportion="-4.965517">
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/crystalboard/plantillas/preguntas.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="142" selection-start="257" selection-end="257" vertical-scroll-proportion="0.20460358">
+        <state line="29" column="146" selection-start="1760" selection-end="1760" vertical-scroll-proportion="0.605598">
           <folding />
         </state>
       </provider>

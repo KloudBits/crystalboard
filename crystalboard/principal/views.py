@@ -1,13 +1,13 @@
 #encoding:utf-8
 from django.shortcuts import render_to_response, render, redirect,get_object_or_404
-from principal.models import Pregunta_Prueba, Prueba, Instituto, Respuesta, Comentario, Foro, Clase, Infocurso, Asistencia, UserProfile, Lista, Comentario_Tarea, Curso, Aviso, Comentario_Aviso, Tarea, Entrega_Tarea
+from principal.models import Respuesta_Prueba, Pregunta_Prueba, Prueba, Instituto, Respuesta, Comentario, Foro, Clase, Infocurso, Asistencia, UserProfile, Lista, Comentario_Tarea, Curso, Aviso, Comentario_Aviso, Tarea, Entrega_Tarea
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from principal.forms import Pregunta_PruebaForm, PruebaForm, NuevoCursoFormulario, ClaseForm, ComentarioForm, RespuestaForm, ForoForm, ClaseEditarFormulario, InfocursoForm, EntregaForm, TareaForm, AvisoForm, ComentarioavisoForm#, TipoListaForm
+from principal.forms import Respuesta_PruebaForm, Pregunta_PruebaForm, PruebaForm, NuevoCursoFormulario, ClaseForm, ComentarioForm, RespuestaForm, ForoForm, ClaseEditarFormulario, InfocursoForm, EntregaForm, TareaForm, AvisoForm, ComentarioavisoForm#, TipoListaForm
 from django.db.models import Avg, Count
 from django.template.defaultfilters import slugify
 from django.core import serializers
@@ -597,3 +597,60 @@ def nueva_pregunta(request, cur, prueba):
     else:
         formulario = Pregunta_PruebaForm()
     return render(request, 'nueva_pregunta.html', {'formulario':formulario,"curso":curso, "prueba":pba})
+
+def editar_pregunta(request, cur, prueba, preg):
+    curso = get_object_or_404(Curso, pk=cur)
+    pba = get_object_or_404(Prueba, pk=prueba)
+    pregunta = get_object_or_404(Pregunta_Prueba, pk = preg)
+
+    if request.method == 'POST':
+        formulario = Pregunta_PruebaForm(request.POST, instance=pregunta)
+        if formulario.is_valid():
+            formulario.save()
+            messages.add_message(request, messages.SUCCESS, 'Se edito la pregunta correctamente')
+            return redirect('/' + cur + '/prueba/' + prueba + '/pregunta/' )
+    else:
+        formulario = Pregunta_PruebaForm(instance=pregunta)
+    return render(request, 'nueva_pregunta.html', {'formulario':formulario,"curso":curso, "prueba":pba})
+
+def borrar_pregunta(request, cur, prueba, preg):
+    pregunta = get_object_or_404(Pregunta_Prueba, pk=preg)
+    pregunta.delete()
+    return redirect('/' + cur + '/prueba/' + prueba + '/pregunta/' )
+
+def nueva_respuesta(request, cur, prueba, preg):
+    curso = get_object_or_404(Curso, pk=cur)
+    pba = get_object_or_404(Prueba, pk=prueba)
+    pregunta = get_object_or_404(Pregunta_Prueba, pk = preg)
+
+    if request.method == 'POST':
+        formulario = Respuesta_PruebaForm(request.POST)
+        if formulario.is_valid():
+            f = formulario.save(commit=False)
+            f.pregunta = pregunta
+            f.save()
+            messages.add_message(request, messages.SUCCESS, 'Registro de respuesta para pregunta exitoso.')
+            return redirect('/' + cur + '/prueba/' + prueba + '/pregunta/' )
+    else:
+        formulario = Respuesta_PruebaForm()
+    return render(request, 'nueva_respuesta.html', {'formulario':formulario,"curso":curso, "prueba":pba})
+
+
+def editar_respuesta(request, cur, prueba, preg, res):
+    curso = get_object_or_404(Curso, pk=cur)
+    pba = get_object_or_404(Prueba, pk=prueba)
+    pregunta = get_object_or_404(Pregunta_Prueba, pk = preg)
+    respuesta = get_object_or_404(Respuesta_Prueba, pk = res)
+    if request.method == 'POST':
+        formulario = Respuesta_PruebaForm(request.POST, instance=respuesta)
+        if formulario.is_valid():
+            formulario.save()
+            messages.add_message(request, messages.SUCCESS, 'Se edito la respuesta correctamente')
+            return redirect('/' + cur + '/prueba/' + prueba + '/pregunta/' )
+    else:
+        formulario = Respuesta_PruebaForm(instance=respuesta)
+    return render(request, 'nueva_respuesta.html', {'formulario':formulario,"curso":curso, "prueba":pba})
+
+def borrar_respuesta(request, cur, prueba, preg, res):
+    get_object_or_404(Respuesta_Prueba, pk = res).delete()
+    return redirect('/' + cur + '/prueba/' + prueba + '/pregunta/' )
