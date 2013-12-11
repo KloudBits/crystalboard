@@ -65,4 +65,6 @@ urlpatterns = patterns('',
 
     url(r'^(?P<cur>[0-9]+)/prueba/$', 'principal.views.pruebas'),
     url(r'^(?P<cur>[0-9]+)/prueba/nueva/$', 'principal.views.nueva_prueba'),
+    url(r'^(?P<cur>[0-9]+)/prueba/(?P<prueba>[0-9]+)/pregunta/$', 'principal.views.preguntas'),
+    url(r'^(?P<cur>[0-9]+)/prueba/(?P<prueba>[0-9]+)/pregunta/nueva/$', 'principal.views.nueva_pregunta')
 )

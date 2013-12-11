@@ -219,6 +219,13 @@ class Pregunta_Prueba(models.Model):
     nombre = models.CharField(max_length=100)
     prueba = models.ForeignKey(Prueba) ## La pregunta le pertenece a la prueba x
 
+    def obtener_respuestas(self):
+        return Respuesta_Prueba.objects.filter(pregunta=self.pk)
+
+    def __unicode__(self):
+        return self.nombre
+
+
 ##########################################
 ## Clase Respuesta
 ##########################################
@@ -226,6 +233,9 @@ class Respuesta_Prueba(models.Model):
     respuesta = models.CharField(max_length=100)
     correcta = models.BooleanField() ## la respuesta es correcta
     pregunta = models.ForeignKey(Pregunta_Prueba) # La respuesta le pertenece a la pregunta x
+
+    def __unicode__(self):
+        return self.respuesta
 
 ##########################################
 ## Clase Aplicar
