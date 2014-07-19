@@ -37,7 +37,6 @@ def ingreso_usuario( request ):
 			return HttpResponseRedirect( '/' )
 	return render( request, 'login.html', { 'formulario' : formulario } )
 
-
 def egreso_usuario( request ):
 	logout( request )
 	return HttpResponseRedirect( '/login/' )
@@ -64,12 +63,14 @@ def perfil( request ):
 		raise Http404
 	else:
 		perfil = UserProfile.objects.get( user = request.user )
-		if perfil.tipo == 1: # Tipo de perfil Usuario ( Admin ) 			
-			template = "usuarios/perfil.html"
-		elif perfil.tipo == 2: # Tipo de perfil miembro ( Consumidor )			
-			template = "miembros/perfil.html"
-		return render( request, template, { 'perfil' : perfil } )
-
+		if request.method == "POST":
+			formulario = editarPerfilFormulario( request.POST, instance = perfil )
+			if formulario.is_valid( ):
+				formulario.save( )
+				messages.add_message( request, messages.SUCCESS, "Se editó correctamente")
+		else:
+			formulario = editarPerfilFormulario( instance = perfil )
+		return render( request, "usuarios/perfil.html", { 'perfil' : perfil, 'formulario' : formulario } )
 #########################################################################
 
 ########################    Cursos      #################################
@@ -82,10 +83,9 @@ def cursos( request ):
 			cursos = Curso.objects.filter( usuario = request.user )
 			template = "usuarios/cursos.html"
 		elif perfil.tipo == 2: # Tipo de perfil miembro ( Consumidor )
-			cursos = Curso.objects.filter(  ) ######## FALTA
+			cursos = Curso.objects.filter( miembros = request.user )
 			template = "miembros/cursos.html"
 		return render( request, template, {  } )
-
 #########################################################################
 
 ###########################    Curso    #################################
@@ -100,7 +100,6 @@ def curso( request, curso ):
 		elif perfil.tipo == 2: # Tipo de perfil miembro ( Consumidor )
 			template = "miembros/curso.html"
 		return render( request, template, { "clases" : clases } )
-
 ################ CRUD ##################
 def nuevoCurso( request ):
 	if not request.user.is_authenticated( ):
@@ -154,8 +153,7 @@ def clase( request, curso, clase ):
 		elif perfil.tipo == 2: # Tipo de perfil miembro ( Consumidor )
 			template = "miembros/clase.html"
 		return render( request, template, { "tareas" : tareas, "recursos" : recursos } )
-
-########## CRUD ############
+############### CRUD ###################
 def nuevaClase( request ):
 	if not request.user.is_authenticated( ):
 		raise Http404
@@ -194,6 +192,3 @@ def editarClase( request, clase ):
 				formulario = nuevaClaseFormulario( instance = curso )
 			return render( request, 'usuarios/nuevaClase.html', { "formulario" : formulario } )
 #########################################################################
-
-
-
