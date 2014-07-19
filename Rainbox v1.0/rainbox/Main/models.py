@@ -37,20 +37,33 @@ class Capitulo( models.Model ):
 #################### CLASE #####################
 class Clase( models.Model ):
     capitulo = models.ForeignKey( Capitulo ) # ID del capitulo al que pertenece la clase
-    titulo = models.CharField( max_length = 30 ) # Título del curso
+    titulo = models.CharField( max_length = 30 ) # Título de la clase
     resumen = models.TextField( blank = True ) # Información del curso
-    stream = models.TextField( max_length = 300, blank = True ) # Embed de ustream, livestream o hangout
-    slideshare = models.TextField( max_length = 300, blank = True ) # Embed de slideshare
-    recursos = models.TextField( blank = True ) # Texto y enlaces de dropbox (material)
-
+    
     def __unicode__( self ):
         return self.titulo
+################################################
+
+################# Recurso ######################
+class Recurso( models.Model ):
+    # Tipo de Perfiles existentes
+    TIPO_CHOICES = (
+        ( 1, 'Slideshare' ),
+        ( 2, 'Dropbox' ),
+        ( 3, 'Stream' ),
+        ( 2, 'Youtube' ),
+    )
+    clase = models.ForeignKey( Clase ) # ID de la clase a la que pertenece la tarea
+    titulo = models.CharField( max_length = 60 ) # Titulo del recurso
+    url = models.URLField( ) # URL de ubicación web
+    descripcion = models.TextField( ) # Resumen del contenido del recurso
+    tipo = models.IntegerField( default = 2, choices = TIPO_CHOICES ) # Tipo de recurso que se va agregar
 ################################################
 
 ################### AVISO ######################
 class Aviso( models.Model ):
     curso = models.ForeignKey( Curso ) # ID del Curso al que pertenece el Aviso
-    titulo = models
+    titulo = models.CharField( max_length = 30 ) # Titulo del aviso
     texto = models.TextField( ) # Información del Aviso
 
     def __unicode__( self ):
@@ -69,7 +82,7 @@ class Aviso_Comentario( models.Model ):
 
 ################# TAREA ########################
 class Tarea( models.Model ):
-    clase = models.ForeignKey( Clase ) # ID del capitulo al que pertenece la tarea
+    clase = models.ForeignKey( Clase ) # ID de la clase a la que pertenece la tarea
     titulo = models.CharField( max_length = 30 ) # Título de la Tarea
     descripcion = models.TextField( blank = True, null = True ) # Texto informativo sobre la tarea
     fecha_registro = models.DateField( auto_now = True, auto_now_add = True ) # Fecha en la que se registo la fecha
@@ -100,7 +113,6 @@ class UserProfile( models.Model ):
         ( 1, 'Usuario' ),
         ( 2, 'Miembro' ),
     )
-
     user = models.OneToOneField( User ) # ID del usuario de Django
     web = models.URLField( blank = True ) # Página Web del usuario
     twitter = models.CharField( max_length = 30, blank = True ) # Cuenta de twitter
