@@ -14,7 +14,11 @@ from django.template.defaultfilters import slugify
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from Main.models import UserProfile, Curso, Tarea, Clase, Recurso
+<<<<<<< HEAD
 from Main.forms import nuevoCursoFormulario
+=======
+from Main.forms import nuevoCurso, nuevaClaseFormulario
+>>>>>>> FETCH_HEAD
 
 ########################## LOGEO #######################################
 def ingreso_usuario( request ):
@@ -36,7 +40,6 @@ def ingreso_usuario( request ):
 		else:
 			return HttpResponseRedirect( '/' )
 	return render( request, 'login.html', { 'formulario' : formulario } )
-
 
 def egreso_usuario( request ):
 	logout( request )
@@ -64,12 +67,14 @@ def perfil( request ):
 		raise Http404
 	else:
 		perfil = UserProfile.objects.get( user = request.user )
-		if perfil.tipo == 1: # Tipo de perfil Usuario ( Admin ) 			
-			template = "usuarios/perfil.html"
-		elif perfil.tipo == 2: # Tipo de perfil miembro ( Consumidor )			
-			template = "miembros/perfil.html"
-		return render( request, template, { 'perfil' : perfil } )
-
+		if request.method == "POST":
+			formulario = editarPerfilFormulario( request.POST, instance = perfil )
+			if formulario.is_valid( ):
+				formulario.save( )
+				messages.add_message( request, messages.SUCCESS, "Se editó correctamente")
+		else:
+			formulario = editarPerfilFormulario( instance = perfil )
+		return render( request, "usuarios/perfil.html", { 'perfil' : perfil, 'formulario' : formulario } )
 #########################################################################
 
 ########################    Cursos      #################################
@@ -82,11 +87,9 @@ def cursos( request ):
 			cursos = Curso.objects.filter( usuario = request.user )
 			template = "usuarios/cursos.html"
 		elif perfil.tipo == 2: # Tipo de perfil miembro ( Consumidor )
-			cursos = Curso.objects.filter(  ) ######## FALTA
+			cursos = Curso.objects.filter( miembros = request.user )
 			template = "miembros/cursos.html"
 		return render( request, template, {  } )
-
-
 #########################################################################
 
 ###########################    Curso    #################################
@@ -101,7 +104,6 @@ def curso( request, curso ):
 		elif perfil.tipo == 2: # Tipo de perfil miembro ( Consumidor )
 			template = "miembros/curso.html"
 		return render( request, template, { "clases" : clases } )
-
 ################ CRUD ##################
 def nuevoCurso( request ):
 	if not request.user.is_authenticated( ):
@@ -120,11 +122,31 @@ def nuevoCurso( request ):
 					messages.add_message( request, messages.SUCCESS, 'Registro de curso exitoso' )
 					return HttpResponseRedirect( '/' )
 			else:
+<<<<<<< HEAD
 				formulario = nuevoCursoFormulario( )
 	return render( request, 'usuarios/nuevoCurso.html', { "formulario" : formulario } )
+=======
+				formulario = nuevoCurso( )
+			return render( request, 'usuarios/nuevoCurso.html', { "formulario" : formulario } )
+>>>>>>> FETCH_HEAD
 
-def editarCurso( request ):
-	return render( request, '', {  } )	
+def editarCurso( request, curso ):
+	if not request.user.is_authenticated( ):
+		raise Http404
+	else: 
+		perfil = UserProfile.objects.get( user = request.user )
+		if perfil.tipo != 1:
+			raise Http404
+		else:
+			curso = get_object_or_404( Curso, pk = curso )
+			if request.method == "POST":
+				formulario = nuevoCursoFormulario( request.POST, instance = curso )
+				if formulario.is_valid( ):
+					formulario.save( )
+					messages.add_message( request, messages.SUCCESS, "Se editó correctamente" )
+			else:
+				formulario = nuevoCursoFormulario( instance = curso )
+			return render( request, 'usuarios/nuevoCurso.html', { "formulario" : formulario } )	
 #########################################################################
 
 ###############################  Clase ##################################
@@ -141,8 +163,7 @@ def clase( request, curso, clase ):
 		elif perfil.tipo == 2: # Tipo de perfil miembro ( Consumidor )
 			template = "miembros/clase.html"
 		return render( request, template, { "tareas" : tareas, "recursos" : recursos } )
-
-########## CRUD ############
+############### CRUD ###################
 def nuevaClase( request ):
 	if not request.user.is_authenticated( ):
 		raise Http404
@@ -152,17 +173,32 @@ def nuevaClase( request ):
 			raise Http404
 		else:
 			if request.method == POST:
-				formulario = nuevaClase( request.POST )
+				formulario = nuevaClaseFormulario( request.POST )
 				if formulario.is_valid( ) :
 					nueva_clase = formulario.save( commit = False )
 					nueva_clase.save( )
 					messages.add_message( request, messages.SUCCESS, "Registro de Clase Exitoso")
-					return HttpResponseRedirect('/')
+					return HttpResponseRedirect( '/' )
+			else: 
+				formulario = nuevaClase( request.POST )
+			return  render( request, "usuarios/nuevaClase.html", { "formulario" : formulario } )
 
-
-
-
+def editarClase( request, clase ):
+	if not request.user.
+	is_authenticated( ):
+		raise Http404
+	else:
+		perfil = UserProfile.objects.get( user = request.user )
+		if perfil.tipo != 1:
+			raise Http404
+		else:
+			curso = get_object_or_404( Curso, pk = curso )
+			if request.method == 'POST':
+				formulario = nuevaClaseFormulario( request.POST, instance = curso )
+				if formulario.is_valid( ):
+					formulario.save()
+					messages.add_message( request, message.SUCCESS, "Se editó correctamente" )
+			else: 
+				formulario = nuevaClaseFormulario( instance = curso )
+			return render( request, 'usuarios/nuevaClase.html', { "formulario" : formulario } )
 #########################################################################
-
-
-
