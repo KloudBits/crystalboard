@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<div class="container">
+
+<div class="row">
+<h1 class="span12">Panel de administración</h1>
+	<div class="span12">
+        <ul class="breadcrumb">
+          <li><a href="#">Inicio</a> <span class="divider">/</span></li>
+          <li class="active">Panel de administración</li>
+        </ul>
+    </div>
+<!-- =========================Start Col left section ============================= -->
+<aside class="span4 ">
+	<div class="col-left">
+    	<h3>Menú</h3>
+            <ul class="submenu-col">
+                <li><a href="/" id="active">Inicio</a></li>
+                <li><a href="/cursos/">Mis cursos</a></li>
+                <li><a href="/info/">Mi información</a></li>
+            </ul>
+            
+            <hr>
+            
+            <h5>Oportunidades</h5>
+            <p>En esta sección mostrar un mensaje al usuario sobre oportunidades que tiene dentro de la plataforma o nuevos desarrollos que estamos creando.</p>
+            <p><a href="#" class=" button_red_small">Ver oportunidades</a></p>
+            
+    </div>
+    <p><img src="{{ STATIC_URL }}img/banner.jpg" alt="Banner" class="img-rounded"></p>
+</aside>
+ 
+<section class="span8  ">
+	<div class="col-right">
+    	<div class="main-img">
+            <img src="{{ STATIC_URL }}img/pic-2.jpg" alt="">
+            <p class="lead">Desde este panel podrás administrar cada uno de tus cursos. </p>
+        </div>  
+              
+         
+          
+          
+          
+          
+            
+            
+    </div><!-- end col right-->
+	
+</section>
+
+  </div><!-- end row-->
+  </div> <!-- end container-->
+{% endblock %}
