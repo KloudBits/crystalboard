@@ -6,7 +6,6 @@ from models import Curso, Clase, Capitulo, Recurso, Aviso, Aviso_Comentario, Tar
 from django.contrib.auth.forms import UserCreationForm
 
 class nuevoCurso(ModelForm):
-	colonia = forms.ModelChoiceField(label="Colonia", queryset=Colonia.objects.all(),widget=forms.Select(attrs={'class':'formDropdown'}), empty_label='Cualquiera')
 	
 	class Meta:
 		model = Curso
