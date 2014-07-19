@@ -51,10 +51,10 @@ def home( request ):
 		perfil = UserProfile.objects.get( user = request.user )
 		if perfil.tipo == 1 # Tipo de perfil Usuario ( Admin ) 
 			cursos = Curso.objects.filter( usuario = request.user )
-			template = ""
+			template = "/usuarios/home.html"
 		elif perfil.tipo == 2 # Tipo de perfil miembro ( Consumidor )
 			cursos = Curso.objects.filter( miembros = request.user )
-			template = ""
+			template = "/miembros/home.html"
 		return render( request, template, { 'cursos' : cursos } )
 #########################################################################
 
@@ -64,7 +64,11 @@ def perfil( request ):
 		raise Http404
 	else:
 		perfil = UserProfile.objects.get( user = request.user )
-		return render( request, "perfil.html", { 'perfil' : perfil } )
+		if perfil.tipo == 1 # Tipo de perfil Usuario ( Admin ) 			
+			template = "/usuarios/perfil.html"
+		elif perfil.tipo == 2 # Tipo de perfil miembro ( Consumidor )			
+			template = "/miembros/perfil.html"
+		return render( request, template, { 'perfil' : perfil } )
 
 #########################################################################
 
@@ -76,9 +80,9 @@ def cursos( request ):
 		perfil = UserProfile.objects.get( user = request.user )		
 		if perfil.tipo == 1: # Tipo de perfil usuario ( Admin )
 			cursos = Curso.objects.filter( usuario = request.user )
-			template = ""
+			template = "/usuarios/cursos.html"
 		elif perfil.tipo == 2: # Tipo de perfil miembro ( Consumidor )
-			template = ""
+			template = "/miembros/cursos.html"
 		return render( request, template, {  } )
 #########################################################################
 
@@ -90,9 +94,9 @@ def curso( request, curso ):
 		clases = get_object_or_404( Curso, pk = curso )
 		perfil = UserProfile.objects.get( user = request.user )
 		if perfil.tipo == 1: # Tipo de perfil de usuario ( Admin )
-			template = ""
+			template = "/usuarios/curso.html"
 		elif perfil.tipo == 2: # Tipo de perfil miembro ( Consumidor )
-			template = ""
+			template = "/miembros/curso.html"
 		return render( request, template, { "clases" : clases } )
 #########################################################################
 
@@ -106,9 +110,9 @@ def clase( request, curso, clase ):
 		tareas = Tarea.objects.filter( clase = clase )
 		recursos = Recurso.objects.filter( clase = clase )
 		if perfil.tipo == 1: # Tipo de perfil usuario ( Admin )
-			template = ""
+			template = "/usuarios/clase.html"
 		elif perfil.tipo == 2: # Tipo de perfil miembro ( Consumidor )
-			template = ""
+			template = "/miembros/clase.html"
 		return render( request, template, { "tareas" : tareas, "recursos" : recursos } )
 #########################################################################
 
