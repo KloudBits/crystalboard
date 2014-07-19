@@ -14,11 +14,7 @@ from django.template.defaultfilters import slugify
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from Main.models import UserProfile, Curso, Tarea, Clase, Recurso
-<<<<<<< HEAD
-from Main.forms import nuevoCursoFormulario
-=======
-from Main.forms import nuevoCurso, nuevaClaseFormulario
->>>>>>> FETCH_HEAD
+from Main.forms import nuevoCursoFormulario, nuevaClaseFormulario
 
 ########################## LOGEO #######################################
 def ingreso_usuario( request ):
@@ -122,13 +118,9 @@ def nuevoCurso( request ):
 					messages.add_message( request, messages.SUCCESS, 'Registro de curso exitoso' )
 					return HttpResponseRedirect( '/' )
 			else:
-<<<<<<< HEAD
 				formulario = nuevoCursoFormulario( )
-	return render( request, 'usuarios/nuevoCurso.html', { "formulario" : formulario } )
-=======
-				formulario = nuevoCurso( )
 			return render( request, 'usuarios/nuevoCurso.html', { "formulario" : formulario } )
->>>>>>> FETCH_HEAD
+
 
 def editarCurso( request, curso ):
 	if not request.user.is_authenticated( ):
