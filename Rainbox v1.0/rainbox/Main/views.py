@@ -49,10 +49,10 @@ def home( request ):
 		raise Http404
 	else: 
 		perfil = UserProfile.objects.get( user = request.user )
-		if perfil.tipo == 1 # Tipo de perfil Usuario ( Admin ) 
+		if perfil.tipo == 1: # Tipo de perfil Usuario ( Admin ) 
 			cursos = Curso.objects.filter( usuario = request.user )
 			template = "/usuarios/home.html"
-		elif perfil.tipo == 2 # Tipo de perfil miembro ( Consumidor )
+		elif perfil.tipo == 2: # Tipo de perfil miembro ( Consumidor )
 			cursos = Curso.objects.filter( miembros = request.user )
 			template = "/miembros/home.html"
 		return render( request, template, { 'cursos' : cursos } )
@@ -64,9 +64,9 @@ def perfil( request ):
 		raise Http404
 	else:
 		perfil = UserProfile.objects.get( user = request.user )
-		if perfil.tipo == 1 # Tipo de perfil Usuario ( Admin ) 			
+		if perfil.tipo == 1: # Tipo de perfil Usuario ( Admin ) 			
 			template = "/usuarios/perfil.html"
-		elif perfil.tipo == 2 # Tipo de perfil miembro ( Consumidor )			
+		elif perfil.tipo == 2: # Tipo de perfil miembro ( Consumidor )			
 			template = "/miembros/perfil.html"
 		return render( request, template, { 'perfil' : perfil } )
 
@@ -82,13 +82,16 @@ def cursos( request ):
 			cursos = Curso.objects.filter( usuario = request.user )
 			template = "/usuarios/cursos.html"
 		elif perfil.tipo == 2: # Tipo de perfil miembro ( Consumidor )
+			cursos = Curso.objects.filter(  )
 			template = "/miembros/cursos.html"
 		return render( request, template, {  } )
+
+
 #########################################################################
 
 ###########################    Curso    #################################
 def curso( request, curso ):
-	if not request.user.is_authenticated( ) 
+	if not request.user.is_authenticated( ):
 		raise Http404
 	else:
 		clases = get_object_or_404( Curso, pk = curso )
@@ -98,11 +101,32 @@ def curso( request, curso ):
 		elif perfil.tipo == 2: # Tipo de perfil miembro ( Consumidor )
 			template = "/miembros/curso.html"
 		return render( request, template, { "clases" : clases } )
+
+################ CRUD ##################
+def nuevoCurso( request ):
+	if not request.user.is_authenticated( ):
+		raise Http404
+	else: 
+		perfil = UserProfile.objects.get( user = request.user )
+		if perfil.tipo != 1:
+			raise Http404
+		else:
+			if request.method == "POST":
+				formulario = nuevoCurso( request.POST, request,FILES )
+				if formulario.is_valid( ) and formulario.is_multipart( ):
+					nuevo_curso = formulario.save(commit = survive )
+
+
+
+	return render( request, ' ', {  } )
+
+def editarCurso( request ):
+	return render( request, '', {  } )	
 #########################################################################
 
 ###############################  Clase ##################################
 def clase( request, curso, clase ):
-	if not request.user.is_authenticated( )
+	if not request.user.is_authenticated( ):
 		raise Http404
 	else:
 		clase = get_object_or_404(Clase, pk = clase)
@@ -115,4 +139,6 @@ def clase( request, curso, clase ):
 			template = "/miembros/clase.html"
 		return render( request, template, { "tareas" : tareas, "recursos" : recursos } )
 #########################################################################
+
+
 
