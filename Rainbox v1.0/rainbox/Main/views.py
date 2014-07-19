@@ -85,7 +85,7 @@ def cursos( request ):
 		elif perfil.tipo == 2: # Tipo de perfil miembro ( Consumidor )
 			cursos = Curso.objects.filter( miembros = request.user )
 			template = "miembros/cursos.html"
-		return render( request, template, {  } )
+		return render( request, template, { "cursos" : cursos } )
 #########################################################################
 
 ###########################    Curso    #################################
