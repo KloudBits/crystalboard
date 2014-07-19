@@ -74,7 +74,7 @@ def perfil( request ):
 
 ########################    Cursos      #################################
 def cursos( request ):
-	if not request.user.is_authenticated( )
+	if not request.user.is_authenticated( ):
 		raise Http404
 	else:
 		perfil = UserProfile.objects.get( user = request.user )		
@@ -114,8 +114,7 @@ def nuevoCurso( request ):
 			if request.method == "POST":
 				formulario = nuevoCurso( request.POST, request,FILES )
 				if formulario.is_valid( ) and formulario.is_multipart( ):
-					nuevo_curso = formulario.save(commit = survive )
-
+					nuevo_curso = formulario.save(commit = False )
 
 
 	return render( request, ' ', {  } )
