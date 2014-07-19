@@ -29,8 +29,6 @@ class Curso( models.Model ):
     def save(self, *args, **kwargs):
         if self.nombre:
             self.slug = slugify(self.nombre)
-
-
         super(Curso, self).save(*args, **kwargs)
 ################################################   
 
@@ -49,9 +47,14 @@ class Clase( models.Model ):
     capitulo = models.ForeignKey( Capitulo ) # ID del capitulo al que pertenece la clase
     titulo = models.CharField( max_length = 30 ) # Título de la clase
     resumen = models.TextField( blank = True ) # Información del curso
+    slug = models.SlugField( )
     
     def __unicode__( self ):
         return self.titulo
+
+    def save( self, *args, **kwargs):
+        if self.titulo:
+            self.slug = slugify(self.titulo)
 ################################################
 
 ################# Recurso ######################
@@ -68,6 +71,7 @@ class Recurso( models.Model ):
     url = models.URLField( ) # URL de ubicación web
     descripcion = models.TextField( ) # Resumen del contenido del recurso
     tipo = models.IntegerField( default = 2, choices = TIPO_CHOICES ) # Tipo de recurso que se va agregar
+    
 ################################################
 
 ################### AVISO ######################
