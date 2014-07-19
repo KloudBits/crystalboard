@@ -26,7 +26,7 @@ def ingreso_usuario( request ):
 			acceso = authenticate( username = usuario, password = clave )
 			if acceso is not None:
 				login( request, acceso )
-				return HttpResponseRedirect( '/home/' )
+				return HttpResponseRedirect( '/' )
 			else:
 				messages.add_message( request, messages.ERROR, 'El usuario o contraseña son incorrectos' )
 				return HttpResponseRedirect( '/login/' )
@@ -34,7 +34,7 @@ def ingreso_usuario( request ):
 		if not request.user.is_authenticated( ):
 			formulario = AuthenticationForm( )
 		else:
-			return HttpResponseRedirect( '/home/' )
+			return HttpResponseRedirect( '/' )
 	return render( request, 'login.html', { 'formulario' : formulario } )
 
 
@@ -82,7 +82,7 @@ def cursos( request ):
 			cursos = Curso.objects.filter( usuario = request.user )
 			template = "usuarios/cursos.html"
 		elif perfil.tipo == 2: # Tipo de perfil miembro ( Consumidor )
-			cursos = Curso.objects.filter(  )
+			cursos = Curso.objects.filter(  ) ######## FALTA
 			template = "miembros/cursos.html"
 		return render( request, template, {  } )
 
@@ -94,7 +94,7 @@ def curso( request, curso ):
 	if not request.user.is_authenticated( ):
 		raise Http404
 	else:
-		clases = get_object_or_404( Curso, pk = curso )
+		clases = Clase.objects.filter( Curso, pk = curso )
 		perfil = UserProfile.objects.get( user = request.user )
 		if perfil.tipo == 1: # Tipo de perfil de usuario ( Admin )
 			template = "usuarios/curso.html"
@@ -112,7 +112,7 @@ def nuevoCurso( request ):
 			raise Http404
 		else:
 			if request.method == "POST":
-				formulario = nuevoCurso( request.POST, request,FILES )
+				formulario = nuevoCurso( request.POST, request.FILES )
 				if formulario.is_valid( ) and formulario.is_multipart( ):
 					nuevo_curso = formulario.save( commit = False )
 					nuevo_curso.save( )
@@ -132,7 +132,7 @@ def clase( request, curso, clase ):
 		raise Http404
 	else:
 		clase = get_object_or_404(Clase, pk = clase)
-		perfil = UserProfile.objects.get( user = request.user )
+		perfi l = UserProfile.objects.get( user = request.user )
 		tareas = Tarea.objects.filter( clase = clase )
 		recursos = Recurso.objects.filter( clase = clase )
 		if perfil.tipo == 1: # Tipo de perfil usuario ( Admin )
@@ -147,6 +147,19 @@ def nuevaClase( request ):
 		raise Http404
 	else:
 		perfil = UserProfile.objects.get( user = request.user )
+		if perfil.tipo != 1:
+			raise Http404
+		else:
+			if request.method == POST:
+				formulario = nuevaClase( request.POST )
+				if formulario.is_valid( ) :
+					nueva_clase = formulario.save( commit = False )
+					nueva_clase.save( )
+					messages.add_message( request, messages.SUCCESS, "Registro de Clase Exitoso")
+					return HttpResponseRedirect('/')
+
+
+
 
 #########################################################################
 
