@@ -86,7 +86,6 @@ def cursos( request ):
 			template = "miembros/cursos.html"
 		return render( request, template, {  } )
 
-
 #########################################################################
 
 ###########################    Curso    #################################
@@ -120,10 +119,25 @@ def nuevoCurso( request ):
 					return HttpResponseRedirect( '/' )
 			else:
 				formulario = nuevoCurso( )
-	return render( request, 'usuarios/nuevoCurso.html', { "formulario" : formulario } )
+			return render( request, 'usuarios/nuevoCurso.html', { "formulario" : formulario } )
 
-def editarCurso( request ):
-	return render( request, '', {  } )	
+def editarCurso( request, curso ):
+	if not request.user.is_authenticated( ):
+		raise Http404
+	else: 
+		perfil = UserProfile.objects.get( user = request.user )
+		if perfil.tipo != 1:
+			raise Http404
+		else:
+			curso = get_object_or_404( Curso, pk = curso )
+			if request.method == "POST":
+				formulario = nuevoCursoFormulario( request.POST, instance = curso )
+				if formulario.is_valid( ):
+					formulario.save( )
+					messages.add_message( request, messages.SUCCESS, "Se editó correctamente" )
+			else:
+				formulario = nuevoCursoFormulario( instance = curso )
+			return render( request, 'usuarios/nuevoCurso.html', { "formulario" : formulario } )	
 #########################################################################
 
 ###############################  Clase ##################################
@@ -132,7 +146,7 @@ def clase( request, curso, clase ):
 		raise Http404
 	else:
 		clase = get_object_or_404(Clase, pk = clase)
-		perfi l = UserProfile.objects.get( user = request.user )
+		perfil = UserProfile.objects.get( user = request.user )
 		tareas = Tarea.objects.filter( clase = clase )
 		recursos = Recurso.objects.filter( clase = clase )
 		if perfil.tipo == 1: # Tipo de perfil usuario ( Admin )
@@ -160,6 +174,25 @@ def nuevaClase( request ):
 			else: 
 				formulario = nuevaClase( request.POST )
 			return  render( request, "usuarios/nuevaClase.html", { "formulario" : formulario } )
+
+def editarClase( request, clase ):
+	if not request.user.
+	is_authenticated( ):
+		raise Http404
+	else:
+		perfil = UserProfile.objects.get( user = request.user )
+		if perfil.tipo != 1:
+			raise Http404
+		else:
+			curso = get_object_or_404( Curso, pk = curso )
+			if request.method == 'POST':
+				formulario = nuevaClaseFormulario( request.POST, instance = curso )
+				if formulario.is_valid( ):
+					formulario.save()
+					messages.add_message( request, message.SUCCESS, "Se editó correctamente" )
+			else: 
+				formulario = nuevaClaseFormulario( instance = curso )
+			return render( request, 'usuarios/nuevaClase.html', { "formulario" : formulario } )
 #########################################################################
 
 
