@@ -15,7 +15,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from Main.models import UserProfile, Curso, Tarea, Clase, Recurso
 from Main.forms import nuevoCursoFormulario, nuevaClaseFormulario
+<<<<<<< HEAD
 
+=======
+>>>>>>> FETCH_HEAD
 
 ########################## LOGEO #######################################
 def ingreso_usuario( request ):
@@ -119,9 +122,14 @@ def nuevoCurso( request ):
 					messages.add_message( request, messages.SUCCESS, 'Registro de curso exitoso' )
 					return HttpResponseRedirect( '/' )
 			else:
+<<<<<<< HEAD
 
 				formulario = nuevoCursoFormulario( )
 	return render( request, 'usuarios/nuevoCurso.html', { "formulario" : formulario } )
+=======
+				formulario = nuevoCursoFormulario( )
+			return render( request, 'usuarios/nuevoCurso.html', { "formulario" : formulario } )
+>>>>>>> FETCH_HEAD
 
 
 def editarCurso( request, curso ):
