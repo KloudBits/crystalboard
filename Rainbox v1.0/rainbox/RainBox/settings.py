@@ -48,9 +48,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'CrystalBoard.urls'
+ROOT_URLCONF = 'RainBox.urls'
 
-WSGI_APPLICATION = 'CrystalBoard.wsgi.application'
+WSGI_APPLICATION = 'RainBox.wsgi.application'
 
 
 # Database
