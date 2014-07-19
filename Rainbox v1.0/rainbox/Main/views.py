@@ -15,10 +15,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from Main.models import UserProfile, Curso, Tarea, Clase, Recurso
 from Main.forms import nuevoCursoFormulario, nuevaClaseFormulario
-<<<<<<< HEAD
-
-=======
->>>>>>> FETCH_HEAD
 
 ########################## LOGEO #######################################
 def ingreso_usuario( request ):
@@ -122,14 +118,10 @@ def nuevoCurso( request ):
 					messages.add_message( request, messages.SUCCESS, 'Registro de curso exitoso' )
 					return HttpResponseRedirect( '/' )
 			else:
-<<<<<<< HEAD
 
 				formulario = nuevoCursoFormulario( )
 	return render( request, 'usuarios/nuevoCurso.html', { "formulario" : formulario } )
-=======
-				formulario = nuevoCursoFormulario( )
-			return render( request, 'usuarios/nuevoCurso.html', { "formulario" : formulario } )
->>>>>>> FETCH_HEAD
+
 
 
 def editarCurso( request, curso ):
@@ -166,7 +158,7 @@ def clase( request, curso, clase ):
 			template = "miembros/clase.html"
 		return render( request, template, { "tareas" : tareas, "recursos" : recursos } )
 ############### CRUD ###################
-def nuevaClase( request ):
+def nuevaClase( request, curso ):
 	if not request.user.is_authenticated( ):
 		raise Http404
 	else:
@@ -174,7 +166,7 @@ def nuevaClase( request ):
 		if perfil.tipo != 1:
 			raise Http404
 		else:
-			if request.method == POST:
+			if request.method == "POST":
 				formulario = nuevaClaseFormulario( request.POST )
 				if formulario.is_valid( ) :
 					nueva_clase = formulario.save( commit = False )
@@ -182,7 +174,7 @@ def nuevaClase( request ):
 					messages.add_message( request, messages.SUCCESS, "Registro de Clase Exitoso")
 					return HttpResponseRedirect( '/' )
 			else: 
-				formulario = nuevaClase( request.POST )
+				formulario = nuevaClaseFormulario( request.POST )
 			return  render( request, "usuarios/nuevaClase.html", { "formulario" : formulario } )
 
 def editarClase( request, clase ):
