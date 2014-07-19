@@ -43,8 +43,7 @@ def egreso_usuario( request ):
 	return HttpResponseRedirect( '/login/' )
 #########################################################################
 
-
-##################### Panel Principal ###################################
+############################## Home  ####################################
 def home( request ):
 	if not request.user.is_authenticated( ):
 		raise Http404
