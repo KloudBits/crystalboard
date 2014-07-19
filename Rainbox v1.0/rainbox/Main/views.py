@@ -113,10 +113,13 @@ def nuevoCurso( request ):
 			if request.method == "POST":
 				formulario = nuevoCurso( request.POST, request,FILES )
 				if formulario.is_valid( ) and formulario.is_multipart( ):
-					nuevo_curso = formulario.save(commit = False )
-
-
-	return render( request, ' ', {  } )
+					nuevo_curso = formulario.save( commit = False )
+					nuevo_curso.save( )
+					messages.add_message( request, messages.SUCCESS, 'Registro de curso exitoso' )
+                	return HttpResponseRedirect( '/home/' )
+            else:
+            	formulario = nuevoCurso( )
+	return render( request, '/usuarios/nuevoCurso.html', { "formulario" : formulario } )
 
 def editarCurso( request ):
 	return render( request, '', {  } )	
