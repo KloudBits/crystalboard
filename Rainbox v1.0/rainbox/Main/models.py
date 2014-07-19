@@ -7,6 +7,8 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.template.defaultfilters import slugify
+
 
 import datetime
 
@@ -14,6 +16,7 @@ import datetime
 ################## CURSO ########################
 class Curso( models.Model ):
     nombre = models.CharField( max_length = 200 ) # Variable que almacena el nombre del curso
+    slug = models.SlugField()
     resumen = models.CharField( max_length = 300 ) # Resumen corto del curso
     informacion_general = models.TextField( ) # Informacion en general del curso, temario, objetivos
     imagen = models.ImageField( upload_to = 'cursos_logo' ) # Imagen del Curso
@@ -22,6 +25,13 @@ class Curso( models.Model ):
 
     def __unicode__(self):
         return self.nombre
+
+    def save(self, *args, **kwargs):
+        if self.nombre:
+            self.slug = slugify(self.nombre)
+
+
+        super(Curso, self).save(*args, **kwargs)
 ################################################   
 
 ################## CAPITULO ####################

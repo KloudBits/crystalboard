@@ -14,7 +14,8 @@ urlpatterns = patterns('',
 	url(r'^cursos/$', 'Main.views.cursos'),
 	url(r'^cursos/nuevo/$', 'Main.views.nuevoCurso'),
 	
-	url(r'^(?P<curso>[a-z-0-9]+)/$', 'Main.views.curso'),
+	url(r'^cursos/(?P<curso>[a-z-0-9]+)/$', 'Main.views.curso'),
 	url(r'^(?P<curso>[a-z-0-9]+)/(?P<clase>[a-z-0-9]+)/$', 'Main.views.clase'),
+	url(r'^(?P<curso>[a-z-0-9]+)/(?P<clase>[a-z-0-9]+)/clases/$', 'Main.views.clase'),
 
 ) + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
