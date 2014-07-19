@@ -184,8 +184,7 @@ def nuevaClase( request ):
 			return  render( request, "usuarios/nuevaClase.html", { "formulario" : formulario } )
 
 def editarClase( request, clase ):
-	if not request.user.
-	is_authenticated( ):
+	if not request.user.is_authenticated( ):
 		raise Http404
 	else:
 		perfil = UserProfile.objects.get( user = request.user )
