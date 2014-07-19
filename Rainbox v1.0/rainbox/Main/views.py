@@ -14,7 +14,7 @@ from django.db.models import Avg, Count
 from django.template.defaultfilters import slugify
 from django.shorcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, Http404
-from Main.models import UserProfile
+from Main.models import UserProfile, Curso, Tarea, Clase, Recurso
 
 ########################## LOGEO #######################################
 def ingreso_usuario( request ):
