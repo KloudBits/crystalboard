@@ -13,11 +13,11 @@ import datetime
 
 ################## CURSO ########################
 class Curso( models.Model ):
+    usuario = models.ForeignKey( User )  # Usuario que administra el curso
     nombre = models.CharField( max_length = 200 ) # Variable que almacena el nombre del curso
     resumen = models.CharField( max_length = 300 ) # Resumen corto del curso
     informacion_general = models.TextField( ) # Informacion en general del curso, temario, objetivos
-    imagen = models.ImageField( upload_to = 'cursos_logo' ) # Imagen del Curso
-    usuario = models.OneToOneField( User )  # Usuario que administra el curso
+    imagen = models.ImageField( upload_to = 'cursos_logo' ) # Imagen del Curso    
     miembros = models.ManyToManyField( User, related_name = 'miembros' )  # Los miembros del curso
 
     def __unicode__(self):
