@@ -50,10 +50,10 @@ def home( request ):
 		perfil = UserProfile.objects.get( user = request.user )
 		if perfil.tipo == 1: # Tipo de perfil Usuario ( Admin ) 
 			cursos = Curso.objects.filter( usuario = request.user )
-			template = "/usuarios/home.html"
+			template = "usuarios/home.html"
 		elif perfil.tipo == 2: # Tipo de perfil miembro ( Consumidor )
 			cursos = Curso.objects.filter( miembros = request.user )
-			template = "/miembros/home.html"
+			template = "miembros/home.html"
 		return render( request, template, { 'cursos' : cursos } )
 #########################################################################
 
@@ -64,9 +64,9 @@ def perfil( request ):
 	else:
 		perfil = UserProfile.objects.get( user = request.user )
 		if perfil.tipo == 1: # Tipo de perfil Usuario ( Admin ) 			
-			template = "/usuarios/perfil.html"
+			template = "usuarios/perfil.html"
 		elif perfil.tipo == 2: # Tipo de perfil miembro ( Consumidor )			
-			template = "/miembros/perfil.html"
+			template = "miembros/perfil.html"
 		return render( request, template, { 'perfil' : perfil } )
 
 #########################################################################
@@ -79,10 +79,10 @@ def cursos( request ):
 		perfil = UserProfile.objects.get( user = request.user )		
 		if perfil.tipo == 1: # Tipo de perfil usuario ( Admin )
 			cursos = Curso.objects.filter( usuario = request.user )
-			template = "/usuarios/cursos.html"
+			template = "usuarios/cursos.html"
 		elif perfil.tipo == 2: # Tipo de perfil miembro ( Consumidor )
 			cursos = Curso.objects.filter(  )
-			template = "/miembros/cursos.html"
+			template = "miembros/cursos.html"
 		return render( request, template, {  } )
 
 
