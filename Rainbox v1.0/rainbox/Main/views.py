@@ -14,7 +14,7 @@ from django.template.defaultfilters import slugify
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from Main.models import UserProfile, Curso, Tarea, Clase, Recurso
-from Main.forms import nuevoCurso
+from Main.forms import nuevoCursoFormulario
 
 ########################## LOGEO #######################################
 def ingreso_usuario( request ):
@@ -112,14 +112,15 @@ def nuevoCurso( request ):
 			raise Http404
 		else:
 			if request.method == "POST":
-				formulario = nuevoCurso( request.POST, request.FILES )
+				formulario = nuevoCursoFormulario( request.POST, request.FILES )
 				if formulario.is_valid( ) and formulario.is_multipart( ):
 					nuevo_curso = formulario.save( commit = False )
+					nuevo_curso.usuario = request.user
 					nuevo_curso.save( )
 					messages.add_message( request, messages.SUCCESS, 'Registro de curso exitoso' )
 					return HttpResponseRedirect( '/' )
 			else:
-				formulario = nuevoCurso( )
+				formulario = nuevoCursoFormulario( )
 	return render( request, 'usuarios/nuevoCurso.html', { "formulario" : formulario } )
 
 def editarCurso( request ):
@@ -132,7 +133,7 @@ def clase( request, curso, clase ):
 		raise Http404
 	else:
 		clase = get_object_or_404(Clase, pk = clase)
-		perfi l = UserProfile.objects.get( user = request.user )
+		perfil = UserProfile.objects.get( user = request.user )
 		tareas = Tarea.objects.filter( clase = clase )
 		recursos = Recurso.objects.filter( clase = clase )
 		if perfil.tipo == 1: # Tipo de perfil usuario ( Admin )

@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
-from Main.models import UserProfile
+from Main.models import UserProfile, Curso
 
 class UserProfileInline(admin.StackedInline):
     model = UserProfile
@@ -17,4 +17,5 @@ class UserAdmin(UserAdmin):
 # Re-register UserAdmin
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
+admin.site.register(Curso)
 
