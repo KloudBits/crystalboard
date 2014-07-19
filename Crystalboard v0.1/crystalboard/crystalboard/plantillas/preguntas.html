@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+{% if user.userprofile.tipo == 1 or user.userprofile.tipo == 2 %}
+     <h3>Exámen: {{ prueba }} <a href="/{{ curso.pk }}/prueba/{{ prueba.pk }}/pregunta/nueva/" class="btn btn-primary">Nueva Pregunta</a></h3>
+     {% for pregunta in preguntas %}
+        <div>
+            <h4>Pregunta: {{ pregunta }}
+            <div class="btn-group">
+                <a href="/{{ curso.pk }}/prueba/{{ prueba.pk }}/pregunta/{{ pregunta.pk }}/editar/" class = "btn btn-primary">Editar</a>
+                <a href="/{{ curso.pk }}/prueba/{{ prueba.pk }}/pregunta/{{ pregunta.pk }}/borrar/" class = "btn btn-primary">Borrar</a>
+                <a href="/{{ curso.pk }}/prueba/{{ prueba.pk }}/pregunta/{{ pregunta.pk }}/respuesta/nueva/" class = "btn btn-primary">Agregar respuesta</a>
+            </div></h4>
+           <table class="table" >
+                <thead>
+                    <tr>
+                        <th>Respuesta</th>
+                        <th>Correcta</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for respuesta in pregunta.obtener_respuestas %}
+                        <tr>
+                            <td>{{ respuesta }}</td>
+                            <td>{{ respuesta.correcta }}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="/{{ curso.pk }}/prueba/{{ prueba.pk }}/pregunta/{{ pregunta.pk }}/respuesta/{{ respuesta.pk }}/editar/" class = "btn btn-primary">Editar</a>
+                                    <a href="/{{ curso.pk }}/prueba/{{ prueba.pk }}/pregunta/{{ pregunta.pk }}/respuesta/{{ respuesta.pk }}/borrar/" class = "btn btn-primary">Borrar</a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endfor %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+
+
+
+<div class="well">
+  <a class="btn btn-danger btn-large" href="/{{ curso.pk }}/clases/nuevo/">Nueva clase</a>
+</div>
+
+{% for clase in clases %}
+	<div class="right" style="border: 1px solid #ddd; margin: 10px 0;">
+		<h3 class="popover-title"><a href="/{{ curso.pk }}/clases/{{ clase.pk }}/editar/">{{ clase.titulo }}</a></h3>
+		<div class="popover-content">
+			<p>{{ clase.resumen }}</p>
+		</div>
+	</div>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+{% if user.userprofile.tipo == 1 or user.userprofile.tipo == 2 %}
+    <a href="/{{ curso.pk }}/prueba/nueva/" class="btn btn-primary">Nueva Prueba</a>
+{% endif %}
+<table class="table">
+    <caption>Examenes Disponibles del Curso</caption>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Fecha de Termino</th>
+            <th>Cantidad de Intentos</th>
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for prueba in pruebas %}
+        <tr>
+            <td>{{ prueba }}</td>
+            <td>{{ prueba.fecha_limite }}</td>
+            <td>{{ prueba.intentos }}</td>
+            <td>
+                {% if user.userprofile.tipo == 1 or user.userprofile.tipo == 2 %}
+                    <div class="btn-group">
+                        <a href="/{{ curso.pk }}/prueba/{{ prueba.pk }}/pregunta/" class="btn btn-primary">Preguntas</a>
+                        <a href="#" class="btn btn-primary">Editar</a>
+                        <a href="#" class="btn btn-primary">Borrar</a>
+                    </div>
+                {% else %}
+                    <a href="#" class="btn btn-primary"> Tomar </a>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

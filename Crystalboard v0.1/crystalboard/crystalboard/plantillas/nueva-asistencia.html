@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<form action="" method="POST">{% csrf_token %}
+<label>Fecha:</label>
+<input type="text" name="fecha" ><br>
+<button type="submit" class="btn">Crear lista de asistencia</button>
+</form>
+{% endblock %}
+

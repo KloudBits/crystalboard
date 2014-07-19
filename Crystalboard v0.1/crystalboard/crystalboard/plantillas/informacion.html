@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+
+
+
+{% if user.userprofile.tipo == 1 or user.userprofile.tipo == 2 %}
+
+<div class="accordion span9" id="accordion2">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+        Nueva información
+      </a>
+    </div>
+    <div id="collapseOne" class="accordion-body collapse out">
+      <div class="accordion-inner">
+        
+
+        <form method="post" action="">{% csrf_token %}
+            {% for field in formulario %}
+            {% if field.errors %}
+                <label for="texto"><b>{{ field.label }}</b></label>
+                {{ field }}
+            {% for error in  field.errors %}{{ error }}{% endfor %}
+            {% else %}
+                <label>{{ field.label }}:</label>
+                {{ field }}
+            {% if field.help_text %}
+                {{ field.help_text }}
+            {% endif %}
+
+            {% endif %}
+            {% endfor %}
+            <p><input type="submit" value="Enviar" class="btn" /></p>
+            
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endif %}
+
+
+<table class="table table-hover span9">
+    {% for i in informacion %}
+        <tr>
+            <td>
+                <h2>{{ i.titulo }}</h2>
+                {{ i.texto }}
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+
+    
+{% endblock %}
