@@ -14,7 +14,7 @@ from django.template.defaultfilters import slugify
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from Main.models import UserProfile, Curso, Tarea, Clase, Recurso
-from Main.forms import nuevoCursoFormulario, nuevaClaseFormulario
+from Main.forms import nuevoCursoFormulario, nuevaClaseFormulario, nuevoCapituloFormulario
 
 ########################## LOGEO #######################################
 def ingreso_usuario( request ):
@@ -195,3 +195,47 @@ def editarClase( request, clase ):
 				formulario = nuevaClaseFormulario( instance = curso )
 			return render( request, 'usuarios/nuevaClase.html', { "formulario" : formulario } )
 #########################################################################
+
+##################### Capitulo ##########################################
+
+def capitulos ( request, curso ):
+	if not request.user.is_authenticated():
+		raise Http404
+	else:
+		perfil = UserProfile.objects.get( user = request.user )
+		if perfil.tipo != 1:
+			raise Http404
+		else:
+			curso = get_object_or_404( Curso, slug = curso )
+			capitulos = Capitulo.objects.filter( curso = curso )
+			return render( request, "usuarios/capitulos.html", { "curso" : curso, "capitulos" : capitulos } )
+######### CRUD #############
+def nuevoCapitulo ( request ):
+	if not request.user.is_authenticated():
+		raise Http404
+	else:
+		perfil = UserProfile.objects.get( user = request.user )
+		if perfil.tipo != 1:
+			raise Http404
+		else:
+			if request.method == "POST": 
+				formulario = nuevoCapituloFormulario( request.POST )
+				if formulario.is_valid():
+					formulario.save()
+					message.add_message( request, messages.SUCCESS, "Registro de Capitulo exitoso" )
+					return HttpResponseRedirect( '/' )
+			else
+				formulario = nuevoCapituloFormulario()
+			return render ( request, "usuarios/nuevoCapitulo", { "formulario" : formulario } })
+
+def borrarCapitulo (request, capitulo):
+	if not request.user.is_authenticated():
+		raise Http404
+	else:
+		perfil = UserProfile.objects.get( user = request.user )
+		if perfil.tipo != 1:
+			raise Http404
+		else:
+			(get_object_or_404(Capitulo, pk = capitulo)).delete()
+			return HttpResponseRedirect( "/" )
+					
