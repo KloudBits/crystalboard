@@ -13,8 +13,8 @@ from django.db.models import Avg, Count
 from django.template.defaultfilters import slugify
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, Http404
-from Main.models import UserProfile, Curso, Tarea, Clase, Recurso, Capitulo
-from Main.forms import nuevoCursoFormulario, nuevaClaseFormulario, nuevoCapituloFormulario
+from Main.models import UserProfile, Curso, Tarea, Clase, Recurso, Capitulo, Foro
+from Main.forms import nuevoCursoFormulario, nuevaClaseFormulario, nuevoCapituloFormulario, nuevoForoFormulario
 
 ########################## LOGEO #######################################
 def ingreso_usuario( request ):
@@ -254,4 +254,47 @@ def borrarCapitulo (request, curso, capitulo):
 		else:
 			(get_object_or_404(Capitulo, pk = capitulo)).delete()
 			return HttpResponseRedirect( "/" )
-					
+##############################################################################################################3
+
+############################## FOROS ############################################################
+def foros ( request, curso ):
+	if not request.user.is_authenticated():
+		raise Http404
+	else:
+		perfil = UserProfile.objects.get( user = request.user )
+		curso = get_object_or_404(Curso, pk = curso)
+		foros = Foro.objects.filter(curso = curso)
+		return render ( request, "usuarios/foro.html", { "curso" : curso, "foros" : foros })
+
+############# CRUD ####################
+def nuevoForo(request, curso):
+	if not request.usuer.is_authenticated():
+		raise Http404
+	else: 
+		perfil = UserProfile.objects.get( user = request.user )
+		curso = get_object_or_404(Curso, pk = curso)
+		if perfil.tipo != 1 && perfil.user != curso.usuario:
+			raise Http404
+		else:
+			if request.method == "POST":
+				formulario = nuevoForoFormulario( request.POST )
+				if formulario.is_valid():
+					nuevo_foro = formulario.save(commit=False)
+					nuevo_foro.curso = curso
+					nuevo_foro.save()
+					messages.add_message(request, messages.SUCCESS, "Registro de Foro Exitoso")
+					return HttpResponseRedirect('/')
+			else:
+				formulario = nuevoForoFormulario()
+			return render(request, "usuarios/nuevoForo.html", { "formulario" : formulario })
+
+def borrarForo(request, curso, foro):
+	if not request.usuer.is_authenticated():
+		raise Http404
+	else: 
+		perfil = UserProfile.objects.get( user = request.user )
+		curso = get_object_or_404(Curso, pk = curso)
+		if perfil.tipo != 1 && perfil.user != curso.usuario:
+			raise Http404
+		else:
+			(get_object_or_404(Foro, pk = foro)).delete()
