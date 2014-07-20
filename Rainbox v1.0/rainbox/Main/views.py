@@ -13,7 +13,7 @@ from django.db.models import Avg, Count
 from django.template.defaultfilters import slugify
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, Http404
-from Main.models import UserProfile, Curso, Tarea, Clase, Recurso
+from Main.models import UserProfile, Curso, Tarea, Clase, Recurso, Capitulo
 from Main.forms import nuevoCursoFormulario, nuevaClaseFormulario, nuevoCapituloFormulario
 
 ########################## LOGEO #######################################
@@ -143,12 +143,25 @@ def editarCurso( request, curso ):
 			return render( request, 'usuarios/nuevoCurso.html', { "formulario" : formulario } )	
 #########################################################################
 
+###########################    Curso    #################################
+def clases( request, curso ):
+	if not request.user.is_authenticated( ):
+		raise Http404
+	else:
+		clases = Clase.objects.filter(capitulo__curso__slug = curso )
+		perfil = UserProfile.objects.get( user = request.user )
+		if perfil.tipo == 1: # Tipo de perfil de usuario ( Admin )
+			template = "usuarios/clases.html"
+		elif perfil.tipo == 2: # Tipo de perfil miembro ( Consumidor )
+			template = "miembros/clases.html"
+		return render( request, template, { "clases" : clases } )
+
 ###############################  Clase ##################################
 def clase( request, curso, clase ):
 	if not request.user.is_authenticated( ):
 		raise Http404
 	else:
-		clase = get_object_or_404(Clase, pk = clase)
+		clase = get_object_or_404(Clase, slug = clase)
 		perfil = UserProfile.objects.get( user = request.user )
 		tareas = Tarea.objects.filter( clase = clase )
 		recursos = Recurso.objects.filter( clase = clase )
@@ -210,7 +223,7 @@ def capitulos ( request, curso ):
 			capitulos = Capitulo.objects.filter( curso = curso )
 			return render( request, "usuarios/capitulos.html", { "curso" : curso, "capitulos" : capitulos } )
 ######### CRUD #############
-def nuevoCapitulo ( request ):
+def nuevoCapitulo ( request, curso ):
 	if not request.user.is_authenticated():
 		raise Http404
 	else:
@@ -221,14 +234,17 @@ def nuevoCapitulo ( request ):
 			if request.method == "POST": 
 				formulario = nuevoCapituloFormulario( request.POST )
 				if formulario.is_valid():
-					formulario.save()
-					message.add_message( request, messages.SUCCESS, "Registro de Capitulo exitoso" )
-					return HttpResponseRedirect( '/' )
-			else
-				formulario = nuevoCapituloFormulario()
-			return render ( request, "usuarios/nuevoCapitulo", { "formulario" : formulario } })
+					nuevo_capitulo = formulario.save( commit = False )
+					nuevo_capitulo.curso = get_object_or_404(Curso, slug=curso)
+					nuevo_capitulo.save()
 
-def borrarCapitulo (request, capitulo):
+					messages.add_message( request, messages.SUCCESS, "Registro de Capitulo exitoso" )
+					return HttpResponseRedirect( '/' )
+			else:
+				formulario = nuevoCapituloFormulario()
+			return render ( request, "usuarios/nuevoCapitulo.html", { "formulario" : formulario } )
+
+def borrarCapitulo (request, curso, capitulo):
 	if not request.user.is_authenticated():
 		raise Http404
 	else:
