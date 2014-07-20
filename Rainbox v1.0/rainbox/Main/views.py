@@ -284,7 +284,7 @@ def nuevoForo(request, curso):
 	else: 
 		perfil = UserProfile.objects.get( user = request.user )
 		curso = get_object_or_404(Curso, pk = curso)
-		if perfil.tipo != 1 && perfil.user != curso.usuario:
+		if perfil.tipo != 1 and perfil.user != curso.usuario:
 			raise Http404
 		else:
 			if request.method == "POST":
@@ -305,7 +305,7 @@ def borrarForo(request, curso, foro):
 	else: 
 		perfil = UserProfile.objects.get( user = request.user )
 		curso = get_object_or_404(Curso, pk = curso)
-		if perfil.tipo != 1 && perfil.user != curso.usuario:
+		if perfil.tipo != 1 and perfil.user != curso.usuario:
 			raise Http404
 		else:
 			(get_object_or_404(Foro, pk = foro)).delete()
