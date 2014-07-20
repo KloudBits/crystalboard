@@ -317,4 +317,14 @@ def comentarForo(request, curso, foro):
 		curso = get_object_or_404(Curso, slug = curso )
 		foro = get_object_or_404(Foro, pk = foro)
 		perfil = get_object_or_404(UserProfile, user = request.user)
-		if request.method == "POST"
+		if request.method == "POST":
+			formulario = comentarForoFormulario (request.POST)
+			if formulario.is_valid():
+				nuevo_comentario = formulario.save(commit=False)
+				nuevo_comentario.usuario = perfil.user
+				nuevo_comentario.save()
+				messages.add_message(request, messages.SUCCESS, "Registro de comentario exitoso")
+				return HttpResponseRedirect("/")
+		else:
+			formulario = comentarioForoFormulario()
+		return render(request, "usuarios/comentarioForo.html", {"curso":curso, "foro":foro, "perfil":perfil, "formulario":formulario})
