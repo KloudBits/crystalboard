@@ -25,3 +25,8 @@ class nuevoCapituloFormulario(ModelForm):
 	class Meta:
 		model = Capitulo
 		exclude = ('curso',)
+
+class nuevoForoFormulario(ModelForm):
+	class Meta:
+		model = Foro
+		
