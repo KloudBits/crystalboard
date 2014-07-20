@@ -309,3 +309,12 @@ def borrarForo(request, curso, foro):
 			raise Http404
 		else:
 			(get_object_or_404(Foro, pk = foro)).delete()
+
+def comentarForo(request, curso, foro):
+	if not request.usuer.is_authenticated():
+		raise Http404
+	else: 
+		curso = get_object_or_404(Curso, slug = curso )
+		foro = get_object_or_404(Foro, pk = foro)
+		perfil = get_object_or_404(UserProfile, user = request.user)
+		if request.method == "POST"
