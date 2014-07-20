@@ -13,7 +13,7 @@ from django.db.models import Avg, Count
 from django.template.defaultfilters import slugify
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, Http404
-from Main.models import UserProfile, Curso, Tarea, Clase, Recurso, Capitulo, Foro
+from Main.models import UserProfile, Curso, Tarea, Clase, Recurso, Capitulo, Foro, Foro_Comentario
 from Main.forms import nuevoCursoFormulario, nuevaClaseFormulario, nuevoCapituloFormulario, nuevoForoFormulario
 
 ########################## LOGEO #######################################
@@ -99,7 +99,7 @@ def curso( request, curso ):
 			template = "usuarios/curso.html"
 		elif perfil.tipo == 2: # Tipo de perfil miembro ( Consumidor )
 			template = "miembros/curso.html"
-		return render( request, template, { "clases" : clases } )
+		return render( request, template, { "clases" : clases, "curso" : get_object_or_404(Curso, slug = curso) } )
 ################ CRUD ##################
 def nuevoCurso( request ):
 	if not request.user.is_authenticated( ):
@@ -262,9 +262,20 @@ def foros ( request, curso ):
 		raise Http404
 	else:
 		perfil = UserProfile.objects.get( user = request.user )
-		curso = get_object_or_404(Curso, pk = curso)
+		curso = get_object_or_404(Curso, slug = curso)
 		foros = Foro.objects.filter(curso = curso)
-		return render ( request, "usuarios/foro.html", { "curso" : curso, "foros" : foros })
+		return render ( request, "usuarios/foros.html", { "curso" : curso, "foros" : foros })
+#################################################################################################
+
+############################ FORO #############################################3
+def foro (request, curso, foro):
+	if not request.usuer.is_authenticated():
+		raise Http404
+	else:
+		curso = get_object_or_404(Curso, slug = curso )
+		foro = get_object_or_404(Foro, pk = foro)
+		comentarios = Foro_Comentario.objects.filter(foro = foro)
+		return render( request, "usuarios/foro.html", { "curso" : curso, "foro" : foro, "comentarios" : comentarios } )
 
 ############# CRUD ####################
 def nuevoForo(request, curso):
