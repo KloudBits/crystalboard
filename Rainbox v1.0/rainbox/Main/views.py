@@ -332,6 +332,25 @@ def comentarForo(request, curso, foro):
 #####################################################################################################
 
 ############################## Avisos ##############################################################
+
+def avisos(request, curso):
+	if not request.user.is_authenticated():
+		raise Http404
+	else:
+		curso = get_object_or_404(Curso, slug = curso)
+		perfil = get_object_or_404(UserProfile, user = request.user)
+		avisos = Aviso.objects.filter(curso = curso)
+		return render(request, "usuarios/avisos.html", {"curso":curso, "perfil":perfil, "avisos":avisos})
+
+def aviso(request, curso, aviso):
+	if not request.user.is_authenticated():}
+		raise Http404
+	else:
+		curso = get_object_or_404(Curso, slug=curso)
+		perfil = get_object_or_404(UserProfile, user = request.user)
+		aviso = get_object_or_404(Aviso, id = aviso)
+		return render(request, "usuarios/aviso.html", {"curso":curso, "perfil":perfil, "aviso":aviso})
+
 def nuevoAviso(request, curso):
 	if not request.user.is_authenticated():
 		raise Http404
@@ -349,3 +368,16 @@ def nuevoAviso(request, curso):
 			formulario = nuevoAvisoFormulario()
 		return render(request, "usuarios/nuevoAviso.html", {"curso": curso, "perfil":perfil, "formulario":formulario})
 
+
+def borrarAviso(request, curso, aviso):
+	if not request.user.is_authenticated():
+		raise Http404
+	else:
+		perfil = UserProfile.objects.get (user = request.user)
+		if perfil.tipo != 1:
+			raise Http404
+		else:
+			(get_object_or_404(Aviso, id=aviso)).delete()
+			return HttpResponseRedirect("/")
+
+#############################################################################################################################
