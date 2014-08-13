@@ -332,7 +332,7 @@ def comentarForo(request, curso, foro):
 #####################################################################################################
 
 ############################## Avisos ##############################################################
-def avisos(request, curso):
+def nuevoAviso(request, curso):
 	if not request.user.is_authenticated():
 		raise Http404
 	else:
