@@ -14,7 +14,7 @@ from django.template.defaultfilters import slugify
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from Main.models import UserProfile, Curso, Tarea, Clase, Recurso, Capitulo, Foro, Foro_Comentario
-from Main.forms import nuevoCursoFormulario, nuevaClaseFormulario, nuevoCapituloFormulario, nuevoForoFormulario
+from Main.forms import nuevoCursoFormulario, nuevaClaseFormulario, nuevoCapituloFormulario, nuevoForoFormulario, nuevoAvisoFormulario
 
 ########################## LOGEO #######################################
 def ingreso_usuario( request ):
@@ -328,3 +328,24 @@ def comentarForo(request, curso, foro):
 		else:
 			formulario = comentarioForoFormulario()
 		return render(request, "usuarios/comentarioForo.html", {"curso":curso, "foro":foro, "perfil":perfil, "formulario":formulario})
+
+#####################################################################################################
+
+############################## Avisos ##############################################################
+def avisos(request, curso):
+	if not request.user.is_authenticated():
+		raise Http404
+	else:
+		curso = get_object_or_404(Curso, slug = curso)
+		perfil = get_object_or_404(UserProfile, user = request.user)
+		if request.method == "POST":
+			formulario = nuevoAvisoFormulario(request.POST)
+			if formulario.is_valid():
+				nuevo_aviso = formulario.save(commit=False)
+				nuevo_aviso.save()
+				messages.add_message(request, messages.SUCCESS, "Registro del Aviso exitoso")
+				return HttpResponseRedirect("/")
+		else:
+			formulario = nuevoAvisoFormulario()
+		return render(request, "usuarios/nuevoAviso.html", {"curso": curso, "perfil":perfil, "formulario":formulario})
+
