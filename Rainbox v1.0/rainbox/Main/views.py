@@ -390,5 +390,4 @@ def miembros(request, curso):
 	else:
 		perfil = UserProfile.objects.get( user = request.user )
 		curso = get_object_or_404(Curso, slug, curso)
-		return render(request, "usuarios/miembros.html", {"curso":curso, "perfil":perfil, "miembros":curos.miembros})
-
+		return render(request, "usuarios/miembros.html", {"curso":curso, "perfil":perfil, "miembros":curso.miembros})
