@@ -38,6 +38,11 @@ class nuevoAvisoFormulario(ModelForm):
 		model = Aviso
 		exclude = ('curso',)
 
+class nuevoForoFormulario(ModelForm):
+	class Meta:
+		model = Foro
+		exclude = ('curso',)
+
 class registrationForm(forms.ModelForm):
 	email = forms.EmailField(label="Correo electrónico", widget=forms.TextInput(attrs={'class':'form-control'}))
 	password1 = forms.CharField(label="Contraseña", widget=forms.PasswordInput(attrs={'class':'form-control'}))
