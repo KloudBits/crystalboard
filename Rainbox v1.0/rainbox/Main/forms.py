@@ -29,4 +29,8 @@ class nuevoCapituloFormulario(ModelForm):
 class nuevoForoFormulario(ModelForm):
 	class Meta:
 		model = Foro
-		
+
+
+class nuevoAvisoFormulario(ModelForm):
+	class Meta:
+		model = Aviso

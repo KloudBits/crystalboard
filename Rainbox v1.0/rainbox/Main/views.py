@@ -13,7 +13,7 @@ from django.db.models import Avg, Count
 from django.template.defaultfilters import slugify
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, Http404
-from Main.models import UserProfile, Curso, Tarea, Clase, Recurso, Capitulo, Foro, Foro_Comentario
+from Main.models import UserProfile, Curso, Tarea, Clase, Recurso, Capitulo, Foro, Foro_Comentario, Aviso
 from Main.forms import nuevoCursoFormulario, nuevaClaseFormulario, nuevoCapituloFormulario, nuevoForoFormulario, nuevoAvisoFormulario
 
 ########################## LOGEO #######################################
