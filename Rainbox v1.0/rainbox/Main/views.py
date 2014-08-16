@@ -409,7 +409,10 @@ def nuevoMiembro(request, curso):
 				formulario_perfil = editarPerfilFormulario(request.POST)
 							
 				if formulario_usuario.is_valid() and formulario_perfil.is_valid():
-					nuevo_miembro = formulario_usuario.save()		
+					nuevo_miembro = formulario_usuario.save(commit=False)		
+					nuevo_miembro.username = formulario_usuario.cleaned_data["email"]
+					nuevo_miembro.set_password(formulario_usuario.cleaned_data["password2"])
+					nuevo_miembro.save()
 					nuevo_perfil = formulario_perfil.save(commit=False)
 					nuevo_perfil.tipo = 2
 					nuevo_perfil.user = nuevo_miembro	
