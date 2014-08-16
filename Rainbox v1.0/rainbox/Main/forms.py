@@ -34,3 +34,4 @@ class nuevoForoFormulario(ModelForm):
 class nuevoAvisoFormulario(ModelForm):
 	class Meta:
 		model = Aviso
+		exclude = ('curso',)
