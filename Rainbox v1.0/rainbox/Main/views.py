@@ -283,7 +283,7 @@ def nuevoForo(request, curso):
 		raise Http404
 	else: 
 		perfil = UserProfile.objects.get( user = request.user )
-		curso = get_object_or_404(Curso, pk = curso)
+		curso = get_object_or_404(Curso, slug = curso)
 		if perfil.tipo != 1 and perfil.user != curso.usuario:
 			raise Http404
 		else:
@@ -304,11 +304,11 @@ def borrarForo(request, curso, foro):
 		raise Http404
 	else: 
 		perfil = UserProfile.objects.get( user = request.user )
-		curso = get_object_or_404(Curso, pk = curso)
+		curso = get_object_or_404(Curso, slug = curso)
 		if perfil.tipo != 1 and perfil.user != curso.usuario:
 			raise Http404
 		else:
-			(get_object_or_404(Foro, pk = foro)).delete()
+			(get_object_or_404(Foro, slug = foro)).delete()
 
 def comentarForo(request, curso, foro):
 	if not request.usuer.is_authenticated():
