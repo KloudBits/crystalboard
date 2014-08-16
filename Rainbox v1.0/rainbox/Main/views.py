@@ -412,7 +412,7 @@ def nuevoMiembro(request, curso):
 					nuevo_miembro = formulario_usuario.save()		
 					nuevo_perfil = formulario_perfil.save(commit=False)
 					nuevo_perfil.tipo = 2
-					nuevo_perfil.user = nuevo_miembros
+					nuevo_perfil.user = nuevo_miembro
 					nuevo_perfil.save()
 
 					cur.miembros.add(nuevo_miembro)		
