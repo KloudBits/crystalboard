@@ -390,7 +390,7 @@ def miembros(request, curso):
 		raise Http404
 	else:
 		perfil = UserProfile.objects.get( user = request.user )
-		cur = get_object_or_404(Curso, curso)
+		cur = get_object_or_404(Curso, slug = curso)
 		return render(request, "usuarios/miembros.html", {"curso":cur, "perfil":perfil, "miembros":curso.miembros})
 
 
@@ -412,8 +412,8 @@ def nuevoMiembro(request, curso):
 					nuevo_miembro = formulario_usuario.save()					
 					curso.miembros.add(nuevo_miembro)					
 			else:
-				formulario1 = registrationForm()
-				formulario2 = editarPerfilFormulario()
+				formulario1_usuario = registrationForm()
+				formulario2_perfil = editarPerfilFormulario()
 
 
 
