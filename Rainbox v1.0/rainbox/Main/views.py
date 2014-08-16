@@ -400,7 +400,7 @@ def nuevoMiembro(request, curso):
 		raise Http404
 	else:
 		perfil = UserProfile.objects.get( user = request.user )
-		cur = get_object_or_404(Curso, curso)
+		cur = get_object_or_404(Curso, slug = curso)
 		if perfil.tipo != 1:
 			raise Http404
 		else: 
