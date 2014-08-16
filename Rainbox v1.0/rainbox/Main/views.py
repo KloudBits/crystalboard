@@ -407,13 +407,14 @@ def nuevoMiembro(request, curso):
 			if request.method == "POST":
 				formulario_usuario = registrationForm(request.POST)
 				formulario_perfil = editarPerfilFormulario(request.POST)
-				formulario_perfil.usuario = formulario_usuario.user				
+							
 				if formulario_usuario.is_valid() and formulario_perfil.is_valid():
 					nuevo_miembro = formulario_usuario.save()		
 					nuevo_perfil = formulario_perfil.save(commit=False)
 					nuevo_perfil.tipo = 2
+					nuevo_perfil.user = nuevo_miembros
 					nuevo_perfil.save()
-					
+
 					cur.miembros.add(nuevo_miembro)		
 					return redirect("/cursos/" + cur.slug + "/")			
 			else:
