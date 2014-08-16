@@ -18,10 +18,18 @@ urlpatterns = patterns('',
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/clases/nuevo/$', 'Main.views.nuevaClase'),
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/clases/$', 'Main.views.clases'),
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/avisos/$', 'Main.views.avisos'),
+	
+	url(r'^cursos/(?P<curso>[a-z-0-9]+)/miembros/$', 'Main.views.miembros'),
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/avisos/nuevo$', 'Main.views.nuevoAviso'),
+	url(r'^cursos/(?P<curso>[a-z-0-9]+)/avisos/(?P<aviso>[0-9]+)/$', 'Main.views.aviso'),
+	url(r'^cursos/(?P<curso>[a-z-0-9]+)/avisos/(?P<aviso>[0-9]+)/borrar/$', 'Main.views.borrarAviso'),
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/capitulos/$', 'Main.views.capitulos'),
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/capitulos/nuevo/$', 'Main.views.nuevoCapitulo'),
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/capitulos/(?P<capitulo>[0-9]+)/del/$', 'Main.views.borrarCapitulo'),
+	
+
+
+
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/(?P<clase>[a-z-0-9]+)/$', 'Main.views.clase'),
 
 ) + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
