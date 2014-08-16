@@ -38,6 +38,11 @@ class nuevoAvisoFormulario(ModelForm):
 		model = Aviso
 		exclude = ('curso',)
 
+class comentarForoFormulario(ModelForm):
+	class Meta:
+		model = Foro_Comentario
+		fields = ('comentario',)
+
 class nuevoForoFormulario(ModelForm):
 	class Meta:
 		model = Foro

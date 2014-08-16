@@ -23,6 +23,7 @@ urlpatterns = patterns('',
 
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/foros/$', 'Main.views.foros'),
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/foros/(?P<foro>[0-9]+)/$', 'Main.views.foro'),
+	url(r'^cursos/(?P<curso>[a-z-0-9]+)/foros/(?P<foro>[0-9]+)/comentar/$', 'Main.views.comentarForo'),
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/foros/nuevo$', 'Main.views.nuevoForo'),
 	
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/avisos/nuevo$', 'Main.views.nuevoAviso'),
