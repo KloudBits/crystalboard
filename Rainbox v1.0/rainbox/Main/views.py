@@ -398,7 +398,7 @@ def miembros(request, curso):
 def nuevoMiembro(request, curso):
 	if not request.user.is_authenticated():
 		raise Http404
-	else:2
+	else:
 		perfil = UserProfile.objects.get( user = request.user )
 		curso = get_object_or_404(Curso, curso)
 		if perfil.tipo != 1:
@@ -414,6 +414,7 @@ def nuevoMiembro(request, curso):
 			else:
 				formulario1_usuario = registrationForm()
 				formulario2_perfil = editarPerfilFormulario()
+			#return render()
 
 
 
