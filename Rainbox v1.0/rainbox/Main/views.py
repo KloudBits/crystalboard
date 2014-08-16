@@ -390,8 +390,8 @@ def miembros(request, curso):
 		raise Http404
 	else:
 		perfil = UserProfile.objects.get( user = request.user )
-		curso = get_object_or_404(Curso, curso)
-		return render(request, "usuarios/miembros.html", {"curso":curso, "perfil":perfil, "miembros":curso.miembros})
+		cur = get_object_or_404(Curso, curso)
+		return render(request, "usuarios/miembros.html", {"curso":cur, "perfil":perfil, "miembros":curso.miembros})
 
 
 #### Hay que hacer un debug
@@ -411,8 +411,11 @@ def nuevoMiembro(request, curso):
 				if formulario_usuario.is_valid() and formulario_perfil.is_valid():
 					nuevo_miembro = formulario_usuario.save()					
 					curso.miembros.add(nuevo_miembro)					
-				nuevo_aviso.curso = curso
-				nuevo_aviso.save()
+			else:
+				formulario1 = registrationForm()
+				formulario2 = editarPerfilFormulario()
+
+
 
 
 
