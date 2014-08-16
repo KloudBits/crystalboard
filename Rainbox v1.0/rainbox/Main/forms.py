@@ -21,6 +21,7 @@ class editarPerfilFormulario(ModelForm):
 	class Meta:
 		model = UserProfile
 
+
 class nuevoCapituloFormulario(ModelForm):
 	class Meta:
 		model = Capitulo
@@ -36,7 +37,7 @@ class nuevoAvisoFormulario(ModelForm):
 		model = Aviso
 		exclude = ('curso',)
 
-class RegistrationForm(forms.ModelForm):
+class registrationForm(forms.ModelForm):
 	email = forms.EmailField(label="Correo electrónico", widget=forms.TextInput(attrs={'class':'form-control'}))
 	password1 = forms.CharField(label="Contraseña", widget=forms.PasswordInput(attrs={'class':'form-control'}))
 	password2 = forms.CharField(label="Confirmar contraseña", widget=forms.PasswordInput(attrs={'class':'form-control'}))
