@@ -14,7 +14,7 @@ from django.template.defaultfilters import slugify
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from Main.models import UserProfile, Curso, Tarea, Clase, Recurso, Capitulo, Foro, Foro_Comentario, Aviso
-from Main.forms import nuevoCursoFormulario, nuevaClaseFormulario, nuevoCapituloFormulario, nuevoForoFormulario, nuevoAvisoFormulario, registrationForm, userProfileForm
+from Main.forms import nuevoCursoFormulario, nuevaClaseFormulario, nuevoCapituloFormulario, nuevoForoFormulario, nuevoAvisoFormulario, registrationForm, editarPerfilFormulario
 
 ########################## LOGEO #######################################
 def ingreso_usuario( request ):
@@ -393,21 +393,27 @@ def miembros(request, curso):
 		curso = get_object_or_404(Curso, curso)
 		return render(request, "usuarios/miembros.html", {"curso":curso, "perfil":perfil, "miembros":curso.miembros})
 
+
+#### Hay que hacer un debug
 def nuevoMiembro(request, curso):
 	if not request.user.is_authenticated():
 		raise Http404
 	else:
 		perfil = UserProfile.objects.get( user = request.user )
+		curso = get_object_or_404(Curso, curso)
 		if perfil.tipo != 1:
 			raise Http404
 		else: 
 			if request.method == "POST":
 				formulario_usuario = registrationForm(request.POST)
-				formulario_perfil = userProfileForm(request.POST)
+				formulario_perfil = editarPerfilFormulario(request.POST)
 				formulario_perfil.usuario = formulario_usuario.user				
 				if formulario_usuario.is_valid() and formulario_perfil.is_valid():
-					formulario_usuario.save()
-					formulario_perfil.save()
+					nuevo_miembro = formulario_usuario.save()					
+					curso.miembros.add(nuevo_miembro)					
+				nuevo_aviso.curso = curso
+				nuevo_aviso.save()
+
 
 
 
