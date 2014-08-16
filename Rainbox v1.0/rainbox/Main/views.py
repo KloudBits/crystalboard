@@ -391,7 +391,7 @@ def miembros(request, curso):
 	else:
 		perfil = UserProfile.objects.get( user = request.user )
 		cur = get_object_or_404(Curso, slug = curso)
-		return render(request, "usuarios/miembros.html", {"curso":cur, "perfil":perfil, "miembros":cur.miembros.list()})
+		return render(request, "usuarios/miembros.html", {"curso":cur, "perfil":perfil, "miembros":cur.miembros})
 
 
 #### Hay que hacer un debug
