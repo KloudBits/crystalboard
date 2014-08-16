@@ -279,7 +279,7 @@ def foro (request, curso, foro):
 
 ############# CRUD ####################
 def nuevoForo(request, curso):
-	if not request.usuer.is_authenticated():
+	if not request.user.is_authenticated():
 		raise Http404
 	else: 
 		perfil = UserProfile.objects.get( user = request.user )
