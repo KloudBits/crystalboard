@@ -343,7 +343,7 @@ def avisos(request, curso):
 		return render(request, "usuarios/avisos.html", {"curso":curso, "perfil":perfil, "avisos":avisos})
 
 def aviso(request, curso, aviso):
-	if not request.user.is_authenticated():}
+	if not request.user.is_authenticated():
 		raise Http404
 	else:
 		curso = get_object_or_404(Curso, slug=curso)
