@@ -400,7 +400,7 @@ def nuevoMiembro(request, curso):
 		raise Http404
 	else:
 		perfil = UserProfile.objects.get( user = request.user )
-		curso = get_object_or_404(Curso, curso)
+		cur = get_object_or_404(Curso, curso)
 		if perfil.tipo != 1:
 			raise Http404
 		else: 
@@ -410,11 +410,12 @@ def nuevoMiembro(request, curso):
 				formulario_perfil.usuario = formulario_usuario.user				
 				if formulario_usuario.is_valid() and formulario_perfil.is_valid():
 					nuevo_miembro = formulario_usuario.save()					
-					curso.miembros.add(nuevo_miembro)					
+					cur.miembros.add(nuevo_miembro)		
+					return redirect("/cursos/" + cur.slug + "/")			
 			else:
-				formulario1_usuario = registrationForm()
-				formulario2_perfil = editarPerfilFormulario()
-			#return render()
+				formulario_usuario = registrationForm()
+				formulario_perfil = editarPerfilFormulario()
+			return render(request, "usuarios/nuevoMiembro.html", {"perfil":perfil, "curso":cur, "formulario1":formulario_usuario, "formulario2":formulario_perfil })
 
 
 
