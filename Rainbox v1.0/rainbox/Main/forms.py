@@ -35,3 +35,14 @@ class nuevoAvisoFormulario(ModelForm):
 	class Meta:
 		model = Aviso
 		exclude = ('curso',)
+
+class RegistrationForm(forms.ModelForm):
+	email = forms.EmailField(label="Correo electrónico", widget=forms.TextInput(attrs={'class':'form-control'}))
+	password1 = forms.CharField(label="Contraseña", widget=forms.PasswordInput(attrs={'class':'form-control'}))
+	password2 = forms.CharField(label="Confirmar contraseña", widget=forms.PasswordInput(attrs={'class':'form-control'}))
+	first_name = forms.CharField(label="Nombre", widget=forms.TextInput(attrs={'class':'form-control'}))
+	last_name = forms.CharField(label="Teléfono", widget=forms.TextInput(attrs={'class':'form-control'}))
+
+	class Meta:
+		model = User
+		fields = ('email', 'password1', 'password2', 'first_name', 'last_name')
