@@ -438,7 +438,7 @@ def quizes(request, curso):
 		perfil = UserProfile.objects.get( user = request.user )
 		cur = get_object_or_404(Curso, slug = curso)
 		quizes = Quiz.objects.filter(curso = cur)
-		return render(request, "usuarios/quizes.html", {"perfil":perfil, ""})		
+		return render(request, "usuarios/quizes.html", {"perfil":perfil})		
 
 
 
