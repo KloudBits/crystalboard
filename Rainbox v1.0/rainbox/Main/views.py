@@ -364,7 +364,7 @@ def nuevoAviso(request, curso):
 				nuevo_aviso.curso = curso
 				nuevo_aviso.save()
 				messages.add_message(request, messages.SUCCESS, "Registro del Aviso exitoso")
-				return HttpResponseRedirect("/")
+				return HttpResponseRedirect("cursos/" + curso.slug + "/avisos/")
 		else:
 			formulario = nuevoAvisoFormulario()
 		return render(request, "usuarios/nuevoAviso.html", {"curso": curso, "perfil":perfil, "formulario":formulario})
@@ -398,5 +398,9 @@ def nuevoMiembro(request, curso):
 		raise Http404
 	else:
 		perfil = UserProfile.objects.get( user = request.user )
+		if perfil.tipo != 1:
+			raise Http404
+		else: 
+
 
 
