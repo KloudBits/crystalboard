@@ -269,7 +269,7 @@ def foros ( request, curso ):
 
 ############################ FORO #############################################3
 def foro (request, curso, foro):
-	if not request.usuer.is_authenticated():
+	if not request.user.is_authenticated():
 		raise Http404
 	else:
 		curso = get_object_or_404(Curso, slug = curso )
@@ -300,7 +300,7 @@ def nuevoForo(request, curso):
 			return render(request, "usuarios/nuevoForo.html", { "formulario" : formulario })
 
 def borrarForo(request, curso, foro):
-	if not request.usuer.is_authenticated():
+	if not request.user.is_authenticated():
 		raise Http404
 	else: 
 		perfil = UserProfile.objects.get( user = request.user )
@@ -311,7 +311,7 @@ def borrarForo(request, curso, foro):
 			(get_object_or_404(Foro, slug = foro)).delete()
 
 def comentarForo(request, curso, foro):
-	if not request.usuer.is_authenticated():
+	if not request.user.is_authenticated():
 		raise Http404
 	else: 
 		curso = get_object_or_404(Curso, slug = curso )
@@ -428,6 +428,9 @@ def nuevoMiembro(request, curso):
 #############################################################################################
 ###################################
 
+## Quizes
+
+#def quizes(request, curso):
 
 
 
