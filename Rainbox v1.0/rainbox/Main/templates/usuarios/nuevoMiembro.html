@@ -41,7 +41,21 @@
         <hr>
 
         <form method="post" action="" enctype="multipart/form-data">{% csrf_token %}
-        {% for field in formulario %}
+        {% for field in formulario1 %}
+
+             
+              <div class="row">
+                <div class="span6">
+                  <label>{{ field.label }}</label>
+                  {{ field }}
+                  {{ field.errors }}
+                </div>
+              </div>
+
+          {% endfor %}
+
+
+          {% for field in formulario2 %}
 
              
               <div class="row">

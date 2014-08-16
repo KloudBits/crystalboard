@@ -20,6 +20,7 @@ class nuevaClaseFormulario(ModelForm):
 class editarPerfilFormulario(ModelForm):
 	class Meta:
 		model = UserProfile
+		exclude = ('user','tipo',)
 
 
 class nuevoCapituloFormulario(ModelForm):
