@@ -26,6 +26,14 @@ urlpatterns = patterns('',
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/foros/(?P<foro>[0-9]+)/comentar/$', 'Main.views.comentarForo'),
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/foros/nuevo$', 'Main.views.nuevoForo'),
 	
+	url(r'^cursos/(?P<curso>[a-z-0-9]+)/quizes/$', 'Main.views.quizes'),
+	url(r'^cursos/(?P<curso>[a-z-0-9]+)/quizes/nuevo$', 'Main.views.nuevoQuiz'),
+	url(r'^cursos/(?P<curso>[a-z-0-9]+)/quizes/(?P<quiz>[0-9]+)/$', 'Main.views.quiz'),
+	url(r'^cursos/(?P<curso>[a-z-0-9]+)/quizes/(?P<quiz>[0-9]+)/pregunta/$', 'Main.views.pregunta'),
+	url(r'^cursos/(?P<curso>[a-z-0-9]+)/quizes/(?P<quiz>[0-9]+)/pregunta/nuevo/$', 'Main.views.nuevaPregunta'),
+	url(r'^cursos/(?P<curso>[a-z-0-9]+)/quizes/(?P<quiz>[0-9]+)/pregunta/respuesta/$', 'Main.views.nuevaRespuesta'),
+
+	
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/avisos/nuevo$', 'Main.views.nuevoAviso'),
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/avisos/(?P<aviso>[0-9]+)/$', 'Main.views.aviso'),
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/avisos/(?P<aviso>[0-9]+)/borrar/$', 'Main.views.borrarAviso'),
