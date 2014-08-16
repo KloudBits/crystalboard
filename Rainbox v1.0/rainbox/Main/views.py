@@ -14,7 +14,7 @@ from django.template.defaultfilters import slugify
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from Main.models import UserProfile, Curso, Tarea, Clase, Recurso, Capitulo, Foro, Foro_Comentario, Aviso
-from Main.forms import nuevoCursoFormulario, nuevaClaseFormulario, nuevoCapituloFormulario, nuevoForoFormulario, nuevoAvisoFormulario, registrationForm, editarPerfilFormulario
+from Main.forms import comentarForoFormulario, nuevoCursoFormulario, nuevaClaseFormulario, nuevoCapituloFormulario, nuevoForoFormulario, nuevoAvisoFormulario, registrationForm, editarPerfilFormulario
 
 ########################## LOGEO #######################################
 def ingreso_usuario( request ):
@@ -438,7 +438,7 @@ def quizes(request, curso):
 		perfil = UserProfile.objects.get( user = request.user )
 		cur = get_object_or_404(Curso, slug = curso)
 		quizes = Quiz.objects.filter(curso = cur)
-		return render(request, "usuarios/quizes.html", {"perg"})		
+		return render(request, "usuarios/quizes.html", {"perfil":perfil, ""})		
 
 
 
