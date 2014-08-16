@@ -361,6 +361,7 @@ def nuevoAviso(request, curso):
 			formulario = nuevoAvisoFormulario(request.POST)
 			if formulario.is_valid():
 				nuevo_aviso = formulario.save(commit=False)
+				nuevo_aviso.curso = curso
 				nuevo_aviso.save()
 				messages.add_message(request, messages.SUCCESS, "Registro del Aviso exitoso")
 				return HttpResponseRedirect("/")
@@ -391,3 +392,11 @@ def miembros(request, curso):
 		perfil = UserProfile.objects.get( user = request.user )
 		curso = get_object_or_404(Curso, slug, curso)
 		return render(request, "usuarios/miembros.html", {"curso":curso, "perfil":perfil, "miembros":curso.miembros})
+
+def nuevoMiembro(request, curso):
+	if not request.user.is_authenticated():
+		raise Http404
+	else:
+		perfil = UserProfile.objects.get( user = request.user )
+
+
