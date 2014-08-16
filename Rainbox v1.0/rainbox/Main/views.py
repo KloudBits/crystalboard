@@ -322,11 +322,12 @@ def comentarForo(request, curso, foro):
 			if formulario.is_valid():
 				nuevo_comentario = formulario.save(commit=False)
 				nuevo_comentario.usuario = perfil.user
+				nuevo_comentario.foro = foro
 				nuevo_comentario.save()
 				messages.add_message(request, messages.SUCCESS, "Registro de comentario exitoso")
 				return HttpResponseRedirect("/")
 		else:
-			formulario = comentarioForoFormulario()
+			formulario = comentarForoFormulario()
 		return render(request, "usuarios/comentarioForo.html", {"curso":curso, "foro":foro, "perfil":perfil, "formulario":formulario})
 
 #####################################################################################################
@@ -430,7 +431,14 @@ def nuevoMiembro(request, curso):
 
 ## Quizes
 
-#def quizes(request, curso):
+def quizes(request, curso):
+	if not request.user.is_authenticated() : 
+		raise Http404
+	else:
+		perfil = UserProfile.objects.get( user = request.user )
+		cur = get_object_or_404(Curso, slug = curso)
+		quizes = Quiz.objects.filter(curso = cur)
+		return render(request, "usuarios/quizes.html", {"perg"})		
 
 
 
