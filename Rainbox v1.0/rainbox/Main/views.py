@@ -391,14 +391,14 @@ def miembros(request, curso):
 	else:
 		perfil = UserProfile.objects.get( user = request.user )
 		cur = get_object_or_404(Curso, slug = curso)
-		return render(request, "usuarios/miembros.html", {"curso":cur, "perfil":perfil, "miembros":curso.miembros})
+		return render(request, "usuarios/miembros.html", {"curso":cur, "perfil":perfil, "miembros":cur.miembros})
 
 
 #### Hay que hacer un debug
 def nuevoMiembro(request, curso):
 	if not request.user.is_authenticated():
 		raise Http404
-	else:
+	else:2
 		perfil = UserProfile.objects.get( user = request.user )
 		curso = get_object_or_404(Curso, curso)
 		if perfil.tipo != 1:
