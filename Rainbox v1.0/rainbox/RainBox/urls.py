@@ -20,6 +20,9 @@ urlpatterns = patterns('',
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/avisos/$', 'Main.views.avisos'),
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/miembros/$', 'Main.views.miembros'),
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/miembros/nuevo$', 'Main.views.nuevoMiembro'),
+
+	url(r'^cursos/(?P<curso>[a-z-0-9]+)/foros/$', 'Main.views.foros'),
+	url(r'^cursos/(?P<curso>[a-z-0-9]+)/foros/nuevo$', 'Main.views.nuevoForo'),
 	
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/avisos/nuevo$', 'Main.views.nuevoAviso'),
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/avisos/(?P<aviso>[0-9]+)/$', 'Main.views.aviso'),
