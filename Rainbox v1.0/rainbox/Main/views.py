@@ -381,3 +381,14 @@ def borrarAviso(request, curso, aviso):
 			return HttpResponseRedirect("/")
 
 #############################################################################################################################
+#############################################################################################################################
+# miembros
+
+def miembros(request, curso):
+	if not request.user.is_authenticated():
+		raise Http404
+	else:
+		perfil = UserProfile.objects.get( user = request.user )
+		curso = get_object_or_404(Curso, slug, curso)
+		return render(request, "usuarios/miembros.html", {"curso":curso, "perfil":perfil, "miembros":curos.miembros})
+
