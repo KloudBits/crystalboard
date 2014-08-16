@@ -391,7 +391,7 @@ def miembros(request, curso):
 	else:
 		perfil = UserProfile.objects.get( user = request.user )
 		cur = get_object_or_404(Curso, slug = curso)
-		return render(request, "usuarios/miembros.html", {"curso":cur, "perfil":perfil, "miembros":cur.miembros})
+		return render(request, "usuarios/miembros.html", {"curso":cur, "perfil":perfil, "miembros":cur.miembros.list()})
 
 
 #### Hay que hacer un debug
@@ -417,7 +417,7 @@ def nuevoMiembro(request, curso):
 				formulario_perfil = editarPerfilFormulario()
 			return render(request, "usuarios/nuevoMiembro.html", {"perfil":perfil, "curso":cur, "formulario1":formulario_usuario, "formulario2":formulario_perfil })
 
-
+#############################################################################################
 
 
 
