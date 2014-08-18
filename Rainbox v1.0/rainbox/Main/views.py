@@ -501,7 +501,7 @@ def borrarPregunta(request, curso, quiz, pregunta):
 			(get_object_or_404(Quiz_Pregunta, id=pregunta)).delete()
 			return HttpResponseRedirect("/curso/" + curso + "/quizes/" + quiz + "/")
 
-def pregunta(request, curso, quiz, pregunta):
+def preguntas(request, curso, quiz, pregunta):
 	if not request.user.is_authenticated():
 		raise Http404
 	else:

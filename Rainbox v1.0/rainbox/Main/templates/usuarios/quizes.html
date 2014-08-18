@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<div class="container">
+
+<div class="row">
+<h1 class="span12">Nombre del curso</h1>
+
+<div class="span12">
+    <ul class="breadcrumb">
+      <li><a href="http://www.ansonika.com/edu/index.html">Home</a> <span class="divider">/</span></li>
+      <li><a href="http://www.ansonika.com/edu/all-courses.html">All Courses</a> <span class="divider">/</span></li>
+      <li class="active">Administration</li>
+    </ul>
+</div>
+
+<!-- =========================Start Col left section ============================= -->
+<aside class="span4 ">
+	<div class="col-left">
+    	<h3>Menú</h3>
+            <ul class="submenu-col">
+                <li><a href="/cursos/{{ curso.slug }}/miembros/">Miembros</a></li>
+                <li><a href="/cursos/{{ curso.slug }}/capitulos/">Capítulos</a></li>
+                <li><a href="/cursos/{{ curso.slug }}/clases/">Clases</a></li>
+                <li><a href="/cursos/{{ curso.slug }}/avisos/">Avisos</a></li>
+                <li><a href="/cursos/{{ curso.slug }}/foros/">Foros</a></li>
+                <li><a href="/cursos/{{ curso.slug }}/quizzes/">Quizzes</a></li>
+
+    
+    
+    
+    
+    
+ 
+
+               
+            </ul>
+            
+            <hr>
+            
+            <h5>Upcoming Courses</h5>
+            <p>Suspendisse quis risus turpis, ut pharetra arcu. Donec 
+adipiscing, quam non faucibus luctus, mi arcu blandit diam, at faucibus 
+mi ante vel augue.</p>
+            <p><a href="#" class=" button_red_small">View Courses</a></p>
+            
+    </div>
+    <p><img src="{{ STATIC_URL }}img/banner.jpg" alt="Banner" class="img-rounded"></p>
+</aside>
+
+ <!-- =========================Start Col right section ============================= -->
+<section class="span8  ">
+	<div class="col-right">
+    	<div class="main-img">
+            <img src="{{ STATIC_URL }}img/pic-4.jpg" alt="">
+            <p class="lead">Tibique dolores adversarium ne vel. At vide errem duo, vis luptatum menandri ullamcorper id. </p>
+        </div>
+        
+       
+        
+        
+        
+      
+        
+       
+        {% for quiz in quizes %}
+            {{ quiz }}
+		{% endfor %}
+					
+        
+    
+        <p class="text-center"><a href="http://www.ansonika.com/edu/contact.html" class="button_large">Apply now </a></p>
+       
+           
+    </div><!-- end col right-->	
+</section>
+</div><!-- end row-->
+</div> <!-- end container-->
+  
+
+{% endblock %}

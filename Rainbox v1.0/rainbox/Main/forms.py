@@ -48,6 +48,23 @@ class nuevoForoFormulario(ModelForm):
 		model = Foro
 		exclude = ('curso',)
 
+#Sobre Quiz
+class nuevaRespuestaFormulario(ModelForm):
+	class Meta:
+		model = Quiz_Respuesta
+		exclude = ('pregunta',)
+
+class nuevaPreguntaFormulario(ModelForm):
+	class Meta:
+		model = Quiz_Pregunta
+		exclude = ('prueba',)
+
+class nuevoQuizFormulario(ModelForm):
+	class Meta:
+		model = Quiz
+		exclude = ('curso','fecha_creacion',)
+#----
+
 class registrationForm(forms.ModelForm):
 	email = forms.EmailField(label="Correo electrónico", widget=forms.TextInput(attrs={'class':'form-control'}))
 	password1 = forms.CharField(label="Contraseña", widget=forms.PasswordInput(attrs={'class':'form-control'}))
