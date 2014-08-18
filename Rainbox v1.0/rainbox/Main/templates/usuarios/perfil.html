@@ -16,12 +16,9 @@
 	<div class="col-left">
     	<h3>Menú</h3>
             <ul class="submenu-col">
-                <li><a href="/cursos/{{ curso.slug }}/miembros/">Miembros</a></li>
-                <li><a href="/cursos/{{ curso.slug }}/capitulos/">Capítulos</a></li>
-                <li><a href="/cursos/{{ curso.slug }}/clases/">Clases</a></li>
-                <li><a href="/cursos/{{ curso.slug }}/avisos/">Avisos</a></li>
-                <li><a href="/cursos/{{ curso.slug }}/foros/">Foros</a></li>
-                <li><a href="/cursos/{{ curso.slug }}/quizes/">Quizzes</a></li>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/cursos/">Mis cursos</a></li>
+                <li><a href="/info/" id="active">Mi información</a></li>
             </ul>
             
             <hr>
@@ -36,14 +33,14 @@
  
 <section class="span8  ">
 	<div class="col-right">
-    	  <div class="main-img">
-            <img src="{{ STATIC_URL}}img/pic-2.jpg" alt="">
+    	<div class="main-img">
+            <img src="{{ STATIC_URL }}img/pic-2.jpg" alt="">
             <p class="lead">Desde este panel podrás administrar cada uno de tus cursos. </p>
         </div>  
               
-        <hr>
-
-        <form method="post" action="" enctype="multipart/form-data">{% csrf_token %}
+         
+          
+           <form method="post" action="" enctype="multipart/form-data">{% csrf_token %}
         {% for field in formulario %}
 
              
@@ -57,6 +54,9 @@
 
           {% endfor %}
 
+
+          
+
           <div class="row">
             <div class="button-align">
               <input type="submit" value="Guardar" class="button_medium">
@@ -64,10 +64,11 @@
           </div>
        
         </form>
-           
-           
+          
+          
+            
+            
     </div><!-- end col right-->
-
 	
 </section>
 

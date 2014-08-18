@@ -4,11 +4,11 @@
 <div class="container">
 
 <div class="row">
-<h1 class="span12">Panel de administración</h1>
+<h1 class="span12">{{ curso }}</h1>
 	<div class="span12">
         <ul class="breadcrumb">
-          <li><a href="#">Inicio</a> <span class="divider">/</span></li>
-          <li class="active">Panel de administración</li>
+          <li><a href="/cursos/{{ curso.slug }}/">{{ curso }}</a> <span class="divider">/</span></li>
+          <li class="active">Clases</li>
         </ul>
     </div>
 <!-- =========================Start Col left section ============================= -->
@@ -17,11 +17,10 @@
     	<h3>Menú</h3>
             <ul class="submenu-col">
                 <li><a href="/cursos/{{ curso.slug }}/miembros/">Miembros</a></li>
-                <li><a href="/cursos/{{ curso.slug }}/capitulos/">Capítulos</a></li>
                 <li><a href="/cursos/{{ curso.slug }}/clases/">Clases</a></li>
-                <li><a href="/cursos/{{ cursp.slug }}/avisos/">Avisos</a></li>
-                <li><a href="/cursos/{{ cursp.slug }}/foros/">Foros</a></li>
-                <li><a href="/cursos/{{ cursp.slug }}/quizzes/">Quizzes</a></li>
+                <li><a href="/cursos/{{ curso.slug }}/avisos/">Avisos</a></li>
+                <li><a href="/cursos/{{ curso.slug }}/foros/">Foros</a></li>
+                <li><a href="/cursos/{{ curso.slug }}/quizzes/">Quizzes</a></li>
             </ul>
             
             <hr>
@@ -41,46 +40,25 @@
             <p class="lead">Desde este panel podrás administrar cada uno de tus cursos. </p>
         </div>  
               
-           <div class="strip-courses">
-       		 <div class="title-course">
-   			   <h3>Administration <img src="{{ STATIC_URL }}img/new.png" alt="New"></h3>
-               <ul>
-               		<li><i class="icon-calendar"></i> Start date: 24/06/13</li>
-                    <li><i class="icon-bookmark"></i> ID: 012</li>
-               </ul>
-             </div>
-                <div class="description">
-                	<p>An utinam reprimique duo, putant mandamus cu qui. 
-Autem possim his cu, quodsi nominavi fabellas ut sit, mea ea ullum 
-epicurei. Saepe tantas ocurreret duo ea, has facilisi vulputate an. 
-Priaeque iuvaret nominati et, ad mea clita numquam. Maluisset 
-dissentiunt et per, dico liber erroribus vis te. Dolor consul graecis 
-nec ut, scripta eruditi scriptorem et nam.</p>
-                    <ul>
-                    	<li><i class="icon-book"></i> 10 Lessons</li>
-                        <li><i class="icon-reorder"></i> Level Intermediate</li>
-                    </ul>
-                <a href="http://www.ansonika.com/edu/course-detail.html" class="button_medium button-align-2">Read more </a>
-                </div>
-            </div><!-- end strip-->
+           
             
-            {% for curso in cursos %}
+            {% for clase in clases %}
             <div class="strip-courses gray">
        		 <div class="title-course">
-   			   <h3>{{ curso.nombre }}</h3>
+   			   <h3>{{ clase.titulo }}</h3>
                <ul>
                		<li><i class="icon-calendar"></i> Start date: 24/06/13</li>
                     <li><i class="icon-bookmark"></i> ID: 012</li>
                </ul>
              </div>
                 <div class="description">
-                	<p>{{ curso.resumen }}</p>
+                	<p>{{ clase.resumen }}</p>
                     <ul>
                     	<li><i class="icon-book"></i> 10 Lessons</li>
                         <li><i class="icon-reorder"></i> Level Basic</li>
                         <li class="online"><i class="icon-laptop"></i> Online</li>
                     </ul>
-                    <a href="/cursos/{{ curso.slug }}/" class="button_medium button-align-2">Ver curso</a>
+                    <a href="/cursos/{{ curso.slug }}/" class="button_medium button-align-2">Ver clase</a>
                 </div>
             </div><!-- end strip-->
             
@@ -89,17 +67,10 @@ nec ut, scripta eruditi scriptorem et nam.</p>
            
             
              <hr>
-           
-           <div class="pagination pagination-centered">
-               <ul>
-                    <li><a href="#">Prev</a></li>
-                    <li class="active"><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">Next</a></li>
-              </ul>
-          </div><!-- end pagination-->
-           
+            
+            <p class="text-center"><a href="/cursos/{{ curso.slug }}/capitulos/nuevo/" class="button_large">Nuevo capítulo</a></p>
+            <p class="text-center"><a href="/cursos/{{ curso.slug }}/clases/nuevo/" class="button_large">Nueva clase</a></p>
+
     </div><!-- end col right-->
 	
 </section>

@@ -76,6 +76,7 @@ class Recurso( models.Model ):
 
 ################### AVISO ######################
 class Aviso( models.Model ):
+    fecha = models.DateField(auto_now=True)
     curso = models.ForeignKey( Curso ) # ID del Curso al que pertenece el Aviso
     titulo = models.CharField( max_length = 30 ) # Titulo del aviso
     texto = models.TextField( ) # Información del Aviso

@@ -4,13 +4,11 @@
 <div class="container">
 
 <div class="row">
-<h1 class="span12">Nombre del curso</h1>
+<h1 class="span12">{{ curso }}</h1>
 
 <div class="span12">
     <ul class="breadcrumb">
-      <li><a href="http://www.ansonika.com/edu/index.html">Home</a> <span class="divider">/</span></li>
-      <li><a href="http://www.ansonika.com/edu/all-courses.html">All Courses</a> <span class="divider">/</span></li>
-      <li class="active">Administration</li>
+      <li class="active">{{ curso }}</li>
     </ul>
 </div>
 
@@ -24,7 +22,7 @@
                 <li><a href="/cursos/{{ curso.slug }}/clases/">Clases</a></li>
                 <li><a href="/cursos/{{ curso.slug }}/avisos/">Avisos</a></li>
                 <li><a href="/cursos/{{ curso.slug }}/foros/">Foros</a></li>
-                <li><a href="/cursos/{{ curso.slug }}/quizzes/">Quizzes</a></li>
+                <li><a href="/cursos/{{ curso.slug }}/quizes/">Quizzes</a></li>
 
     
     
@@ -52,7 +50,7 @@ mi ante vel augue.</p>
 <section class="span8  ">
 	<div class="col-right">
     	<div class="main-img">
-            <img src="{{ STATIC_URL }}img/pic-4.jpg" alt="">
+            <img src="{{ STATIC_URL }}img/pic-2.jpg" alt="">
             <p class="lead">Tibique dolores adversarium ne vel. At vide errem duo, vis luptatum menandri ullamcorper id. </p>
         </div>
         

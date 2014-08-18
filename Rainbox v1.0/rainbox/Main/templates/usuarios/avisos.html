@@ -4,13 +4,12 @@
 <div class="container">
 
 <div class="row">
-<h1 class="span12">Nombre del curso</h1>
+<h1 class="span12">{{ curso }}</h1>
 
 <div class="span12">
     <ul class="breadcrumb">
-      <li><a href="http://www.ansonika.com/edu/index.html">Home</a> <span class="divider">/</span></li>
-      <li><a href="http://www.ansonika.com/edu/all-courses.html">All Courses</a> <span class="divider">/</span></li>
-      <li class="active">Administration</li>
+      <li><a href="/cursos/{{ curso.slug }}/">{{ curso }}</a> <span class="divider">/</span></li>
+      <li class="active">Avisos</li>
     </ul>
 </div>
 
@@ -24,7 +23,7 @@
                 <li><a href="/cursos/{{ curso.slug }}/clases/">Clases</a></li>
                 <li><a href="/cursos/{{ curso.slug }}/avisos/">Avisos</a></li>
                 <li><a href="/cursos/{{ curso.slug }}/foros/">Foros</a></li>
-                <li><a href="/cursos/{{ curso.slug }}/quizzes/">Quizzes</a></li>
+                <li><a href="/cursos/{{ curso.slug }}/quizes/">Quizzes</a></li>
             </ul>
             
             <hr>
@@ -43,16 +42,44 @@ mi ante vel augue.</p>
 <section class="span8  ">
 	<div class="col-right">
     	<div class="main-img">
-            <img src="{{ STATIC_URL }}img/pic-4.jpg" alt="">
+            <img src="{{ STATIC_URL }}img/pic-2.jpg" alt="">
             <p class="lead">Tibique dolores adversarium ne vel. At vide errem duo, vis luptatum menandri ullamcorper id. </p>
         </div>
         
-       
+
+       <div class=" builder-column col-lg-8 col-md-8 col-sm-8 eight lv-1 index-2 last ">
+       <div class="bd-row clearfix row-2 lv-2 last">
+        <div class="item-inner stpb-custom-event"> <div class="news-strip list">
+       <ul>
+
         {% for aviso in avisos %}
-            <p>{{ aviso }}</p>
-        {% endfor %}
+
+        <li class="use-editor post-145 event type-event status-publish hentry clearfix img-type-full-width"  id="post-145">
     
-        <p class="text-center"><a href="http://www.ansonika.com/edu/contact.html" class="button_large">Apply now </a></p>
+            <div class="date-news">
+                <strong>{{ aviso.fecha|date:'d' }}</strong>
+                de {{ aviso.fecha|date:'M' }} del {{ aviso.fecha|date:'Y' }}
+            </div>
+            
+            <div class="col-lg-9 col-md-9 col-sm-9">
+                <h5>
+                    <a href="#" title="{{ aviso }}"><i class="iconentypo-newspaper"></i>{{ aviso }}</a>
+                </h5>
+                <p>{{ aviso.texto }}</p>
+            </div>
+        </li>
+        {% endfor %}
+
+    </ul>
+</div>
+
+</div>
+
+</div>
+
+
+    
+        <p class="text-center"><a href="/cursos/{{ curso.slug }}/avisos/nuevo/" class="button_large">Nuevo aviso</a></p>
        
            
     </div><!-- end col right-->	

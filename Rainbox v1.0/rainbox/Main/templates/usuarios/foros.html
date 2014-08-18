@@ -40,19 +40,34 @@ mi ante vel augue.</p>
 </aside>
 
  <!-- =========================Start Col right section ============================= -->
-<section class="span8  ">
+<section class="span8">
 	<div class="col-right">
     	<div class="main-img">
-            <img src="{{ STATIC_URL }}img/pic-4.jpg" alt="">
+            <img src="{{ STATIC_URL }}img/pic-2.jpg" alt="">
             <p class="lead">Tibique dolores adversarium ne vel. At vide errem duo, vis luptatum menandri ullamcorper id. </p>
         </div>
         
-       
+
         {% for foro in foros %}
-            <p>{{ foro }}</p>
+        <div class="strip-staff">
+                <div class="row">
+                    <div class="span2 pic-teacher">
+                        <div class="borders"><img src="{{ STATIC_URL }}img/teacher.jpg" alt="" class=" img-rounded"></div>
+                    </div>
+                    <div class="span5">
+                        <h4>{{ foro }} <em>{{ foro.fecha }}</em></h4>
+                        <p>
+                            {{ foro.texto }}
+                        </p>
+                        <ul class="data-staff">
+                            <p><a href="/cursos/{{ curso.slug }}/foros/{{ foro.id }}/" class="button_red_small" title="staff">Entrar</a></p>
+                        </ul>
+                    </div>
+                </div>
+            </div><!-- End Strip staff -->
         {% endfor %}
     
-        <p class="text-center"><a href="http://www.ansonika.com/edu/contact.html" class="button_large">Apply now </a></p>
+        <p class="text-center"><a href="/cursos/{{ curso.slug }}/foros/nuevo/" class="button_large">Nuevo foro </a></p>
        
            
     </div><!-- end col right-->	

@@ -146,13 +146,14 @@ def clases( request, curso ):
 	if not request.user.is_authenticated( ):
 		raise Http404
 	else:
-		clases = Clase.objects.filter(capitulo__curso__slug = curso )
+		curso = get_object_or_404(Curso, slug=curso)
+		clases = Clase.objects.filter(capitulo__curso = curso )
 		perfil = UserProfile.objects.get( user = request.user )
 		if perfil.tipo == 1: # Tipo de perfil de usuario ( Admin )
 			template = "usuarios/clases.html"
 		elif perfil.tipo == 2: # Tipo de perfil miembro ( Consumidor )
 			template = "miembros/clases.html"
-		return render( request, template, { "clases" : clases } )
+		return render( request, template, { "clases" : clases, "curso":curso } )
 
 ###############################  Clase ##################################
 def clase( request, curso, clase ):
@@ -180,10 +181,10 @@ def nuevaClase( request, curso ):
 			if request.method == "POST":
 				formulario = nuevaClaseFormulario( request.POST )
 				if formulario.is_valid( ) :
-					nueva_clase = formulario.save( commit = False )
-					nueva_clase.save( )
+					formulario.save(  )
+					
 					messages.add_message( request, messages.SUCCESS, "Registro de Clase Exitoso")
-					return HttpResponseRedirect( '/' )
+					return HttpResponseRedirect( '/cursos/'+curso+'/clases/' )
 			else: 
 				formulario = nuevaClaseFormulario( request.POST )
 			return  render( request, "usuarios/nuevaClase.html", { "formulario" : formulario } )
@@ -363,7 +364,7 @@ def nuevoAviso(request, curso):
 				nuevo_aviso.curso = curso
 				nuevo_aviso.save()
 				messages.add_message(request, messages.SUCCESS, "Registro del Aviso exitoso")
-				return HttpResponseRedirect("cursos/" + curso.slug + "/avisos/")
+				return HttpResponseRedirect("/cursos/" + curso.slug + "/avisos/")
 		else:
 			formulario = nuevoAvisoFormulario()
 		return render(request, "usuarios/nuevoAviso.html", {"curso": curso, "perfil":perfil, "formulario":formulario})
