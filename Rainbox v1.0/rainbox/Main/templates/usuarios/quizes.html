@@ -4,13 +4,12 @@
 <div class="container">
 
 <div class="row">
-<h1 class="span12">Nombre del curso</h1>
+<h1 class="span12">{{ curso }}</h1>
 
 <div class="span12">
     <ul class="breadcrumb">
-      <li><a href="http://www.ansonika.com/edu/index.html">Home</a> <span class="divider">/</span></li>
-      <li><a href="http://www.ansonika.com/edu/all-courses.html">All Courses</a> <span class="divider">/</span></li>
-      <li class="active">Administration</li>
+      <li><a href="/cursos/{{ curso }}/">{{ curso }}</a> <span class="divider">/</span></li>
+      <li class="active">Quizes</li>
     </ul>
 </div>
 
@@ -24,7 +23,7 @@
                 <li><a href="/cursos/{{ curso.slug }}/clases/">Clases</a></li>
                 <li><a href="/cursos/{{ curso.slug }}/avisos/">Avisos</a></li>
                 <li><a href="/cursos/{{ curso.slug }}/foros/">Foros</a></li>
-                <li><a href="/cursos/{{ curso.slug }}/quizzes/">Quizzes</a></li>
+                <li><a href="/cursos/{{ curso.slug }}/quizes/">Quizzes</a></li>
 
     
     
@@ -60,16 +59,53 @@ mi ante vel augue.</p>
         
         
         
+        <div class="widget borders widget-table">
+                    
+                    <div class="widget-header">
+                        <h5>Miembros</h5>
+                    </div> <!-- .widget-header -->
+                    
+                    <div class="widget-content">
+                        <table class="table table-bordered table-striped">
+                            
+                            <thead>
+                            <tr>                                
+                                <th>Quiz</th>
+                                <th>Intentos</th>
+                                <th>Fecha de inicio</th>
+                                <th>Fecha de término</th>
+                                <th>Eliminar</th>
+                            </tr></thead>
+                    
+                            <tbody>
+
+                                {% for quiz in quizes %}
+                                <tr>
+                                    <td>{{ quiz }}</td>
+                                    <td>{{ quiz.intentos }}</td>
+                                    <td>{{ quiz.fecha_inicio }}</td>
+                                    <td>{{ quiz.fecha_limite }}</td>
+                                    <td> <a href="">X</a> </td>
+                                </tr>
+                                {% endfor %}
+ 
+                            </tbody>
+                        </table>
+                        
+                    </div> <!-- .widget-content -->
+                    
+        </div> <!-- /widget --> 
+
+
       
         
-       
-        {% for quiz in quizes %}
-            {{ quiz }}
-		{% endfor %}
+      
+
+    
 					
         
     
-        <p class="text-center"><a href="http://www.ansonika.com/edu/contact.html" class="button_large">Apply now </a></p>
+        <p class="text-center"><a href="/cursos/{{ curso.slug }}/quizes/nuevo/" class="button_large">Nuevo Quizz </a></p>
        
            
     </div><!-- end col right-->	

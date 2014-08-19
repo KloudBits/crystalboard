@@ -24,7 +24,16 @@
                 <li><a href="/cursos/{{ curso.slug }}/clases/">Clases</a></li>
                 <li><a href="/cursos/{{ curso.slug }}/avisos/">Avisos</a></li>
                 <li><a href="/cursos/{{ curso.slug }}/foros/">Foros</a></li>
-                <li><a href="/cursos/{{ curso.slug }}/quizes/">Quizzes</a></li>
+                <li><a href="/cursos/{{ curso.slug }}/quizzes/">Quizzes</a></li>
+
+    
+    
+    
+    
+    
+ 
+
+               
             </ul>
             
             <hr>
@@ -43,37 +52,24 @@ mi ante vel augue.</p>
 <section class="span8  ">
 	<div class="col-right">
     	<div class="main-img">
-            <img src="{{ STATIC_URL }}img/pic-2.jpg" alt="">
+            <img src="{{ STATIC_URL }}img/pic-4.jpg" alt="">
             <p class="lead">Tibique dolores adversarium ne vel. At vide errem duo, vis luptatum menandri ullamcorper id. </p>
         </div>
         
        
-        <h4>{{ foro }}</h4>
-
-        <p class="lead">{{ foro.texto }}</p>
-
-
-
-        {% for comentario in comentarios %}
-            <div class="strip-courses gray">
-             <div class="title-course">
-               <h3>{{ comentario.usuario.first_name }}</h3>
-               <ul>
-                    <li><i class="icon-calendar"></i> Fecha: {{ comentario.fecha }}</li>
-               </ul>
-             </div>
-                <div class="description">
-                    <p>{{ comentario.comentario }}</p>
-                    
-                </div>
-            </div><!-- end strip-->
-            
-            {% endfor %}
-           
-
+        
+        
+        
+      
+        
        
+        {% for pregunta in preguntas %}
+            {{ pregunta }}
+		{% endfor %}
+					
+        
     
-        <p class="text-center"><a href="/cursos/{{ curso.slug }}/foros/{{ foro.id }}/comentar/" class="button_large">Participar </a></p>
+        <p class="text-center"><a href="http://www.ansonika.com/edu/contact.html" class="button_large">Apply now </a></p>
        
            
     </div><!-- end col right-->	

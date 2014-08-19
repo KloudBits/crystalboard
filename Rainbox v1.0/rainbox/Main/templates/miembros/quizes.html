@@ -4,13 +4,12 @@
 <div class="container">
 
 <div class="row">
-<h1 class="span12">Nombre del curso</h1>
+<h1 class="span12">{{ curso }}</h1>
 
 <div class="span12">
     <ul class="breadcrumb">
-      <li><a href="http://www.ansonika.com/edu/index.html">Home</a> <span class="divider">/</span></li>
-      <li><a href="http://www.ansonika.com/edu/all-courses.html">All Courses</a> <span class="divider">/</span></li>
-      <li class="active">Administration</li>
+      <li><a href="/cursos/{{ curso }}/">{{ curso }}</a> <span class="divider">/</span></li>
+      <li class="active">Quizes</li>
     </ul>
 </div>
 
@@ -25,6 +24,15 @@
                 <li><a href="/cursos/{{ curso.slug }}/avisos/">Avisos</a></li>
                 <li><a href="/cursos/{{ curso.slug }}/foros/">Foros</a></li>
                 <li><a href="/cursos/{{ curso.slug }}/quizes/">Quizzes</a></li>
+
+    
+    
+    
+    
+    
+ 
+
+               
             </ul>
             
             <hr>
@@ -43,37 +51,39 @@ mi ante vel augue.</p>
 <section class="span8  ">
 	<div class="col-right">
     	<div class="main-img">
-            <img src="{{ STATIC_URL }}img/pic-2.jpg" alt="">
+            <img src="{{ STATIC_URL }}img/pic-4.jpg" alt="">
             <p class="lead">Tibique dolores adversarium ne vel. At vide errem duo, vis luptatum menandri ullamcorper id. </p>
         </div>
         
        
-        <h4>{{ foro }}</h4>
-
-        <p class="lead">{{ foro.texto }}</p>
-
-
-
-        {% for comentario in comentarios %}
-            <div class="strip-courses gray">
-             <div class="title-course">
-               <h3>{{ comentario.usuario.first_name }}</h3>
-               <ul>
-                    <li><i class="icon-calendar"></i> Fecha: {{ comentario.fecha }}</li>
-               </ul>
-             </div>
-                <div class="description">
-                    <p>{{ comentario.comentario }}</p>
-                    
+        
+        
+        
+      
+        {% for quiz in quizes %}
+        <div class="strip-staff">
+                <div class="row">
+                    <div class="span2 pic-teacher">
+                        <div class="borders"><img src="{{ STATIC_URL }}img/teacher.jpg" alt="" class=" img-rounded"></div>
+                    </div>
+                    <div class="span5">
+                        <h4>{{ quiz }} <em>Fecha límite: {{ quiz.fecha_limite }}</em></h4>
+                        <p>
+                            Intentos posibles: {{ quiz.intentos }}
+                        </p>
+                        <ul class="data-staff">
+                            <p><a href="/cursos/{{ curso.slug }}/quizes/{{ quiz.id }}/" class="button_red_small" title="staff">Comenzar</a></p>
+                        </ul>
+                    </div>
                 </div>
-            </div><!-- end strip-->
-            
-            {% endfor %}
-           
+            </div><!-- End Strip staff -->
+        {% endfor %}
 
-       
     
-        <p class="text-center"><a href="/cursos/{{ curso.slug }}/foros/{{ foro.id }}/comentar/" class="button_large">Participar </a></p>
+					
+        
+    
+        <p class="text-center"><a href="/cursos/{{ curso.slug }}/quizes/nuevo/" class="button_large">Nuevo Quizz </a></p>
        
            
     </div><!-- end col right-->	
