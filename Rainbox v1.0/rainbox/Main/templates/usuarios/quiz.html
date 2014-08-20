@@ -4,13 +4,12 @@
 <div class="container">
 
 <div class="row">
-<h1 class="span12">Nombre del curso</h1>
+<h1 class="span12">{{ curso }}</h1>
 
 <div class="span12">
     <ul class="breadcrumb">
-      <li><a href="http://www.ansonika.com/edu/index.html">Home</a> <span class="divider">/</span></li>
-      <li><a href="http://www.ansonika.com/edu/all-courses.html">All Courses</a> <span class="divider">/</span></li>
-      <li class="active">Administration</li>
+      <li><a href="/cursos/{{ curso.slug }}/">{{ curso }}</a> <span class="divider">/</span></li>
+      <li><a href="/cursos/{{ curso.slug }}/quizes/">Quizes</a> <span class="divider">/</span></li>
     </ul>
 </div>
 
@@ -25,13 +24,6 @@
                 <li><a href="/cursos/{{ curso.slug }}/avisos/">Avisos</a></li>
                 <li><a href="/cursos/{{ curso.slug }}/foros/">Foros</a></li>
                 <li><a href="/cursos/{{ curso.slug }}/quizzes/">Quizzes</a></li>
-
-    
-    
-    
-    
-    
- 
 
                
             </ul>
@@ -63,13 +55,42 @@ mi ante vel augue.</p>
       
         
        
-        {% for pregunta in preguntas %}
-            {{ pregunta }}
-		{% endfor %}
+      <div class="widget borders widget-table">
+                    
+                    <div class="widget-header">
+                        <h5>Preguntas</h5>
+                    </div> <!-- .widget-header -->
+                    
+                    <div class="widget-content">
+                        <table class="table table-bordered table-striped">
+                            
+                            <thead>
+                            <tr>                                
+                                <th>Pregunta</th>
+                                <th>Ver</th>
+                                <th>Eliminar</th>
+                            </tr></thead>
+                    
+                            <tbody>
+
+                                {% for pregunta in preguntas %}
+                                <tr>
+                                    <td>{{ pregunta }}</td>
+                                    <td> <a href="/cursos/{{ curso.slug }}/quizes/{{ quiz.id }}/preguntas/{{ pregunta.id }}/">X</a> </td>
+                                    <td> <a href="">X</a> </td>
+                                </tr>
+                                {% endfor %}
+ 
+                            </tbody>
+                        </table>
+                        
+                    </div> <!-- .widget-content -->
+                    
+        </div> <!-- /widget --> 
 					
         
     
-        <p class="text-center"><a href="http://www.ansonika.com/edu/contact.html" class="button_large">Apply now </a></p>
+        <p class="text-center"><a href="/cursos/{{ curso.slug }}/quizes/{{ quiz.id }}/preguntas/nuevo" class="button_large">Nueva pregunta </a></p>
        
            
     </div><!-- end col right-->	

@@ -74,6 +74,7 @@ mi ante vel augue.</p>
                                 <th>Intentos</th>
                                 <th>Fecha de inicio</th>
                                 <th>Fecha de término</th>
+                                <th>Ver</th>
                                 <th>Eliminar</th>
                             </tr></thead>
                     
@@ -85,6 +86,7 @@ mi ante vel augue.</p>
                                     <td>{{ quiz.intentos }}</td>
                                     <td>{{ quiz.fecha_inicio }}</td>
                                     <td>{{ quiz.fecha_limite }}</td>
+                                    <td> <a href="/cursos/{{ curso.slug }}/quizes/{{ quiz.id }}/">X</a> </td>
                                     <td> <a href="">X</a> </td>
                                 </tr>
                                 {% endfor %}
