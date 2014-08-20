@@ -48,46 +48,24 @@ mi ante vel augue.</p>
         </div>
         
 
-
-        <div class="widget borders widget-table">
-                    
-                    <div class="widget-header">
-                        <h5>Miembros</h5>
-                    </div> <!-- .widget-header -->
-                    
-                    <div class="widget-content">
-                        <table class="table table-bordered table-striped">
-                            
-                            <thead>
-                            <tr>                                
-                                <th>Nombre</th>
-                                <th>Fecha</th>
-                                <th>Texto</th>
-                                <th>Ver</th>
-                                <th>Eliminar</th>
-                            </tr></thead>
-                    
-                            <tbody>
-
-                                {% for foro in foros %}
-                                <tr>
-                                    <td>{{ foro }}</td>
-                                    <td>{{ foro.fecha }}</td>
-                                    <td>{{ foro.texto }}</td>
-                                    <td> <a href="/cursos/{{ curso.slug }}/foros/{{ foro.id }}/">X</a> </td>
-                                    <td> <a href="">X</a> </td>
-                                </tr>
-                                {% endfor %}
- 
-                            </tbody>
-                        </table>
-                        
-                    </div> <!-- .widget-content -->
-                    
-        </div> <!-- /widget --> 
-
-
-        
+        {% for foro in foros %}
+        <div class="strip-staff">
+                <div class="row">
+                    <div class="span2 pic-teacher">
+                        <div class="borders"><img src="{{ STATIC_URL }}img/teacher.jpg" alt="" class=" img-rounded"></div>
+                    </div>
+                    <div class="span5">
+                        <h4>{{ foro }} <em>{{ foro.fecha }}</em></h4>
+                        <p>
+                            {{ foro.texto }}
+                        </p>
+                        <ul class="data-staff">
+                            <p><a href="/cursos/{{ curso.slug }}/foros/{{ foro.id }}/" class="button_red_small" title="staff">Entrar</a></p>
+                        </ul>
+                    </div>
+                </div>
+            </div><!-- End Strip staff -->
+        {% endfor %}
     
         <p class="text-center"><a href="/cursos/{{ curso.slug }}/foros/nuevo/" class="button_large">Nuevo foro </a></p>
        

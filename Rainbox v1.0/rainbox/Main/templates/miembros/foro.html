@@ -40,56 +40,40 @@ mi ante vel augue.</p>
 </aside>
 
  <!-- =========================Start Col right section ============================= -->
-<section class="span8">
+<section class="span8  ">
 	<div class="col-right">
     	<div class="main-img">
             <img src="{{ STATIC_URL }}img/pic-2.jpg" alt="">
             <p class="lead">Tibique dolores adversarium ne vel. At vide errem duo, vis luptatum menandri ullamcorper id. </p>
         </div>
         
+       
+        <h4>{{ foro }}</h4>
+
+        <p class="lead">{{ foro.texto }}</p>
 
 
-        <div class="widget borders widget-table">
+
+        {% for comentario in comentarios %}
+            <div class="strip-courses gray">
+             <div class="title-course">
+               <h3>{{ comentario.usuario.first_name }}</h3>
+               <ul>
+                    <li><i class="icon-calendar"></i> Fecha: {{ comentario.fecha }}</li>
+               </ul>
+             </div>
+                <div class="description">
+                    <p>{{ comentario.comentario }}</p>
                     
-                    <div class="widget-header">
-                        <h5>Miembros</h5>
-                    </div> <!-- .widget-header -->
-                    
-                    <div class="widget-content">
-                        <table class="table table-bordered table-striped">
-                            
-                            <thead>
-                            <tr>                                
-                                <th>Nombre</th>
-                                <th>Fecha</th>
-                                <th>Texto</th>
-                                <th>Ver</th>
-                                <th>Eliminar</th>
-                            </tr></thead>
-                    
-                            <tbody>
+                </div>
+            </div><!-- end strip-->
+            
+            {% endfor %}
+           
 
-                                {% for foro in foros %}
-                                <tr>
-                                    <td>{{ foro }}</td>
-                                    <td>{{ foro.fecha }}</td>
-                                    <td>{{ foro.texto }}</td>
-                                    <td> <a href="/cursos/{{ curso.slug }}/foros/{{ foro.id }}/">X</a> </td>
-                                    <td> <a href="">X</a> </td>
-                                </tr>
-                                {% endfor %}
- 
-                            </tbody>
-                        </table>
-                        
-                    </div> <!-- .widget-content -->
-                    
-        </div> <!-- /widget --> 
-
-
-        
+       
     
-        <p class="text-center"><a href="/cursos/{{ curso.slug }}/foros/nuevo/" class="button_large">Nuevo foro </a></p>
+        <p class="text-center"><a href="/cursos/{{ curso.slug }}/foros/{{ foro.id }}/comentar/" class="button_large">Participar </a></p>
        
            
     </div><!-- end col right-->	
