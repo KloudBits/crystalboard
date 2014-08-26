@@ -55,6 +55,7 @@ class Clase( models.Model ):
     def save( self, *args, **kwargs):
         if self.titulo:
             self.slug = slugify(self.titulo)
+        super(Clase, self).save(*args, **kwargs)
 ################################################
 
 ################# Recurso ######################
