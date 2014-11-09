@@ -7,10 +7,13 @@
         </div>
         
        
-      <div class="widget borders widget-table">
+        
+        
+        
+        <div class="widget borders widget-table">
                     
                     <div class="widget-header">
-                        <h5>Preguntas</h5>
+                        <h5>Tareas</h5>
                     </div> <!-- .widget-header -->
                     
                     <div class="widget-content">
@@ -18,18 +21,22 @@
                             
                             <thead>
                             <tr>                                
-                                <th>Pregunta</th>
-                                <th>Ver</th>
-                                <th>Eliminar</th>
+                                <th>Título</th>
+                                <th>Descripción</th>
+                                <th>Fecha de registro</th>
+                                <th>Fecha límite</th>
+                                <th>Puntos</th>
                             </tr></thead>
                     
                             <tbody>
 
-                                {% for pregunta in preguntas %}
+                                {% for tarea in tareas %}
                                 <tr>
-                                    <td>{{ pregunta }}</td>
-                                    <td> <a href="/cursos/{{ curso.slug }}/quizzes/{{ quiz.id }}/preguntas/{{ pregunta.id }}/">X</a> </td>
-                                    <td> <a href="">X</a> </td>
+                                    <td>{{ tarea.titulo }}</td>
+                                    <td>{{ tarea.descripcion }}</td>
+                                    <td>{{ tarea.fecha_de_registro }}</td>
+                                    <td>{{ tarea.fecha_limite }}</td>
+                                    <td>{{ tarea.puntos }}</td>
                                 </tr>
                                 {% endfor %}
  
@@ -39,10 +46,18 @@
                     </div> <!-- .widget-content -->
                     
         </div> <!-- /widget --> 
+
+
+      
+        
+      
+
+    
 					
         
     
-        <p class="text-center"><a href="/cursos/{{ curso.slug }}/quizzes/{{ quiz.id }}/preguntas/nuevo" class="button_large">Nueva pregunta </a></p>
-       
+        <p class="text-center"><a href="/cursos/{{ curso.slug }}/tareas/nuevo/" class="button_large">Nueva Tarea</a></p>
+
+  
 
 {% endblock %}

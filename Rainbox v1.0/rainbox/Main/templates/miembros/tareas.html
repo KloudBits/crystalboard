@@ -1,0 +1,48 @@
+{% extends "miembros/base-miembro.html" %}
+
+{% block colright %}
+    	<div class="main-img">
+            <img src="{{ STATIC_URL}}img/pic-2.jpg" alt="">
+            <p class="lead">Estas son las tareas del curso</p>
+        </div>  
+              
+          
+            
+            {% for t in tareas %}
+            <div class="strip-courses gray">
+       		 <div class="title-course">
+   			   <h3>{{ t.titulo }}</h3>
+               <ul>
+               		  <!--<li><i class="icon-calendar"></i> Start date: 24/06/13</li>
+                    <li><i class="icon-bookmark"></i> ID: 012</li>-->
+               </ul>
+             </div>
+                <div class="description">
+                	<p>{{ t.descripcion }}</p>
+                    <ul>
+                    	  <!--<li><i class="icon-book"></i> 10 Lessons</li>
+                        <li><i class="icon-reorder"></i> Level Basic</li>
+                        <li class="online"><i class="icon-laptop"></i> Online</li>-->
+                    </ul>
+                    <a href="/cursos/{{ curso.slug }}/tareas/{{ t.id }}/" class="button_medium button-align-2">Ver tarea</a>
+                </div>
+            </div><!-- end strip-->
+            
+            {% endfor %}
+           
+           
+            
+             <hr>
+           
+           <!--<div class="pagination pagination-centered">
+               <ul>
+                    <li><a href="#">Prev</a></li>
+                    <li class="active"><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">Next</a></li>
+              </ul>
+          </div>--><!-- end pagination-->
+           
+
+{% endblock %}

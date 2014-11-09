@@ -13,8 +13,8 @@ from django.db.models import Avg, Count
 from django.template.defaultfilters import slugify
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, Http404
-from Main.models import Quiz_Respuesta, Quiz_Pregunta, Quiz, UserProfile, Curso, Tarea, Clase, Recurso, Capitulo, Foro, Foro_Comentario, Aviso
-from Main.forms import nuevaRespuestaFormulario, nuevaPreguntaFormulario, nuevoQuizFormulario, comentarForoFormulario, nuevoCursoFormulario, nuevaClaseFormulario, nuevoCapituloFormulario, nuevoForoFormulario, nuevoAvisoFormulario, registrationForm, editarPerfilFormulario
+from Main.models import Entrega_Tarea, Quiz_Aplicar, Quiz_Respuesta, Quiz_Pregunta, Quiz, UserProfile, Curso, Tarea, Clase, Recurso, Capitulo, Foro, Foro_Comentario, Aviso
+from Main.forms import nuevoEntregaTareaFormulario, nuevoTareaFormulario, nuevoRecursoFormulario, nuevaRespuestaFormulario, nuevaPreguntaFormulario, nuevoQuizFormulario, comentarForoFormulario, nuevoCursoFormulario, nuevaClaseFormulario, nuevoCapituloFormulario, nuevoForoFormulario, nuevoAvisoFormulario, registrationForm, editarPerfilFormulario, nuevoCanalCursoFormulario
 
 ########################## LOGEO #######################################
 def ingreso_usuario( request ):
@@ -160,15 +160,15 @@ def clase( request, curso, clase ):
 	if not request.user.is_authenticated( ):
 		raise Http404
 	else:
+		curso = get_object_or_404(Curso, slug=curso)
 		clase = get_object_or_404(Clase, slug = clase)
 		perfil = UserProfile.objects.get( user = request.user )
-		tareas = Tarea.objects.filter( clase = clase )
 		recursos = Recurso.objects.filter( clase = clase )
 		if perfil.tipo == 1: # Tipo de perfil usuario ( Admin )
 			template = "usuarios/clase.html"
 		elif perfil.tipo == 2: # Tipo de perfil miembro ( Consumidor )
 			template = "miembros/clase.html"
-		return render( request, template, { "tareas" : tareas, "recursos" : recursos } )
+		return render( request, template, { "recursos" : recursos, "curso":curso, "clase":clase } )
 ############### CRUD ###################
 def nuevaClase( request, curso ):
 	if not request.user.is_authenticated( ):
@@ -186,8 +186,9 @@ def nuevaClase( request, curso ):
 					messages.add_message( request, messages.SUCCESS, "Registro de Clase Exitoso")
 					return HttpResponseRedirect( '/cursos/'+curso+'/clases/' )
 			else: 
+				curso = get_object_or_404(Curso, slug=curso)
 				formulario = nuevaClaseFormulario( request.POST )
-			return  render( request, "usuarios/nuevaClase.html", { "formulario" : formulario } )
+			return  render( request, "usuarios/nuevaClase.html", { "formulario" : formulario, "curso":curso } )
 
 def editarClase( request, clase ):
 	if not request.user.is_authenticated( ):
@@ -222,6 +223,7 @@ def capitulos ( request, curso ):
 			capitulos = Capitulo.objects.filter( curso = curso )
 			return render( request, "usuarios/capitulos.html", { "curso" : curso, "capitulos" : capitulos } )
 ######### CRUD #############
+
 def nuevoCapitulo ( request, curso ):
 	if not request.user.is_authenticated():
 		raise Http404
@@ -238,10 +240,11 @@ def nuevoCapitulo ( request, curso ):
 					nuevo_capitulo.save()
 
 					messages.add_message( request, messages.SUCCESS, "Registro de Capitulo exitoso" )
-					return HttpResponseRedirect( '/' )
+					return HttpResponseRedirect( '/cursos/'+ curso +'/capitulos/' )
 			else:
 				formulario = nuevoCapituloFormulario()
-			return render ( request, "usuarios/nuevoCapitulo.html", { "formulario" : formulario } )
+				curso = get_object_or_404(Curso,slug=curso)
+			return render ( request, "usuarios/nuevoCapitulo.html", { "formulario" : formulario, 'curso':curso } )
 
 def borrarCapitulo (request, curso, capitulo):
 	if not request.user.is_authenticated():
@@ -252,7 +255,7 @@ def borrarCapitulo (request, curso, capitulo):
 			raise Http404
 		else:
 			(get_object_or_404(Capitulo, pk = capitulo)).delete()
-			return HttpResponseRedirect( "/" )
+			return HttpResponseRedirect( '/cursos/'+ curso +'/capitulos/' )
 ##############################################################################################################3
 
 ############################## FOROS ############################################################
@@ -263,7 +266,10 @@ def foros ( request, curso ):
 		perfil = UserProfile.objects.get( user = request.user )
 		curso = get_object_or_404(Curso, slug = curso)
 		foros = Foro.objects.filter(curso = curso)
-		return render ( request, "usuarios/foros.html", { "curso" : curso, "foros" : foros })
+		if request.user.get_profile().tipo == 1:
+			return render ( request, "usuarios/foros.html", { "curso" : curso, "foros" : foros })
+		else:
+			return render ( request, "miembros/foros.html", { "curso" : curso, "foros" : foros })
 #################################################################################################
 
 ############################ FORO #############################################3
@@ -274,7 +280,11 @@ def foro (request, curso, foro):
 		curso = get_object_or_404(Curso, slug = curso )
 		foro = get_object_or_404(Foro, pk = foro)
 		comentarios = Foro_Comentario.objects.filter(foro = foro)
-		return render( request, "usuarios/foro.html", { "curso" : curso, "foro" : foro, "comentarios" : comentarios } )
+		if request.user.get_profile().tipo == 1:
+			return render( request, "usuarios/foro.html", { "curso" : curso, "foro" : foro, "comentarios" : comentarios } )
+		else:
+			return render( request, "miembros/foro.html", { "curso" : curso, "foro" : foro, "comentarios" : comentarios } )
+
 
 ############# CRUD ####################
 def nuevoForo(request, curso):
@@ -293,10 +303,10 @@ def nuevoForo(request, curso):
 					nuevo_foro.curso = curso
 					nuevo_foro.save()
 					messages.add_message(request, messages.SUCCESS, "Registro de Foro Exitoso")
-					return HttpResponseRedirect('/')
+					return HttpResponseRedirect('/cursos/'+ str(curso.slug) +'/foros/')
 			else:
 				formulario = nuevoForoFormulario()
-			return render(request, "usuarios/nuevoForo.html", { "formulario" : formulario })
+			return render(request, "usuarios/nuevoForo.html", { "formulario" : formulario, 'curso':curso })
 
 def borrarForo(request, curso, foro):
 	if not request.user.is_authenticated():
@@ -324,10 +334,13 @@ def comentarForo(request, curso, foro):
 				nuevo_comentario.foro = foro
 				nuevo_comentario.save()
 				messages.add_message(request, messages.SUCCESS, "Registro de comentario exitoso")
-				return HttpResponseRedirect("/")
+				return HttpResponseRedirect('/cursos/'+ str(curso.slug) +'/foros/'+str(foro.id)+'/')
 		else:
 			formulario = comentarForoFormulario()
-		return render(request, "usuarios/comentarioForo.html", {"curso":curso, "foro":foro, "perfil":perfil, "formulario":formulario})
+		if request.user.get_profile().tipo == 1:
+			return render(request, "usuarios/comentarioForo.html", {"curso":curso, "foro":foro, "perfil":perfil, "formulario":formulario})
+		else:
+			return render(request, "miembros/comentarioForo.html", {"curso":curso, "foro":foro, "perfil":perfil, "formulario":formulario})
 
 #####################################################################################################
 
@@ -340,7 +353,10 @@ def avisos(request, curso):
 		curso = get_object_or_404(Curso, slug = curso)
 		perfil = get_object_or_404(UserProfile, user = request.user)
 		avisos = Aviso.objects.filter(curso = curso)
-		return render(request, "usuarios/avisos.html", {"curso":curso, "perfil":perfil, "avisos":avisos})
+		if request.user.get_profile().tipo == 1:
+			return render(request, "usuarios/avisos.html", {"curso":curso, "perfil":perfil, "avisos":avisos})
+		else:
+			return render(request, "miembros/avisos.html", {"curso":curso, "perfil":perfil, "avisos":avisos})
 
 def aviso(request, curso, aviso):
 	if not request.user.is_authenticated():
@@ -349,7 +365,10 @@ def aviso(request, curso, aviso):
 		curso = get_object_or_404(Curso, slug=curso)
 		perfil = get_object_or_404(UserProfile, user = request.user)
 		aviso = get_object_or_404(Aviso, id = aviso)
-		return render(request, "usuarios/aviso.html", {"curso":curso, "perfil":perfil, "aviso":aviso})
+		if request.user.get_profile().tipo == 1:
+			return render(request, "usuarios/aviso.html", {"curso":curso, "perfil":perfil, "aviso":aviso})
+		else:
+			return render(request, "miembros/aviso.html", {"curso":curso, "perfil":perfil, "aviso":aviso})
 
 def nuevoAviso(request, curso):
 	if not request.user.is_authenticated():
@@ -390,7 +409,10 @@ def miembros(request, curso):
 	else:
 		perfil = UserProfile.objects.get( user = request.user )
 		cur = get_object_or_404(Curso, slug = curso)
-		return render(request, "usuarios/miembros.html", {"curso":cur, "perfil":perfil, "miembros":cur.miembros.all()})
+		if request.user.get_profile().tipo == 1:
+			return render(request, "usuarios/miembros.html", {"curso":cur, "perfil":perfil, "miembros":cur.miembros.all()})
+		else:
+			return render(request, "miembros/miembros.html", {"curso":cur, "perfil":perfil, "miembros":cur.miembros.all()})
 
 #### Hay que hacer un debug
 def nuevoMiembro(request, curso):
@@ -417,7 +439,7 @@ def nuevoMiembro(request, curso):
 					nuevo_perfil.save()
 
 					cur.miembros.add(nuevo_miembro)		
-					return HttpResponseRedirect("/cursos/" + cur.slug + "/")			
+					return HttpResponseRedirect("/cursos/" + cur.slug + "/miembros/")			
 			else:
 				formulario_usuario = registrationForm()
 				formulario_perfil = editarPerfilFormulario()
@@ -433,7 +455,10 @@ def quizes(request, curso):
 		perfil = UserProfile.objects.get( user = request.user )
 		cur = get_object_or_404(Curso, slug = curso)
 		quizes = Quiz.objects.filter(curso = cur)
-		return render(request, "usuarios/quizes.html", {"perfil":perfil, "curso":cur, "quizes":quizes})	
+		if request.user.get_profile().tipo == 1:
+			return render(request, "usuarios/quizes.html", {"perfil":perfil, "curso":cur, "quizes":quizes})	
+		else:
+			return render(request, "miembros/quizes.html", {"perfil":perfil, "curso":cur, "quizes":quizes})
 
 def nuevoQuiz(request, curso):
 	if not request.user.is_authenticated():
@@ -447,7 +472,7 @@ def nuevoQuiz(request, curso):
 				nuevo_quiz = formulario.save(commit=False)
 				nuevo_quiz.curso = cur
 				nuevo_quiz.save()
-				return HttpResponseRedirect("/cursos/" + cur.slug + "/quizes/")
+				return HttpResponseRedirect("/cursos/" + cur.slug + "/quizzes/")
 		else:
 			formulario = nuevoQuizFormulario()
 		return render(request, "usuarios/nuevoQuiz.html", {"perfil":perfil, "curso":cur, "formulario":formulario})
@@ -460,7 +485,30 @@ def quiz(request, curso, quiz):
 		q = get_object_or_404(Quiz, id = quiz)
 		preguntas = Quiz_Pregunta.objects.filter(prueba = q)
 		perfil = UserProfile.objects.get(user = request.user)
-		return render(request, "usuarios/quiz.html", {"perfil":perfil, "curso":cur, "quiz":q, "preguntas":preguntas})
+		if request.user.get_profile().tipo == 1:
+			return render(request, "usuarios/quiz.html", {"perfil":perfil, "curso":cur, "quiz":q, "preguntas":preguntas})
+		else:
+			if request.method == 'POST':
+				aplicacion = Quiz_Aplicar()
+				aplicacion.usuario = request.user
+				aplicacion.quiz = q
+				aplicacion.fecha_inicio = '2014-12-12 00:00:00'
+				aplicacion.fecha_termino = '2014-12-12 00:00:00'
+				aplicacion.save()
+
+				for pregunta in preguntas:
+					formulario = Quiz_Respuesta()
+					formulario.examen = aplicacion
+					formulario.respuesta = request.POST['respuesta-'+str(pregunta.id)]
+					formulario.pregunta = pregunta
+					formulario.feedback = ''
+					formulario.save()
+
+				
+
+				return redirect('/cursos/'+ curso +'/')
+			else:
+				return render(request, "miembros/quiz.html", {"perfil":perfil, "curso":cur, "quiz":q, "preguntas":preguntas})
 
 def borrarQuiz(request, curso, quiz):
 	if not request.user.is_authenticated():
@@ -471,7 +519,7 @@ def borrarQuiz(request, curso, quiz):
 			raise Http404
 		else:
 			(get_object_or_404(Quiz, id=quiz)).delete()
-			return HttpResponseRedirect("/curso/" + curso + "/quizes/")	
+			return HttpResponseRedirect("/curso/" + curso + "/quizzes/")	
 
 def nuevaPregunta(request, curso, quiz):
 	if not request.user.is_authenticated():
@@ -486,7 +534,7 @@ def nuevaPregunta(request, curso, quiz):
 				nueva_pregunta  = formulario.save(commit = False)
 				nueva_pregunta.prueba = q
 				nueva_pregunta.save()
-				return HttpResponseRedirect("/cursos/" + cur.slug + "/quizes/" + quiz + "/")
+				return HttpResponseRedirect("/cursos/" + cur.slug + "/quizzes/" + quiz + "/")
 		else:
 			formulario = nuevaPreguntaFormulario()
 		return render(request, "usuarios/nuevaPregunta.html", {"perfil":perfil, "curso":cur, "quiz":q, "formulario":formulario})
@@ -527,7 +575,7 @@ def nuevaRespuesta(request, curso, quiz, pregunta):
 				nueva_respuesta = formulario.save(commit=False)
 				nueva_respuesta.pregunta = p
 				nueva_respuesta.save()
-				return HttpResponseRedirect("/cursos/" + cur.slug + "/quizes/" + quiz + "/" + pregunta + "/")
+				return HttpResponseRedirect("/cursos/" + cur.slug + "/quizzes/" + quiz + "/preguntas/" + pregunta + "/")
 		else:
 			formulario = nuevaRespuestaFormulario()
 		return render(request, "usuarios/nuevaRespuesta.html", {"perfil":perfil, "curso":cur, "quiz":q, "pregunta":p ,"formulario":formulario})
@@ -542,3 +590,200 @@ def borrarRespuesta(request, curso, quiz, pregunta, respuesta):
 		else:
 			(get_object_or_404(Quiz_Respuesta, id=respuesta)).delete()
 			return HttpResponseRedirect("/curso/" + curso + "/quizes/" + quiz + "/" + pregunta + "/")
+
+def envivo(request, curso):
+	if not request.user.is_authenticated():
+		raise Http404
+	
+	
+	if request.user.userprofile.tipo == 1:
+		cur = get_object_or_404(Curso, slug = curso)
+		if request.method == "POST":
+			formulario = nuevoCanalCursoFormulario(request.POST, instance=cur)
+			if formulario.is_valid():
+				formulario.save()
+				return HttpResponseRedirect("/cursos/" + cur.slug + "/")
+		else:
+			formulario = nuevoCanalCursoFormulario(instance=cur)
+		return render(request, "usuarios/nuevoStream.html", {"curso":cur, "formulario":formulario})
+
+	if request.user.userprofile.tipo == 2:
+		cur = get_object_or_404(Curso, slug = curso)
+		return render(request, "miembros/stream.html", {"curso":cur})
+
+
+def add_slideshare(request, curso, clase):
+	if not request.user.is_authenticated():
+		raise Http404
+
+	c = get_object_or_404(Curso, slug=curso)
+	if request.method == "POST":
+		formulario = nuevoRecursoFormulario(request.POST)
+		if formulario.is_valid():
+			f = formulario.save(commit=False)
+			c = get_object_or_404(Clase, slug=clase)
+			f.clase = c
+			f.tipo = 1
+			f.save()
+			return HttpResponseRedirect("/cursos/" + curso + "/"+clase+"/")
+	else:
+		formulario = nuevoRecursoFormulario()
+	return render(request, 'usuarios/nuevoRecurso.html', {'formulario':formulario, 'curso': c })
+
+def add_dropbox(request, curso, clase):
+	if not request.user.is_authenticated():
+		raise Http404
+
+	c = get_object_or_404(Curso, slug=curso)
+	if request.method == "POST":
+		formulario = nuevoRecursoFormulario(request.POST)
+		if formulario.is_valid():
+			f = formulario.save(commit=False)
+			c = get_object_or_404(Clase, slug=clase)
+			f.clase = c
+			f.tipo = 2
+			f.save()
+			return HttpResponseRedirect("/cursos/" + curso + "/"+clase+"/")
+	else:
+		formulario = nuevoRecursoFormulario()
+	return render(request, 'usuarios/nuevoRecurso.html', {'formulario':formulario, 'curso':c})
+
+def add_youtube(request, curso, clase):
+	if not request.user.is_authenticated():
+		raise Http404
+
+	c = get_object_or_404(Curso, slug=curso)
+	if request.method == "POST":
+		formulario = nuevoRecursoFormulario(request.POST)
+		if formulario.is_valid():
+			f = formulario.save(commit=False)
+			c = get_object_or_404(Clase, slug=clase)
+			f.clase = c
+			f.tipo = 3
+			f.save()
+			return HttpResponseRedirect("/cursos/" + curso + "/"+clase+"/")
+	else:
+		formulario = nuevoRecursoFormulario()
+	return render(request, 'usuarios/nuevoRecurso.html', {'formulario':formulario, 'curso': c})
+
+def add_weblink(request, curso, clase):
+	if not request.user.is_authenticated():
+		raise Http404
+
+	c = get_object_or_404(Curso, slug=curso)
+	if request.method == "POST":
+		formulario = nuevoRecursoFormulario(request.POST)
+		if formulario.is_valid():
+			f = formulario.save(commit=False)
+			c = get_object_or_404(Clase, slug=clase)
+			f.clase = c
+			f.tipo = 4
+			f.save()
+			return HttpResponseRedirect("/cursos/" + curso + "/"+clase+"/")
+	else:
+		formulario = nuevoRecursoFormulario()
+	return render(request, 'usuarios/nuevoRecurso.html', {'formulario':formulario, 'curso': c })
+
+def tareas(request, curso):
+	if not request.user.is_authenticated():
+		raise Http404
+
+	c = get_object_or_404(Curso, slug=curso)
+	t = Tarea.objects.filter(curso=c)
+	if request.user.get_profile().tipo == 1:
+		return render(request, 'usuarios/tareas.html', { 'tareas':t, 'curso':c })
+	else:
+		return render(request, 'miembros/tareas.html', { 'tareas':t, 'curso':c })	
+
+def nuevoTarea(request, curso):
+	if not request.user.is_authenticated():
+		raise Http404
+
+	if request.method == "POST":
+		formulario = nuevoTareaFormulario(request.POST)
+		if formulario.is_valid():
+			f = formulario.save(commit=False)
+			c = get_object_or_404(Curso, slug=curso)
+			f.curso = c
+			f.save()
+			return HttpResponseRedirect("/cursos/" + curso + "/tareas/")
+	else:
+		formulario = nuevoTareaFormulario()
+	return render(request, 'usuarios/nuevoTarea.html', {'formulario':formulario})
+
+#Lectura y formulario de entrega para miembros
+def tarea(request, curso, tarea):
+	if not request.user.is_authenticated():
+		raise Http404
+
+	c = get_object_or_404(Curso, slug=curso)
+	if request.method == "POST":
+		formulario = nuevoEntregaTareaFormulario(request.POST)
+		if formulario.is_valid():
+			f = formulario.save(commit=False)
+			t = get_object_or_404(Tarea, id=tarea)
+			f.tarea = t
+			f.alumno = request.user
+			f.save()
+			return HttpResponseRedirect("/cursos/" + curso + "/tareas/")
+	else:
+		formulario = nuevoEntregaTareaFormulario()
+	return render(request, 'miembros/nuevoTarea.html', {'formulario':formulario, 'curso':c})
+
+def gradecenter(request, curso):
+	if not request.user.is_authenticated():
+		raise Http404
+
+	c = get_object_or_404(Curso, slug=curso)
+	tareas = Tarea.objects.filter(curso=c)
+	quizzes = Quiz.objects.filter(curso=c)
+
+	return render(request, 'usuarios/gradecenter.html', { 'tareas':tareas, 'quizzes':quizzes, 'curso':c })
+
+
+def gradequiz(request, curso, quiz):
+	if not request.user.is_authenticated():
+		raise Http404
+
+	aplicaciones = Quiz_Aplicar.objects.filter(quiz=quiz)
+	c = get_object_or_404(Curso, slug=curso)
+	return render(request, 'usuarios/gradequiz.html', { 'aplicaciones':aplicaciones, 'curso':c, 'quiz':quiz })
+
+def gradetarea(request, curso, tarea):
+	if not request.user.is_authenticated():
+		raise Http404
+
+	entregas = Entrega_Tarea.objects.filter(tarea=tarea)
+	c = get_object_or_404(Curso, slug=curso)
+	return render(request, 'usuarios/gradetarea.html', { 'entregas':entregas, 'curso':c,  'tarea':tarea })
+
+def gradequiz_aplicacion(request, curso, quiz, aplicacion):
+	if not request.user.is_authenticated():
+		raise Http404
+
+	respuestas = Quiz_Respuesta.objects.filter(examen=aplicacion)
+	c = get_object_or_404(Curso, slug=curso)
+	return render(request, 'usuarios/gradeaplicacion.html', { 'respuestas':respuestas, 'curso':c })
+
+
+def gradetarea_entrega(request, curso, tarea, entrega):
+	if not request.user.is_authenticated():
+		raise Http404
+
+	entrega = get_object_or_404(Entrega_Tarea, id=entrega)
+	c = get_object_or_404(Curso, slug=curso)
+	return render(request, 'usuarios/gradeentrega.html', { 'entrega':entrega, 'curso':c })
+
+
+def del_recurso(request, curso, clase, recurso):
+	if not request.user.is_authenticated() or not request.user.get_profile().tipo == 1:
+		raise Http404
+
+	r = get_object_or_404(Recurso, id=recurso)
+	r.delete()
+	return redirect('/cursos/'+ curso +'/'+ clase +'/')
+
+
+
+
+

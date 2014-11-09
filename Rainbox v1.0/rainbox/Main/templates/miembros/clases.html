@@ -1,19 +1,20 @@
-{% extends "usuarios/base-usuario.html" %}
+{% extends "miembros/base-miembro.html" %}
 
 {% block colright %}
+
     	<div class="main-img">
             <img src="{{ STATIC_URL}}img/pic-2.jpg" alt="">
-            <p class="lead">Tus clases</p>
+            <p class="lead">Estas son las clases que ya están disponibles para ti</p>
         </div>  
               
-           
+          
             
             {% for clase in clases %}
             <div class="strip-courses gray">
        		 <div class="title-course">
    			   <h3>{{ clase.titulo }}</h3>
                <ul>
-               	    <!--<li><i class="icon-calendar"></i> Start date: 24/06/13</li>
+               		  <!--<li><i class="icon-calendar"></i> Start date: 24/06/13</li>
                     <li><i class="icon-bookmark"></i> ID: 012</li>-->
                </ul>
              </div>
@@ -33,9 +34,16 @@
            
             
              <hr>
-            
-            <p class="text-center"><a href="/cursos/{{ curso.slug }}/capitulos/nuevo/" class="button_large">Nuevo capítulo</a></p>
-            <p class="text-center"><a href="/cursos/{{ curso.slug }}/clases/nuevo/" class="button_large">Nueva clase</a></p>
+           
+           <!--<div class="pagination pagination-centered">
+               <ul>
+                    <li><a href="#">Prev</a></li>
+                    <li class="active"><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">Next</a></li>
+              </ul>
+          </div>--><!-- end pagination-->
 
 
 {% endblock %}

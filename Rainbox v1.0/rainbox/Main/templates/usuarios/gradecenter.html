@@ -1,0 +1,100 @@
+{% extends "usuarios/base-usuario.html" %}
+
+{% block colright %}
+    	<div class="main-img">
+            <img src="{{ STATIC_URL }}img/pic-4.jpg" alt="">
+            <p class="lead">Tibique dolores adversarium ne vel. At vide errem duo, vis luptatum menandri ullamcorper id. </p>
+        </div>
+        
+       
+        
+        
+        
+        <div class="widget borders widget-table">
+                    
+                    <div class="widget-header">
+                        <h5>Quizzes</h5>
+                    </div> <!-- .widget-header -->
+                    
+                    <div class="widget-content">
+                        <table class="table table-bordered table-striped">
+                            
+                            <thead>
+                            <tr>                                
+                                <th>Quiz</th>
+                                <th>Intentos</th>
+                                <th>Fecha de inicio</th>
+                                <th>Fecha de término</th>
+                                <th>Aplicaciones</th>
+                            </tr></thead>
+                    
+                            <tbody>
+
+                                {% for quiz in quizzes %}
+                                <tr>
+                                    <td>{{ quiz }}</td>
+                                    <td>{{ quiz.intentos }}</td>
+                                    <td>{{ quiz.fecha_inicio }}</td>
+                                    <td>{{ quiz.fecha_limite }}</td>
+                                    <td> <a href="/cursos/{{ curso.slug }}/grade-center/quizzes/{{ quiz.id }}/">X</a> </td>
+                                </tr>
+                                {% endfor %}
+ 
+                            </tbody>
+                        </table>
+                        
+                    </div> <!-- .widget-content -->
+                    
+        </div> <!-- /widget --> 
+
+
+        <div class="widget borders widget-table">
+                    
+                    <div class="widget-header">
+                        <h5>Tareas</h5>
+                    </div> <!-- .widget-header -->
+                    
+                    <div class="widget-content">
+                        <table class="table table-bordered table-striped">
+                            
+                            <thead>
+                            <tr>                                
+                                <th>Título</th>
+                                <th>Descripción</th>
+                                <th>Fecha de registro</th>
+                                <th>Fecha límite</th>
+                                <th>Aplicaciones</th>
+                            </tr></thead>
+                    
+                            <tbody>
+
+                                {% for tarea in tareas %}
+                                <tr>
+                                    <td>{{ tarea.titulo }}</td>
+                                    <td>{{ tarea.descripcion }}</td>
+                                    <td>{{ tarea.fecha_de_registro }}</td>
+                                    <td>{{ tarea.fecha_limite }}</td>
+                                    <td><a href="/cursos/{{ curso.slug }}/grade-center/tareas/{{ tarea.id }}/">X</a> </td>
+                                </tr>
+                                {% endfor %}
+ 
+                            </tbody>
+                        </table>
+                        
+                    </div> <!-- .widget-content -->
+                    
+        </div> <!-- /widget --> 
+
+
+      
+        
+      
+
+    
+					
+        
+    
+
+  
+
+{% endblock %}

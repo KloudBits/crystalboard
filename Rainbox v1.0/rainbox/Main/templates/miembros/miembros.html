@@ -1,14 +1,15 @@
-{% extends "usuarios/base-usuario.html" %}
+{% extends "miembros/base-miembro.html" %}
 
 {% block colright %}
+
     	<div class="main-img">
             <img src="{{ STATIC_URL }}img/pic-2.jpg" alt="">
-            <p class="lead">Los foros te permiten generar un espacio de participación entre tus estudiantes</p>
+            <p class="lead">Ellos son quienes te acompañarán durante este curso</p>
         </div>
         
-
-
-        <div class="widget borders widget-table">
+       
+        
+         <div class="widget borders widget-table">
                     
                     <div class="widget-header">
                         <h5>Miembros</h5>
@@ -20,21 +21,15 @@
                             <thead>
                             <tr>                                
                                 <th>Nombre</th>
-                                <th>Fecha</th>
-                                <th>Texto</th>
-                                <th>Ver</th>
-                                <th>Eliminar</th>
+                                <th>Correo</th>
                             </tr></thead>
                     
                             <tbody>
 
-                                {% for foro in foros %}
+                                {% for miembro in miembros %}
                                 <tr>
-                                    <td>{{ foro }}</td>
-                                    <td>{{ foro.fecha }}</td>
-                                    <td>{{ foro.texto }}</td>
-                                    <td> <a href="/cursos/{{ curso.slug }}/foros/{{ foro.id }}/">X</a> </td>
-                                    <td> <a href="/cursos/{{ curso.slug }}/foros/del/">X</a> </td>
+                                    <td>{{ miembro.first_name }} {{ miembro.last_name }}</td>
+                                    <td>{{ miembro }}</td>
                                 </tr>
                                 {% endfor %}
  
@@ -46,12 +41,6 @@
         </div> <!-- /widget --> 
 
 
-        
-    
-        <p class="text-center"><a href="/cursos/{{ curso.slug }}/foros/nuevo/" class="button_large">Nuevo foro </a></p>
        
-           
-
-  
-
-{% endblock %}
+    {% endblock %}
+   

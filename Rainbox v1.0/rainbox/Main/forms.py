@@ -2,14 +2,26 @@
 from django.forms import ModelForm
 from django import forms
 from django.contrib.auth.models import User
-from Main.models import UserProfile,Curso, Clase, Capitulo, Recurso, Aviso, Aviso_Comentario, Tarea, Entrega_Tarea, Foro, Foro_Comentario, Quiz, Quiz_Pregunta, Quiz_Respuesta, Quiz_Aplicar, Aplicar_Respuesta
+from Main.models import UserProfile,Curso, Clase, Capitulo, Recurso, Aviso, Aviso_Comentario, Tarea, Entrega_Tarea, Foro, Foro_Comentario, Quiz, Quiz_Pregunta, Quiz_Respuesta, Quiz_Aplicar
 from django.contrib.auth.forms import UserCreationForm
+
+class nuevoEntregaTareaFormulario(ModelForm):
+	class Meta:
+		model = Entrega_Tarea
+		exclude = ('alumno','tarea',)
+
+
+class nuevoCanalCursoFormulario(ModelForm):
+
+	class Meta:
+		model = Curso
+		fields = ('canal','chat',)
 
 class nuevoCursoFormulario(ModelForm):
 	
 	class Meta:
 		model = Curso
-		exclude = ('usuario', 'miembros','slug',)
+		exclude = ('usuario', 'miembros','slug','canal', 'chat',)
 
 class nuevaClaseFormulario(ModelForm):
 
@@ -52,7 +64,7 @@ class nuevoForoFormulario(ModelForm):
 class nuevaRespuestaFormulario(ModelForm):
 	class Meta:
 		model = Quiz_Respuesta
-		exclude = ('pregunta',)
+		exclude = ('pregunta','feedback', 'examen',)
 
 class nuevaPreguntaFormulario(ModelForm):
 	class Meta:
@@ -63,6 +75,17 @@ class nuevoQuizFormulario(ModelForm):
 	class Meta:
 		model = Quiz
 		exclude = ('curso','fecha_creacion',)
+
+class nuevoRecursoFormulario(ModelForm):
+	class Meta:
+		model = Recurso
+		exclude = ('clase', 'tipo',)
+
+class nuevoTareaFormulario(ModelForm):
+	class Meta:
+		model = Tarea
+		exclude = ('curso',)
+
 #----
 
 class registrationForm(forms.ModelForm):

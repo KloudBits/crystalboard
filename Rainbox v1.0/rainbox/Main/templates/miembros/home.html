@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<div class="container">
+
+<div class="row">
+<h1 class="span12">Panel de administración</h1>
+	<div class="span12">
+        <ul class="breadcrumb">
+          <li><a href="#">Inicio</a> <span class="divider">/</span></li>
+          <li class="active">Panel de administración</li>
+        </ul>
+    </div>
+<!-- =========================Start Col left section ============================= -->
+<aside class="span4 ">
+	<div class="col-left">
+    	<h3>Menú</h3>
+            <ul class="submenu-col">
+                <li><a href="/" id="active">Inicio</a></li>
+                <li><a href="/cursos/">Mis cursos</a></li>
+                <li><a href="/info/">Mi información</a></li>
+            </ul>
+            
+            <hr>
+            
+            <h5>Próximos cursos</h5>
+            <p>Proximamente se estarán abriendo nuevos cursos relacionados a este mismo. Te invitamos a suscribirte y enterarte de los próximos cursos relacionados con tu interés</p>
+            <p><a href="#" class=" button_red_small">Suscribirme</a></p>
+            
+    </div>
+    <p><img src="{{ STATIC_URL }}img/banner.jpg" alt="Banner" class="img-rounded"></p>
+</aside>
+ 
+<section class="span8  ">
+	<div class="col-right">
+    	<div class="main-img">
+            <img src="{{ STATIC_URL }}img/pic-2.jpg" alt="">
+            <p class="lead">Bienvenido a tu plataforma de e-learning</p>
+        </div>  
+              
+         
+          
+          
+          
+          
+            
+            
+    </div><!-- end col right-->
+	
+</section>
+
+  </div><!-- end row-->
+  </div> <!-- end container-->
+{% endblock %}

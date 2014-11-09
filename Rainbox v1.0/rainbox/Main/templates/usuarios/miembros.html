@@ -1,57 +1,10 @@
-{% extends "base.html" %}
+{% extends "usuarios/base-usuario.html" %}
 
-{% block contenido %}
-<div class="container">
+{% block colright %}
 
-<div class="row">
-<h1 class="span12">{{ curso }}</h1>
-
-<div class="span12">
-    <ul class="breadcrumb">
-      <li><a href="/cursos/{{ curso.slug }}/">{{ curso }}</a> <span class="divider">/</span></li>
-      <li class="active">Miembros</li>
-    </ul>
-</div>
-
-<!-- =========================Start Col left section ============================= -->
-<aside class="span4 ">
-	<div class="col-left">
-    	<h3>Menú</h3>
-            <ul class="submenu-col">
-                <li><a href="/cursos/{{ curso.slug }}/miembros/">Miembros</a></li>
-                <li><a href="/cursos/{{ curso.slug }}/clases/">Clases</a></li>
-                <li><a href="/cursos/{{ curso.slug }}/avisos/">Avisos</a></li>
-                <li><a href="/cursos/{{ curso.slug }}/foros/">Foros</a></li>
-                <li><a href="/cursos/{{ curso.slug }}/quizzes/">Quizzes</a></li>
-
-    
-    
-    
-    
-    
- 
-
-               
-            </ul>
-            
-            <hr>
-            
-            <h5>Upcoming Courses</h5>
-            <p>Suspendisse quis risus turpis, ut pharetra arcu. Donec 
-adipiscing, quam non faucibus luctus, mi arcu blandit diam, at faucibus 
-mi ante vel augue.</p>
-            <p><a href="#" class=" button_red_small">View Courses</a></p>
-            
-    </div>
-    <p><img src="{{ STATIC_URL }}img/banner.jpg" alt="Banner" class="img-rounded"></p>
-</aside>
-
- <!-- =========================Start Col right section ============================= -->
-<section class="span8  ">
-	<div class="col-right">
     	<div class="main-img">
             <img src="{{ STATIC_URL }}img/pic-2.jpg" alt="">
-            <p class="lead">Tibique dolores adversarium ne vel. At vide errem duo, vis luptatum menandri ullamcorper id. </p>
+            <p class="lead">En esta sección encontrarás los usuarios enrolados en tu curso.</p>
         </div>
         
        
@@ -75,7 +28,7 @@ mi ante vel augue.</p>
 
                                 {% for miembro in miembros %}
                                 <tr>
-                                    <td></td>
+                                    <td>{{ miembro.first_name }} {{ miembro.last_name }}</td>
                                     <td>{{ miembro }}</td>
                                 </tr>
                                 {% endfor %}
@@ -87,14 +40,8 @@ mi ante vel augue.</p>
                     
         </div> <!-- /widget --> 
 
-        <p class="text-center"><a href="#" class="button_large">Registrar miembro</a></p>
+        <p class="text-center"><a href="/cursos/{{ curso.slug }}/miembros/nuevo/" class="button_large">Registrar miembro</a></p>
 
        
-           
-    </div><!-- end col right-->	
-</section>
-</div><!-- end row-->
-</div> <!-- end container-->
-  
-
-{% endblock %}
+    {% endblock %}
+   

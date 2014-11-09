@@ -1,44 +1,9 @@
-{% extends "base.html" %}
+{% extends "usuarios/base-usuario.html" %}
 
-{% block contenido %}
-<div class="container">
-
-<div class="row">
-<h1 class="span12">Panel de administración</h1>
-	<div class="span12">
-        <ul class="breadcrumb">
-          <li><a href="#">Inicio</a> <span class="divider">/</span></li>
-          <li class="active">Panel de administración</li>
-        </ul>
-    </div>
-<!-- =========================Start Col left section ============================= -->
-<aside class="span4 ">
-	<div class="col-left">
-    	<h3>Menú</h3>
-            <ul class="submenu-col">
-                <li><a href="/cursos/{{ curso.slug }}/miembros/">Miembros</a></li>
-                <li><a href="/cursos/{{ curso.slug }}/capitulos/">Capítulos</a></li>
-                <li><a href="/cursos/{{ curso.slug }}/clases/">Clases</a></li>
-                <li><a href="/cursos/{{ curso.slug }}/avisos/">Avisos</a></li>
-                <li><a href="/cursos/{{ curso.slug }}/foros/">Foros</a></li>
-                <li><a href="/cursos/{{ curso.slug }}/quizes/">Quizzes</a></li>
-            </ul>
-            
-            <hr>
-            
-            <h5>Oportunidades</h5>
-            <p>En esta sección mostrar un mensaje al usuario sobre oportunidades que tiene dentro de la plataforma o nuevos desarrollos que estamos creando.</p>
-            <p><a href="#" class=" button_red_small">Ver oportunidades</a></p>
-            
-    </div>
-    <p><img src="{{ STATIC_URL }}img/banner.jpg" alt="Banner" class="img-rounded"></p>
-</aside>
- 
-<section class="span8  ">
-	<div class="col-right">
+{% block colright %}
     	  <div class="main-img">
             <img src="{{ STATIC_URL}}img/pic-2.jpg" alt="">
-            <p class="lead">Desde este panel podrás administrar cada uno de tus cursos. </p>
+            <p class="lead">Genera un nuevo foro </p>
         </div>  
               
         <hr>
@@ -66,11 +31,5 @@
         </form>
            
            
-    </div><!-- end col right-->
 
-	
-</section>
-
-  </div><!-- end row-->
-  </div> <!-- end container-->
 {% endblock %}

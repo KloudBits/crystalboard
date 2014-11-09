@@ -1,9 +1,9 @@
-{% extends "usuarios/base-usuario.html" %}
+{% extends "miembros/base-miembro.html" %}
 
 {% block colright %}
     	<div class="main-img">
             <img src="{{ STATIC_URL }}img/pic-2.jpg" alt="">
-            <p class="lead">Genera avisos para tus estudiantes</p>
+            <p class="lead">Estos son los avisos de tu curso.</p>
         </div>
         
 
@@ -39,7 +39,6 @@
 
 
     
-        <p class="text-center"><a href="/cursos/{{ curso.slug }}/avisos/nuevo/" class="button_large">Nuevo aviso</a></p>
        
            
 

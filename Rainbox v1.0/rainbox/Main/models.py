@@ -9,7 +9,6 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 
-
 import datetime
 
 
@@ -21,6 +20,8 @@ class Curso( models.Model ):
     resumen = models.CharField( max_length = 300 ) # Resumen corto del curso
     informacion_general = models.TextField( ) # Informacion en general del curso, temario, objetivos
     imagen = models.ImageField( upload_to = 'cursos_logo' ) # Imagen del Curso    
+    canal = models.URLField(max_length=100) # URL del canal de streaming
+    chat = models.CharField(max_length=100)
     miembros = models.ManyToManyField( User, related_name = 'miembros' )  # Los miembros del curso
 
     def __unicode__(self):
@@ -64,12 +65,12 @@ class Recurso( models.Model ):
     TIPO_CHOICES = (
         ( 1, 'Slideshare' ),
         ( 2, 'Dropbox' ),
-        ( 3, 'Stream' ),
-        ( 2, 'Youtube' ),
+        ( 3, 'Youtube' ),
+        ( 4, 'Weblink')
     )
     clase = models.ForeignKey( Clase ) # ID de la clase a la que pertenece la tarea
     titulo = models.CharField( max_length = 60 ) # Titulo del recurso
-    url = models.URLField( ) # URL de ubicación web
+    url = models.TextField( max_length = 60 ) # URL de ubicación web
     descripcion = models.TextField( ) # Resumen del contenido del recurso
     tipo = models.IntegerField( default = 2, choices = TIPO_CHOICES ) # Tipo de recurso que se va agregar
     
@@ -98,7 +99,7 @@ class Aviso_Comentario( models.Model ):
 
 ################# TAREA ########################
 class Tarea( models.Model ):
-    clase = models.ForeignKey( Clase ) # ID de la clase a la que pertenece la tarea
+    curso = models.ForeignKey( Curso ) # ID de la clase a la que pertenece la tarea
     titulo = models.CharField( max_length = 30 ) # Título de la Tarea
     descripcion = models.TextField( blank = True, null = True ) # Texto informativo sobre la tarea
     fecha_registro = models.DateField( auto_now = True, auto_now_add = True ) # Fecha en la que se registo la fecha
@@ -171,7 +172,7 @@ class Quiz( models.Model ):
     fecha_creacion = models.DateTimeField( auto_now = True, auto_now_add = True ) # Fecha en la que se creo el quiz
     fecha_inicio = models.DateTimeField( ) # Fecha en la que se muestra el quiz
     fecha_limite = models.DateTimeField( ) # Fecha Limite de acceso
-    intentos = models.IntegerField( ) # Intentos para presentar el quiz
+    #intentos = models.IntegerField( ) # Intentos para presentar el quiz
 
     def __unicode__( self ):
         return self.nombre
@@ -189,28 +190,36 @@ class Quiz_Pregunta( models.Model ):
         return self.nombre_pregunta
 ################################################
 
-############## QUIZ_RESPUESTA ##################
-class Quiz_Respuesta( models.Model ):
-    pregunta = models.ForeignKey( Quiz_Pregunta ) # La pregunta a la que pertenece la respuesta
-    respuesta = models.CharField( max_length = 100 ) # Opción de la pregunta
-    correcta = models.BooleanField( ) # es la respuesta es correcta
+# ############## QUIZ_RESPUESTA ##################
+# class Quiz_Respuesta( models.Model ):
+#     pregunta = models.ForeignKey( Quiz_Pregunta ) # La pregunta a la que pertenece la respuesta
+#     respuesta = models.CharField( max_length = 100 ) # Opción de la pregunta
+#     correcta = models.BooleanField( ) # es la respuesta es correcta
     
-    def __unicode__( self ):
-        return self.respuesta
-################################################
+#     def __unicode__( self ):
+#         return self.respuesta
+# ################################################
 
 ############### QUIZ_Aplicar ###################
 class Quiz_Aplicar( models.Model ):
     usuario = models.ForeignKey( User ) # Usuario al que se le aplica el quiz
     quiz = models.ForeignKey( Quiz ) # Quiz que se va a aplicar
-    intento = models.IntegerField( ) # Intentos que lleva de realizar el quiz
+    #intento = models.IntegerField( ) # Intentos que lleva de realizar el quiz
     fecha_inicio = models.DateTimeField( ) # Hora de Inicio del quiz
     fecha_termino = models.DateTimeField( ) # Hora de Termino del quiz
-#################################################
+################################################
+
+# ############ APLICAR_RESPUESTA ##################
+# class Aplicar_Respuesta( models.Model ):
+#     examen = models.ForeignKey( Quiz_Aplicar ) # Quiz que se esta contestando
+#     pregunta = models.ForeignKey( Quiz_Pregunta ) # Pregunta que se contesta
+#     respuesta = models.ForeignKey( Quiz_Respuesta ) # Respuesta seleccionada
+# #################################################
 
 ############ APLICAR_RESPUESTA ##################
-class Aplicar_Respuesta( models.Model ):
-    examen = models.ForeignKey( Quiz_Aplicar ) # Quiz que se esta contestando
+class Quiz_Respuesta( models.Model ):
+    examen = models.ForeignKey( Quiz_Aplicar )
     pregunta = models.ForeignKey( Quiz_Pregunta ) # Pregunta que se contesta
-    respuesta = models.ForeignKey( Quiz_Respuesta ) # Respuesta seleccionada
+    respuesta = models.TextField()
+    feedback = models.TextField()
 #################################################

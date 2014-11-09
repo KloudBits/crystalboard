@@ -4,13 +4,12 @@
 <div class="container">
 
 <div class="row">
-<h1 class="span12">Nombre del curso</h1>
+<h1 class="span12">{{ curso }}</h1>
 
 <div class="span12">
     <ul class="breadcrumb">
-      <li><a href="http://www.ansonika.com/edu/index.html">Home</a> <span class="divider">/</span></li>
-      <li><a href="http://www.ansonika.com/edu/all-courses.html">All Courses</a> <span class="divider">/</span></li>
-      <li class="active">Administration</li>
+      <li><a href="/cursos/{{ curso.slug }}/">{{ curso }}</a> <span class="divider">/</span></li>
+      <li class="active">Miembros</li>
     </ul>
 </div>
 
@@ -18,13 +17,18 @@
 <aside class="span4 ">
 	<div class="col-left">
     	<h3>Menú</h3>
-            <ul class="submenu-col">
+            <ul class="submenu-col">         
                 <li><a href="/cursos/{{ curso.slug }}/miembros/">Miembros</a></li>
                 <li><a href="/cursos/{{ curso.slug }}/capitulos/">Capítulos</a></li>
                 <li><a href="/cursos/{{ curso.slug }}/clases/">Clases</a></li>
                 <li><a href="/cursos/{{ curso.slug }}/avisos/">Avisos</a></li>
+                <li><a href="/cursos/{{ curso.slug }}/tareas/">Tareas</a></li>
                 <li><a href="/cursos/{{ curso.slug }}/foros/">Foros</a></li>
                 <li><a href="/cursos/{{ curso.slug }}/quizzes/">Quizzes</a></li>
+                <li><a href="/cursos/{{ curso.slug }}/vivo/">En vivo</a></li>
+                <hr>
+                <li><a href="/cursos/{{ curso.slug }}/grade-center/">Grade Center</a></li>
+                
 
     
     
@@ -38,11 +42,9 @@
             
             <hr>
             
-            <h5>Upcoming Courses</h5>
-            <p>Suspendisse quis risus turpis, ut pharetra arcu. Donec 
-adipiscing, quam non faucibus luctus, mi arcu blandit diam, at faucibus 
-mi ante vel augue.</p>
-            <p><a href="#" class=" button_red_small">View Courses</a></p>
+            <h5>Próximas mejoras</h5>
+            <p>La plataforma sigue en desarrollo, te invitamos a estar pendientes de las nuevas características en el blog de noticias</p>
+            <p><a href="#" class=" button_red_small">ver blog</a></p>
             
     </div>
     <p><img src="{{ STATIC_URL }}img/banner.jpg" alt="Banner" class="img-rounded"></p>
@@ -51,25 +53,16 @@ mi ante vel augue.</p>
  <!-- =========================Start Col right section ============================= -->
 <section class="span8  ">
 	<div class="col-right">
-    	<div class="main-img">
-            <img src="{{ STATIC_URL }}img/pic-4.jpg" alt="">
-            <p class="lead">Tibique dolores adversarium ne vel. At vide errem duo, vis luptatum menandri ullamcorper id. </p>
-        </div>
+        {% block colright %}
+
+
+
+    	
         
        
-        
-        
-        
-      
-        
-       
-        {% for pregunta in preguntas %}
-            {{ pregunta }}
-		{% endfor %}
-					
-        
-    
-        <p class="text-center"><a href="http://www.ansonika.com/edu/contact.html" class="button_large">Apply now </a></p>
+   
+
+        {% endblock %}
        
            
     </div><!-- end col right-->	

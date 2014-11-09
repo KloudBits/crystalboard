@@ -1,29 +1,15 @@
-{% extends "usuarios/base-usuario.html" %}
+{% extends "miembros/base-miembro.html" %}
 
 {% block colright %}
     	  <div class="main-img">
             <img src="{{ STATIC_URL}}img/pic-2.jpg" alt="">
-            <p class="lead">Agregar un nuevo alumno</p>
+            <p class="lead">Te recomendamos leer también las participaciones de tus compañeros.</p>
         </div>  
               
         <hr>
 
         <form method="post" action="" enctype="multipart/form-data">{% csrf_token %}
-        {% for field in formulario1 %}
-
-             
-              <div class="row">
-                <div class="span6">
-                  <label>{{ field.label }}</label>
-                  {{ field }}
-                  {{ field.errors }}
-                </div>
-              </div>
-
-          {% endfor %}
-
-
-          {% for field in formulario2 %}
+        {% for field in formulario %}
 
              
               <div class="row">
@@ -45,4 +31,5 @@
         </form>
            
            
-  {% endblock %}
+
+{% endblock %}
