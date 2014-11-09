@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<div class="container">
+
+<div class="row">
+<h1 class="span12">Iniciar sesión</h1>
+
+<div class="span12">
+    <ul class="breadcrumb">
+    </ul>
+</div>
+
+<!-- =========================Start Col left section ============================= -->
+<aside class="span4 ">
+  <div class="col-left">
+           
+            
+            <h5>Próximas mejoras</h5>
+            <p>La plataforma sigue en desarrollo, te invitamos a estar pendientes de las nuevas características en el blog de noticias</p>
+            <p><a href="#" class=" button_red_small">ver blog</a></p>
+            
+    </div>
+    <p><img src="{{ STATIC_URL }}img/banner.jpg" alt="Banner" class="img-rounded"></p>
+</aside>
+
+ <!-- =========================Start Col right section ============================= -->
+<section class="span8  ">
+  <div class="col-right">
+        <div class="main-img">
+            <img src="{{ STATIC_URL}}img/pic-2.jpg" alt="">
+            <p class="lead">Iniciar sesión</p>
+        </div>  
+              
+        <hr>
+
+        <form method="post" action="" enctype="multipart/form-data">{% csrf_token %}
+        {% for field in formulario %}
+
+             
+              <div class="row">
+                <div class="span6">
+                  <label>{{ field.label }}</label>
+                  {{ field }}
+                  {{ field.errors }}
+                </div>
+              </div>
+
+          {% endfor %}
+
+          <div class="row">
+            <div class="button-align">
+              <input type="submit" value="Iniciar sesión" class="button_medium">
+            </div>
+          </div>
+       
+        </form>
+       
+           
+    </div><!-- end col right--> 
+</section>
+</div><!-- end row-->
+</div> <!-- end container-->
+  
+
+{% endblock %}
+
+
+
+
+
+

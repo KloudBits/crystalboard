@@ -21,7 +21,7 @@ def ingreso_usuario( request ):
 	if request.method == 'POST':
 		formulario = AuthenticationForm( request.POST )
 		if formulario.is_valid:
-			usuario = request.POST [ 'usuario' ]
+			usuario = request.POST [ 'username' ]
 			clave = request.POST [ 'password' ]
 			acceso = authenticate( username = usuario, password = clave )
 			if acceso is not None:

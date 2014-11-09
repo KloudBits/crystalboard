@@ -16,6 +16,9 @@ urlpatterns = patterns('',
 
 	url(r'^cursos/$', 'Main.views.cursos'),
 	url(r'^info/$', 'Main.views.perfil'),
+	
+	url(r'^login/$', 'Main.views.ingreso_usuario'),
+	
 	url(r'^cursos/nuevo/$', 'Main.views.nuevoCurso'),
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/tareas/$', 'Main.views.tareas'),
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/tareas/(?P<tarea>[0-9]+)/$', 'Main.views.tarea'),

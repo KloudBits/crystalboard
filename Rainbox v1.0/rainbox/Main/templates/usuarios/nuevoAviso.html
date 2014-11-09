@@ -1,0 +1,35 @@
+{% extends "usuarios/base-usuario.html" %}
+
+{% block colright %}
+    	  <div class="main-img">
+            <img src="{{ STATIC_URL}}img/pic-2.jpg" alt="">
+            <p class="lead">Genera un nuevo aviso</p>
+        </div>  
+              
+        <hr>
+
+        <form method="post" action="" enctype="multipart/form-data">{% csrf_token %}
+        {% for field in formulario %}
+
+             
+              <div class="row">
+                <div class="span6">
+                  <label>{{ field.label }}</label>
+                  {{ field }}
+                  {{ field.errors }}
+                </div>
+              </div>
+
+          {% endfor %}
+
+          <div class="row">
+            <div class="button-align">
+              <input type="submit" value="Guardar" class="button_medium">
+            </div>
+          </div>
+       
+        </form>
+           
+           
+
+{% endblock %}
