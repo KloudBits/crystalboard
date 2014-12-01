@@ -32,7 +32,7 @@
 	{% elif recurso.tipo == 2 %}
 	<a href="{{ recurso.url }}" target="_blank">Abrir el archivo desde Dropbox</a>
 	{% elif recurso.tipo == 3 %}
-	<iframe width="560" height="315" src="//www.youtube.com/embed/{{ recurso.url }}" frameborder="0" allowfullscreen></iframe>
+	     {{ recurso.url|safe }}
 	{% elif recurso.tipo == 4 %}
 	<a href="{{ recurso.url }}" target="_blank">Abrir el enlace web</a>
 	{% endif %}

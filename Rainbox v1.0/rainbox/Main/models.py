@@ -57,6 +57,7 @@ class Clase( models.Model ):
         if self.titulo:
             self.slug = slugify(self.titulo)
         super(Clase, self).save(*args, **kwargs)
+
 ################################################
 
 ################# Recurso ######################
@@ -70,7 +71,7 @@ class Recurso( models.Model ):
     )
     clase = models.ForeignKey( Clase ) # ID de la clase a la que pertenece la tarea
     titulo = models.CharField( max_length = 60 ) # Titulo del recurso
-    url = models.TextField( max_length = 60 ) # URL de ubicación web
+    url = models.TextField( max_length = 60 ) # URL de ubicación web    
     descripcion = models.TextField( ) # Resumen del contenido del recurso
     tipo = models.IntegerField( default = 2, choices = TIPO_CHOICES ) # Tipo de recurso que se va agregar
     

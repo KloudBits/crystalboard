@@ -15,6 +15,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from Main.models import Entrega_Tarea, Quiz_Aplicar, Quiz_Respuesta, Quiz_Pregunta, Quiz, UserProfile, Curso, Tarea, Clase, Recurso, Capitulo, Foro, Foro_Comentario, Aviso
 from Main.forms import nuevoEntregaTareaFormulario, nuevoTareaFormulario, nuevoRecursoFormulario, nuevaRespuestaFormulario, nuevaPreguntaFormulario, nuevoQuizFormulario, comentarForoFormulario, nuevoCursoFormulario, nuevaClaseFormulario, nuevoCapituloFormulario, nuevoForoFormulario, nuevoAvisoFormulario, registrationForm, editarPerfilFormulario, nuevoCanalCursoFormulario
+import urllib
+import json
 
 ########################## LOGEO #######################################
 def ingreso_usuario( request ):
@@ -317,7 +319,7 @@ def borrarForo(request, curso, foro):
 		if perfil.tipo != 1 and perfil.user != curso.usuario:
 			raise Http404
 		else:
-			(get_object_or_404(Foro, slug = foro)).delete()
+			(get_object_or_404(claseForo, slug = foro)).delete()
 
 def comentarForo(request, curso, foro):
 	if not request.user.is_authenticated():
@@ -622,6 +624,7 @@ def add_slideshare(request, curso, clase):
 		if formulario.is_valid():
 			f = formulario.save(commit=False)
 			c = get_object_or_404(Clase, slug=clase)
+			f.url = id_slide(f.url)
 			f.clase = c
 			f.tipo = 1
 			f.save()
@@ -639,7 +642,7 @@ def add_dropbox(request, curso, clase):
 		formulario = nuevoRecursoFormulario(request.POST)
 		if formulario.is_valid():
 			f = formulario.save(commit=False)
-			c = get_object_or_404(Clase, slug=clase)
+			c = get_object_or_404(Clase, slug=clase)			
 			f.clase = c
 			f.tipo = 2
 			f.save()
@@ -658,6 +661,7 @@ def add_youtube(request, curso, clase):
 		if formulario.is_valid():
 			f = formulario.save(commit=False)
 			c = get_object_or_404(Clase, slug=clase)
+			f.url = embed_video(f.url)
 			f.clase = c
 			f.tipo = 3
 			f.save()
@@ -799,3 +803,16 @@ def del_recurso(request, curso, clase, recurso):
 
 
 
+############################ FUNCIONES DE UTILIDAD ###################################3
+
+def id_slide(url):
+	sock = urllib.urlopen('http://www.slideshare.net/api/oembed/2?url='+url+'&format=json')
+	slideId = json.loads(sock.read())['slideshow_id']
+	sock.close()
+	return slideId
+
+def embed_video(url):
+	sock = urllib.urlopen('http://www.youtube.com/oembed?url='+url+'&format=json')
+	video = json.loads(sock.read())['html']
+	sock.close()
+	return video
