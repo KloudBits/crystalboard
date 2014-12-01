@@ -20,7 +20,7 @@ class Curso( models.Model ):
     resumen = models.CharField( max_length = 300 ) # Resumen corto del curso
     informacion_general = models.TextField( ) # Informacion en general del curso, temario, objetivos
     imagen = models.ImageField( upload_to = 'cursos_logo' ) # Imagen del Curso    
-    canal = models.URLField(max_length=100) # URL del canal de streaming
+    canal = models.CharField(blank=True, max_length=100) # URL del canal de streaming
     chat = models.CharField(max_length=100)
     miembros = models.ManyToManyField( User, related_name = 'miembros' )  # Los miembros del curso
 

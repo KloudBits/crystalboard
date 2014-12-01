@@ -595,14 +595,13 @@ def borrarRespuesta(request, curso, quiz, pregunta, respuesta):
 
 def envivo(request, curso):
 	if not request.user.is_authenticated():
-		raise Http404
-	
+		raise Http404	
 	
 	if request.user.userprofile.tipo == 1:
 		cur = get_object_or_404(Curso, slug = curso)
 		if request.method == "POST":
 			formulario = nuevoCanalCursoFormulario(request.POST, instance=cur)
-			if formulario.is_valid():
+			if formulario.is_valid():							
 				formulario.save()
 				return HttpResponseRedirect("/cursos/" + cur.slug + "/")
 		else:
@@ -611,7 +610,7 @@ def envivo(request, curso):
 
 	if request.user.userprofile.tipo == 2:
 		cur = get_object_or_404(Curso, slug = curso)
-		return render(request, "miembros/stream.html", {"curso":cur})
+		return render(request, "miembros/stream.html", {"curso":cur, "streamvideo":embed_video(cur.canal)})
 
 
 def add_slideshare(request, curso, clase):
@@ -798,10 +797,6 @@ def del_recurso(request, curso, clase, recurso):
 	r = get_object_or_404(Recurso, id=recurso)
 	r.delete()
 	return redirect('/cursos/'+ curso +'/'+ clase +'/')
-
-
-
-
 
 ############################ FUNCIONES DE UTILIDAD ###################################3
 
