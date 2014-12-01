@@ -8,7 +8,7 @@ from django.contrib.auth.forms import UserCreationForm
 class nuevoEntregaTareaFormulario(ModelForm):
 	class Meta:
 		model = Entrega_Tarea
-		exclude = ('alumno','tarea',)
+		exclude = ('alumno','tarea', 'feedback',)
 
 
 class nuevoCanalCursoFormulario(ModelForm):

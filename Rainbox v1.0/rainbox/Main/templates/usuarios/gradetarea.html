@@ -14,6 +14,7 @@
                     
                     <div class="widget-header">
                         <h5>Entregas</h5>
+                        <h5>Tareas: {{ tareas }}</h5>
                     </div> <!-- .widget-header -->
                     
                     <div class="widget-content">
@@ -30,13 +31,13 @@
                     
                             <tbody>
 
-                                {% for tarea in tareas %}
+                                {% for tarea in entregas %}
                                 <tr>
                                     <td>{{ tarea.alumno }}</td>
-                                    <td>{{ quiz.intentos }}</td>
-                                    <td>{{ quiz.fecha_inicio }}</td>
-                                    <td>{{ quiz.fecha_limite }}</td>
-                                    <td> <a href="/cursos/{{ curso.slug }}/grade-center/tareas/{{ tarea.id }}/{{ tarea.usuario.id }}/">X</a> </td>
+                                    <td>{{ tarea.intentos }}</td>
+                                    <td>{{ tarea.fecha_inicio }}</td>
+                                    <td>{{ tarea.fecha_limite }}</td>
+                                    <td> <a href="/cursos/{{ curso.slug }}/grade-center/tareas/{{ tarea.id }}/{{ tarea.alumno.id }}/">X</a> </td>
                                 </tr>
                                 {% endfor %}
  

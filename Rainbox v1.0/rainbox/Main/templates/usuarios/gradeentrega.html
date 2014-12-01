@@ -5,12 +5,25 @@
             <img src="{{ STATIC_URL }}img/pic-4.jpg" alt="">
             <p class="lead">Tibique dolores adversarium ne vel. At vide errem duo, vis luptatum menandri ullamcorper id. </p>
         </div>
-        
-       
-        
+             
         
         
-      {{ entrega }}
+        
+      <a href="{{ entrega }}" > {{ entrega }}</a>
+
+      <form method="POST" action=""> {% csrf_token %}
+      	<div class="row">
+            <div class="span6">
+                <label>Retroalimentación:</label>
+                <textarea name="feedback" id="feedback">{% if entrega.tieneFeedback %}{{ entrega.feedback }}{% endif %}</textarea>
+            </div>
+        </div>   
+        <div class="row">
+            <div class="button-align">
+              <input type="submit" value="Enviar" class="button_medium">
+            </div>
+        </div>
+      </form>
 					
         
     

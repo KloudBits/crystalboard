@@ -13,7 +13,7 @@
         <div class="widget borders widget-table">
                     
                     <div class="widget-header">
-                        <h5>Aplicaciones</h5>
+                        <h5>Aplicaciones</h5>                        
                     </div> <!-- .widget-header -->
                     
                     <div class="widget-content">
@@ -33,9 +33,9 @@
                                 {% for aplicacion in aplicaciones %}
                                 <tr>
                                     <td>{{ aplicacion.usuario }}</td>
-                                    <td>{{ quiz.intentos }}</td>
-                                    <td>{{ quiz.fecha_inicio }}</td>
-                                    <td>{{ quiz.fecha_limite }}</td>
+                                    <td>{{ aplicacion.intentos }}</td>
+                                    <td>{{ aplicacion.fecha_inicio }}</td>
+                                    <td>{{ aplicacion.fecha_limite }}</td>
                                     <td> <a href="/cursos/{{ curso.slug }}/grade-center/quizzes/{{ quiz }}/{{ aplicacion.id }}/">X</a> </td>
                                 </tr>
                                 {% endfor %}

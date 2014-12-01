@@ -4,13 +4,10 @@
     	<div class="main-img">
             <img src="{{ STATIC_URL }}img/pic-4.jpg" alt="">
             <p class="lead">Tibique dolores adversarium ne vel. At vide errem duo, vis luptatum menandri ullamcorper id. </p>
-        </div>
+        </div>                
         
-       
-        
-        
-        
-      <form method="post" action="">{% csrf_token %}
+    <form method="post" action="">{% csrf_token %}
+
     {% for respuesta in respuestas %}
 
         <p><strong>Pregunta:</strong> {{ respuesta.pregunta }}</p>
@@ -19,14 +16,12 @@
               <div class="row">
                 <div class="span6">
                   <label>Retroalimentación:</label>
-                  <textarea name="respuesta-{{ respuesta.id }}" id="respuesta-{{ respuesta.id }}"></textarea>
+                  <textarea name="respuesta-{{ respuesta.id }}" id="respuesta-{{ respuesta.id }}">{% if respuesta.tieneFeedback %}  {{ respuesta.feedback }}{% endif %}</textarea>
                 </div>
-              </div>
-
-         
-          
+              </div>       
     {% endfor %}
-        <div class="row">
+
+        <div class="row">          
             <div class="button-align">
               <input type="submit" value="Enviar" class="button_medium">
             </div>

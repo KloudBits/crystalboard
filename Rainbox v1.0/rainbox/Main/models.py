@@ -118,9 +118,13 @@ class Entrega_Tarea( models.Model ):
     comentarios = models.TextField( blank = True ) # Comentarios del alumno sobre la tarea
     fecha = models.DateTimeField( auto_now = True, auto_now_add = True ) # Feha y hora de la entrega    
     link_dp = models.URLField( ) # Link de dropbox para compartir la tarea
-
+    feedback  = models.TextField(blank=True)
+    
     def __unicode__( self ):
         return self.link_dp
+
+    def tieneFeedback(self):
+        return len(self.feedback) > 0
 #################################################
 
 ################# USERPROFILE ###################
@@ -207,6 +211,9 @@ class Quiz_Aplicar( models.Model ):
     #intento = models.IntegerField( ) # Intentos que lleva de realizar el quiz
     fecha_inicio = models.DateTimeField( ) # Hora de Inicio del quiz
     fecha_termino = models.DateTimeField( ) # Hora de Termino del quiz
+
+    def __unicode__(self):
+        return str(self.quiz) + " de " + str(self.usuario)
 ################################################
 
 # ############ APLICAR_RESPUESTA ##################
@@ -221,5 +228,12 @@ class Quiz_Respuesta( models.Model ):
     examen = models.ForeignKey( Quiz_Aplicar )
     pregunta = models.ForeignKey( Quiz_Pregunta ) # Pregunta que se contesta
     respuesta = models.TextField()
-    feedback = models.TextField()
+    feedback = models.TextField(blank=True)
+
+    def __unicode__(self):
+        return "Respuestas: " + str(self.examen)
+
+    def tieneFeedback(self):
+        return len(self.feedback) > 0
+
 #################################################

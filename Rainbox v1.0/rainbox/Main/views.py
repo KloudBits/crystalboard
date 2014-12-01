@@ -733,7 +733,6 @@ def tarea(request, curso, tarea):
 def gradecenter(request, curso):
 	if not request.user.is_authenticated():
 		raise Http404
-
 	c = get_object_or_404(Curso, slug=curso)
 	tareas = Tarea.objects.filter(curso=c)
 	quizzes = Quiz.objects.filter(curso=c)
@@ -760,19 +759,32 @@ def gradetarea(request, curso, tarea):
 def gradequiz_aplicacion(request, curso, quiz, aplicacion):
 	if not request.user.is_authenticated():
 		raise Http404
+	else:
+		if request.method == "POST":
+			for elemento in request.POST:
+				if not elemento == 'csrfmiddlewaretoken':					
+					respuesta = get_object_or_404(Quiz_Respuesta, id=int(str(elemento).split('-')[1]))
+					respuesta.feedback = str(request.POST[elemento])
+					respuesta.save()
 
-	respuestas = Quiz_Respuesta.objects.filter(examen=aplicacion)
-	c = get_object_or_404(Curso, slug=curso)
-	return render(request, 'usuarios/gradeaplicacion.html', { 'respuestas':respuestas, 'curso':c })
-
+			respuestas = Quiz_Respuesta.objects.filter(examen=aplicacion)	
+			c = get_object_or_404(Curso, slug=curso)
+		else:
+			respuestas = Quiz_Respuesta.objects.filter(examen=aplicacion)	
+			c = get_object_or_404(Curso, slug=curso)
+		return render(request, 'usuarios/gradeaplicacion.html', { 'respuestas':respuestas, 'curso':c })
 
 def gradetarea_entrega(request, curso, tarea, entrega):
 	if not request.user.is_authenticated():
 		raise Http404
-
-	entrega = get_object_or_404(Entrega_Tarea, id=entrega)
-	c = get_object_or_404(Curso, slug=curso)
-	return render(request, 'usuarios/gradeentrega.html', { 'entrega':entrega, 'curso':c })
+	else:
+		c = get_object_or_404(Curso, slug=curso)
+		entrega = get_object_or_404(Entrega_Tarea, id=tarea)
+		if request.method == "POST":
+			feedback = request.POST['feedback']			
+			entrega.feedback = feedback
+			entrega.save()
+		return render(request, 'usuarios/gradeentrega.html', { 'entrega':entrega, 'curso':c })
 
 
 def del_recurso(request, curso, clase, recurso):
