@@ -35,7 +35,7 @@
 	<div class="col-right">
     	<div class="main-img">
             <img src="{{ STATIC_URL}}img/pic-2.jpg" alt="">
-            <p class="lead">Estos son los cursos que estás impartiendo</p>
+            <p class="lead">Bienvenido a tu plataforma de aprendizaje en línea</p>
         </div>  
               
           
@@ -50,7 +50,8 @@
                </ul>
              </div>
                 <div class="description">
-                	<p>{{ curso.resumen }}</p>
+                	<img src="{{ MEDIA_URL }}{{ curso.imagen }}">
+                	<p>{{ curso.informacion_general }}</p>
                     <ul>
                     	  <!--<li><i class="icon-book"></i> 10 Lessons</li>
                         <li><i class="icon-reorder"></i> Level Basic</li>

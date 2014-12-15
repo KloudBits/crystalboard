@@ -2,8 +2,8 @@
 
 {% block colright %}
     	<div class="main-img">
-            <img src="{{ STATIC_URL }}img/pic-4.jpg" alt="">
-            <p class="lead">Tibique dolores adversarium ne vel. At vide errem duo, vis luptatum menandri ullamcorper id. </p>
+            <img src="{{ MEDIA_URL }}{{ curso.imagen }}" alt="">
+            <p class="lead">Centro de evaluación</p>
         </div>
         
        
@@ -13,7 +13,7 @@
         <div class="widget borders widget-table">
                     
                     <div class="widget-header">
-                        <h5>Quizzes</h5>
+                        <h5>Evaluaciones</h5>
                     </div> <!-- .widget-header -->
                     
                     <div class="widget-content">
@@ -21,8 +21,7 @@
                             
                             <thead>
                             <tr>                                
-                                <th>Quiz</th>
-                                <th>Intentos</th>
+                                <th>Evaluación</th>
                                 <th>Fecha de inicio</th>
                                 <th>Fecha de término</th>
                                 <th>Aplicaciones</th>
@@ -33,10 +32,9 @@
                                 {% for quiz in quizzes %}
                                 <tr>
                                     <td>{{ quiz }}</td>
-                                    <td>{{ quiz.intentos }}</td>
                                     <td>{{ quiz.fecha_inicio }}</td>
                                     <td>{{ quiz.fecha_limite }}</td>
-                                    <td> <a href="/cursos/{{ curso.slug }}/grade-center/quizzes/{{ quiz.id }}/">X</a> </td>
+                                    <td class="center"> <a href="/cursos/{{ curso.slug }}/grade-center/quizzes/{{ quiz.id }}/"><i class="fa fa-eye fa-lg"></i></a> </td>
                                 </tr>
                                 {% endfor %}
  
@@ -61,7 +59,6 @@
                             <tr>                                
                                 <th>Título</th>
                                 <th>Descripción</th>
-                                <th>Fecha de registro</th>
                                 <th>Fecha límite</th>
                                 <th>Aplicaciones</th>
                             </tr></thead>
@@ -72,9 +69,8 @@
                                 <tr>
                                     <td>{{ tarea.titulo }}</td>
                                     <td>{{ tarea.descripcion }}</td>
-                                    <td>{{ tarea.fecha_de_registro }}</td>
                                     <td>{{ tarea.fecha_limite }}</td>
-                                    <td><a href="/cursos/{{ curso.slug }}/grade-center/tareas/{{ tarea.id }}/">X</a> </td>
+                                    <td class="center"><a href="/cursos/{{ curso.slug }}/grade-center/tareas/{{ tarea.id }}/"><i class="fa fa-eye fa-lg"></i></a> </td>
                                 </tr>
                                 {% endfor %}
  

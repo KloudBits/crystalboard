@@ -2,10 +2,14 @@
 
 {% block colright %}
     	<div class="main-img">
-            <img src="{{ STATIC_URL }}img/pic-2.jpg" alt="">
-            <p class="lead">Genera avisos para tus estudiantes</p>
+            <img src="{{ MEDIA_URL }}{{ curso.imagen }}" alt="">
+            <p class="lead">Genera avisos para tus alumnos</p>
         </div>
-        
+        {% if messages %}
+        {% for message in messages %}
+         <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
 
        <div class=" builder-column col-lg-8 col-md-8 col-sm-8 eight lv-1 index-2 last ">
        <div class="bd-row clearfix row-2 lv-2 last">

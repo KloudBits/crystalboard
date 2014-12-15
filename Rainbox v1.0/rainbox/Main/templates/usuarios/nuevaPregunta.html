@@ -2,8 +2,8 @@
 
 {% block colright %}
     	  <div class="main-img">
-            <img src="{{ STATIC_URL}}img/pic-2.jpg" alt="">
-            <p class="lead">Desde este panel podrás administrar cada uno de tus cursos. </p>
+            <img src="{{ MEDIA_URL}}{{ curso.imagen }}" alt="">
+            <p class="lead">Nueva pregunta para la evaluación: {{ quiz }}</p>
         </div>  
               
         <hr>

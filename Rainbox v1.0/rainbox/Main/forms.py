@@ -72,16 +72,20 @@ class nuevaPreguntaFormulario(ModelForm):
 		exclude = ('prueba',)
 
 class nuevoQuizFormulario(ModelForm):
+	fecha_inicio = forms.CharField(widget=forms.TextInput(attrs={'class':'fechado'}))
+	fecha_limite = forms.CharField(widget=forms.TextInput(attrs={'class':'fechado'}))
 	class Meta:
 		model = Quiz
 		exclude = ('curso','fecha_creacion',)
 
 class nuevoRecursoFormulario(ModelForm):
+	url = forms.CharField(label="Enlace de recurso", widget=forms.TextInput(attrs={'class':'form-control'}))
 	class Meta:
 		model = Recurso
 		exclude = ('clase', 'tipo',)
 
 class nuevoTareaFormulario(ModelForm):
+	fecha_limite = forms.CharField(widget=forms.TextInput(attrs={'class':'fechado'}))
 	class Meta:
 		model = Tarea
 		exclude = ('curso',)

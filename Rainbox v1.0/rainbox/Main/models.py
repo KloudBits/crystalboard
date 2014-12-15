@@ -17,12 +17,11 @@ class Curso( models.Model ):
     usuario = models.ForeignKey( User )  # Usuario que administra el curso
     nombre = models.CharField( max_length = 200 ) # Variable que almacena el nombre del curso
     slug = models.SlugField()
-    resumen = models.CharField( max_length = 300 ) # Resumen corto del curso
     informacion_general = models.TextField( ) # Informacion en general del curso, temario, objetivos
     imagen = models.ImageField( upload_to = 'cursos_logo' ) # Imagen del Curso    
     canal = models.CharField(blank=True, max_length=100) # URL del canal de streaming
-    chat = models.CharField(max_length=100)
-    miembros = models.ManyToManyField( User, related_name = 'miembros' )  # Los miembros del curso
+    chat = models.CharField(max_length=100, blank=True)
+    miembros = models.ManyToManyField(User, related_name = 'miembros', blank=True )  # Los miembros del curso
 
     def __unicode__(self):
         return self.nombre
@@ -71,7 +70,7 @@ class Recurso( models.Model ):
     )
     clase = models.ForeignKey( Clase ) # ID de la clase a la que pertenece la tarea
     titulo = models.CharField( max_length = 60 ) # Titulo del recurso
-    url = models.TextField( max_length = 60 ) # URL de ubicación web    
+    url = models.CharField( max_length = 200 ) # URL de ubicación web    
     descripcion = models.TextField( ) # Resumen del contenido del recurso
     tipo = models.IntegerField( default = 2, choices = TIPO_CHOICES ) # Tipo de recurso que se va agregar
     
@@ -106,7 +105,7 @@ class Tarea( models.Model ):
     fecha_registro = models.DateField( auto_now = True, auto_now_add = True ) # Fecha en la que se registo la fecha
     fecha_inicio = models.DateField( auto_now = False, auto_now_add = True ) # Fecha en la que se abre el acceso
     fecha_limite = models.DateField( auto_now = False, auto_now_add = False) # Fecha limite de entrega la materia
-    puntos = models.IntegerField( blank = True, null = True ) # Puntos que otorga la tarea
+    #puntos = models.IntegerField( blank = True, null = True ) # Puntos que otorga la tarea
     
     def __unicode__( self ):
         return self.titulo
@@ -151,7 +150,7 @@ class UserProfile( models.Model ):
 class Foro( models.Model ):
     curso = models.ForeignKey( Curso ) # ID del curso al que pertenece
     fecha = models.DateField( auto_now = True, auto_now_add = True ) # Fecha en la que el foro es creado
-    titulo = models.TextField( max_length = 30 ) # Titulo del foro
+    titulo = models.CharField( max_length = 100 ) # Titulo del foro
     texto = models.TextField( ) # Descripción del foro
     visibilidad = models.BooleanField() # Opción de visibilidad
 

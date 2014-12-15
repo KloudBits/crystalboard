@@ -35,8 +35,15 @@
 	<div class="col-right">
     	<div class="main-img">
             <img src="{{ STATIC_URL }}img/pic-2.jpg" alt="">
-            <p class="lead">Desde este panel podrás administrar cada uno de tus cursos. </p>
-        </div>  
+            <p class="lead">Bienvenido a tu plataforma de aprendizaje en línea.</p>
+        </div>
+        {% if messages %}
+		    {% for message in messages %}
+		     <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
+		    {% endfor %}
+		{% endif %}
+
+       
               
          
           

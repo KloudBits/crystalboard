@@ -256,6 +256,7 @@ def borrarCapitulo (request, curso, capitulo):
 		if perfil.tipo != 1:
 			raise Http404
 		else:
+			messages.add_message( request, messages.SUCCESS, "Se eliminó correctamente el capítulo" )
 			(get_object_or_404(Capitulo, pk = capitulo)).delete()
 			return HttpResponseRedirect( '/cursos/'+ curso +'/capitulos/' )
 ##############################################################################################################3
@@ -627,6 +628,7 @@ def add_slideshare(request, curso, clase):
 			f.clase = c
 			f.tipo = 1
 			f.save()
+			messages.add_message(request, messages.SUCCESS, "La presentación de slideshare se agregó correctamente")
 			return HttpResponseRedirect("/cursos/" + curso + "/"+clase+"/")
 	else:
 		formulario = nuevoRecursoFormulario()
@@ -645,6 +647,7 @@ def add_dropbox(request, curso, clase):
 			f.clase = c
 			f.tipo = 2
 			f.save()
+			messages.add_message(request, messages.SUCCESS, "El archivo de dropbox se agregó correctamente")
 			return HttpResponseRedirect("/cursos/" + curso + "/"+clase+"/")
 	else:
 		formulario = nuevoRecursoFormulario()
@@ -664,6 +667,7 @@ def add_youtube(request, curso, clase):
 			f.clase = c
 			f.tipo = 3
 			f.save()
+			messages.add_message(request, messages.SUCCESS, "El video de YouTube se agregó correctamente")
 			return HttpResponseRedirect("/cursos/" + curso + "/"+clase+"/")
 	else:
 		formulario = nuevoRecursoFormulario()
@@ -682,6 +686,7 @@ def add_weblink(request, curso, clase):
 			f.clase = c
 			f.tipo = 4
 			f.save()
+			messages.add_message(request, messages.SUCCESS, "El enlace web se registró correctamente")
 			return HttpResponseRedirect("/cursos/" + curso + "/"+clase+"/")
 	else:
 		formulario = nuevoRecursoFormulario()
@@ -702,17 +707,18 @@ def nuevoTarea(request, curso):
 	if not request.user.is_authenticated():
 		raise Http404
 
+	c = get_object_or_404(Curso, slug=curso)
 	if request.method == "POST":
 		formulario = nuevoTareaFormulario(request.POST)
 		if formulario.is_valid():
 			f = formulario.save(commit=False)
-			c = get_object_or_404(Curso, slug=curso)
 			f.curso = c
 			f.save()
+			messages.add_message(request, messages.SUCCESS, "Se registró la tarea correctamente")
 			return HttpResponseRedirect("/cursos/" + curso + "/tareas/")
 	else:
 		formulario = nuevoTareaFormulario()
-	return render(request, 'usuarios/nuevoTarea.html', {'formulario':formulario})
+	return render(request, 'usuarios/nuevoTarea.html', {'formulario':formulario, 'curso':c  })
 
 #Lectura y formulario de entrega para miembros
 def tarea(request, curso, tarea):
@@ -796,6 +802,7 @@ def del_recurso(request, curso, clase, recurso):
 
 	r = get_object_or_404(Recurso, id=recurso)
 	r.delete()
+	messages.add_message(request, messages.SUCCESS, "Se eliminó el recurso correctamente")
 	return redirect('/cursos/'+ curso +'/'+ clase +'/')
 
 ############################ FUNCIONES DE UTILIDAD ###################################3

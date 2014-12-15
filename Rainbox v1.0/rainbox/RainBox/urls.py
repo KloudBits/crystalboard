@@ -19,7 +19,7 @@ urlpatterns = patterns('',
 	
 	url(r'^login/$', 'Main.views.ingreso_usuario'),
 	
-	url(r'^cursos/nuevo/$', 'Main.views.nuevoCurso'),
+	#url(r'^cursos/nuevo/$', 'Main.views.nuevoCurso'),
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/tareas/$', 'Main.views.tareas'),
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/tareas/(?P<tarea>[0-9]+)/$', 'Main.views.tarea'),
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/tareas/nuevo/$', 'Main.views.nuevoTarea'),
@@ -37,7 +37,7 @@ urlpatterns = patterns('',
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/clases/$', 'Main.views.clases'),
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/avisos/$', 'Main.views.avisos'),
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/miembros/$', 'Main.views.miembros'),
-	url(r'^cursos/(?P<curso>[a-z-0-9]+)/miembros/nuevo/$', 'Main.views.nuevoMiembro'),
+	#url(r'^cursos/(?P<curso>[a-z-0-9]+)/miembros/nuevo/$', 'Main.views.nuevoMiembro'),
 
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/foros/$', 'Main.views.foros'),
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/foros/(?P<foro>[0-9]+)/$', 'Main.views.foro'),
@@ -77,3 +77,7 @@ urlpatterns = patterns('',
 
 
 ) + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
+
+urlpatterns += patterns('',
+        (r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+        'document_root': settings.MEDIA_ROOT}))

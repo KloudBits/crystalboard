@@ -1,11 +1,11 @@
 /*!
  * Bootstrap v2.3.2
  *
- * Copyright 2012 Twitter, Inc
+ * Copyright 2013 Twitter, Inc
  * Licensed under the Apache License v2.0
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Designed and built with all the love in the world @twitter by @mdo and @fat.
+ * Designed and built with all the love in the world by @mdo and @fat.
  */
 
 .clearfix {
@@ -1092,7 +1092,7 @@ input[type="color"],
 .uneditable-input {
   display: inline-block;
   height: 20px;
-  padding: 7px 6px;
+  padding: 4px 6px;
   margin-bottom: 10px;
   font-size: 14px;
   line-height: 20px;
@@ -1714,9 +1714,9 @@ select:focus:invalid:focus {
 .input-prepend .add-on {
   display: inline-block;
   width: auto;
-  height: 18px;
+  height: 20px;
   min-width: 16px;
-  padding: 8px 5px;
+  padding: 4px 5px;
   font-size: 14px;
   font-weight: normal;
   line-height: 20px;
@@ -2003,7 +2003,7 @@ table {
 
 .table {
   width: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .table th,

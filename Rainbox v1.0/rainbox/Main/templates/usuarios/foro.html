@@ -2,8 +2,8 @@
 
 {% block colright %}
     	<div class="main-img">
-            <img src="{{ STATIC_URL }}img/pic-2.jpg" alt="">
-            <p class="lead">Tibique dolores adversarium ne vel. At vide errem duo, vis luptatum menandri ullamcorper id. </p>
+            <img src="{{ MEDIA_URL }}{{ curso.imagen }}" alt="">
+            <p class="lead">Foro</p>
         </div>
         
        
@@ -16,7 +16,7 @@
         {% for comentario in comentarios %}
             <div class="strip-courses gray">
              <div class="title-course">
-               <h3>{{ comentario.usuario.first_name }}</h3>
+               <h3>{{ comentario.usuario.first_name }} {{ comentario.usuario.last_name }}</h3>
                <ul>
                     <li><i class="icon-calendar"></i> Fecha: {{ comentario.fecha }}</li>
                </ul>

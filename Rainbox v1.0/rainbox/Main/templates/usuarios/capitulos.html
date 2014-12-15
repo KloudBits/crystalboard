@@ -3,12 +3,16 @@
 {% block colright %}
 
     	<div class="main-img">
-            <img src="{{ STATIC_URL }}pic-4.jpg" alt="">
-            <p class="lead">Tibique dolores adversarium ne vel. At vide errem duo, vis luptatum menandri ullamcorper id. </p>
+            <img src="{{ MEDIA_URL }}{{ curso.imagen }}" alt="">
+            <p class="lead">Cápítulos</p>
         </div>
         
     
-        
+        {% if messages %}
+		    {% for message in messages %}
+		     <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
+		    {% endfor %}
+		{% endif %}
         <div class="widget borders widget-table">
 					
 					<div class="widget-header">
@@ -30,7 +34,7 @@
                         <tr>
 							<td>{{ cap.nombre }}</td>
 							<td>{{ cap.resumen }}</td>
-                            <td><a href="/cursos/{{ curso.slug }}/capitulos/{{ cap.id }}/del/">X</a></td>
+                            <td class="center"><a href="/cursos/{{ curso.slug }}/capitulos/{{ cap.id }}/del/"><i class="fa fa-minus-circle"></i></a></td>
 						</tr>
                         {% endfor %}
                         

@@ -3,7 +3,7 @@
 {% block colright %}
 
     	<div class="main-img">
-            <img src="{{ STATIC_URL }}img/pic-2.jpg" alt="">
+            <img src="{{ MEDIA_URL }}{{ curso.imagen }}" alt="">
             <p class="lead">En esta sección encontrarás los usuarios enrolados en tu curso.</p>
         </div>
         
@@ -12,7 +12,7 @@
          <div class="widget borders widget-table">
                     
                     <div class="widget-header">
-                        <h5>Miembros</h5>
+                        <h5>Alumnos</h5>
                     </div> <!-- .widget-header -->
                     
                     <div class="widget-content">
@@ -29,7 +29,7 @@
                                 {% for miembro in miembros %}
                                 <tr>
                                     <td>{{ miembro.first_name }} {{ miembro.last_name }}</td>
-                                    <td>{{ miembro }}</td>
+                                    <td>{{ miembro.email }}</td>
                                 </tr>
                                 {% endfor %}
  
@@ -40,7 +40,7 @@
                     
         </div> <!-- /widget --> 
 
-        <p class="text-center"><a href="/cursos/{{ curso.slug }}/miembros/nuevo/" class="button_large">Registrar miembro</a></p>
+        <!--<p class="text-center"><a href="/cursos/{{ curso.slug }}/miembros/nuevo/" class="button_large">Registrar miembro</a></p>-->
 
        
     {% endblock %}

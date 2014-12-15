@@ -2,8 +2,8 @@
 
 {% block colright %}
     	<div class="main-img">
-            <img src="{{ STATIC_URL }}img/pic-2.jpg" alt="">
-            <p class="lead">Los foros te permiten generar un espacio de participación entre tus estudiantes</p>
+            <img src="{{ MEDIA_URL }}{{ curso.imagen }}" alt="">
+            <p class="lead">Foros</p>
         </div>
         
 
@@ -11,7 +11,7 @@
         <div class="widget borders widget-table">
                     
                     <div class="widget-header">
-                        <h5>Miembros</h5>
+                        <h5>Foros</h5>
                     </div> <!-- .widget-header -->
                     
                     <div class="widget-content">
@@ -20,7 +20,7 @@
                             <thead>
                             <tr>                                
                                 <th>Nombre</th>
-                                <th>Fecha</th>
+                                <th>Fecha de creación</th>
                                 <th>Texto</th>
                                 <th>Ver</th>
                                 <th>Eliminar</th>
@@ -33,8 +33,8 @@
                                     <td>{{ foro }}</td>
                                     <td>{{ foro.fecha }}</td>
                                     <td>{{ foro.texto }}</td>
-                                    <td> <a href="/cursos/{{ curso.slug }}/foros/{{ foro.id }}/">X</a> </td>
-                                    <td> <a href="/cursos/{{ curso.slug }}/foros/del/">X</a> </td>
+                                    <td class="center"> <a href="/cursos/{{ curso.slug }}/foros/{{ foro.id }}/"><i class="fa fa-eye fa-lg"></i></a> </td>
+                                    <td class="center"> <a href="/cursos/{{ curso.slug }}/foros/del/"><i class="fa fa-minus-circle fa-lg"></i></a> </td>
                                 </tr>
                                 {% endfor %}
  

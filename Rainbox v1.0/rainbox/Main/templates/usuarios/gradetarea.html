@@ -2,8 +2,8 @@
 
 {% block colright %}
     	<div class="main-img">
-            <img src="{{ STATIC_URL }}img/pic-4.jpg" alt="">
-            <p class="lead">Tibique dolores adversarium ne vel. At vide errem duo, vis luptatum menandri ullamcorper id. </p>
+            <img src="{{ MEDIA_URL }}{{ curso.imagen }}" alt="">
+            <p class="lead">Evaluación de tareas</p>
         </div>
         
        
@@ -23,7 +23,6 @@
                             <thead>
                             <tr>                                
                                 <th>Usuario</th>
-                                <th>Intentos</th>
                                 <th>Fecha de inicio</th>
                                 <th>Fecha de término</th>
                                 <th>Ver respuestas</th>
@@ -33,11 +32,10 @@
 
                                 {% for tarea in entregas %}
                                 <tr>
-                                    <td>{{ tarea.alumno }}</td>
-                                    <td>{{ tarea.intentos }}</td>
+                                    <td>{{ tarea.alumno.first_name }} {{ tarea.alumno.last_name }}</td>
                                     <td>{{ tarea.fecha_inicio }}</td>
-                                    <td>{{ tarea.fecha_limite }}</td>
-                                    <td> <a href="/cursos/{{ curso.slug }}/grade-center/tareas/{{ tarea.id }}/{{ tarea.alumno.id }}/">X</a> </td>
+                                    <td>{{ tarea.fecha_termino }}</td>
+                                    <td class="center"> <a href="/cursos/{{ curso.slug }}/grade-center/tareas/{{ tarea.id }}/{{ tarea.alumno.id }}/"><i class="fa fa-eye fa-lg"></i></a> </td>
                                 </tr>
                                 {% endfor %}
  

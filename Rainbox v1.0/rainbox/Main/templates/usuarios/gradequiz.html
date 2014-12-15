@@ -2,8 +2,8 @@
 
 {% block colright %}
     	<div class="main-img">
-            <img src="{{ STATIC_URL }}img/pic-4.jpg" alt="">
-            <p class="lead">Tibique dolores adversarium ne vel. At vide errem duo, vis luptatum menandri ullamcorper id. </p>
+            <img src="{{ MEDIA_URL }}{{ curso.imagen }}" alt="">
+            <p class="lead">Aplicaciones de evaluación</p>
         </div>
         
        
@@ -22,7 +22,6 @@
                             <thead>
                             <tr>                                
                                 <th>Usuario</th>
-                                <th>Intentos</th>
                                 <th>Fecha de inicio</th>
                                 <th>Fecha de término</th>
                                 <th>Ver respuestas</th>
@@ -32,11 +31,10 @@
 
                                 {% for aplicacion in aplicaciones %}
                                 <tr>
-                                    <td>{{ aplicacion.usuario }}</td>
-                                    <td>{{ aplicacion.intentos }}</td>
+                                    <td>{{ aplicacion.usuario.first_name }} {{ aplicacion.usuario.last_name }}</td>
                                     <td>{{ aplicacion.fecha_inicio }}</td>
-                                    <td>{{ aplicacion.fecha_limite }}</td>
-                                    <td> <a href="/cursos/{{ curso.slug }}/grade-center/quizzes/{{ quiz }}/{{ aplicacion.id }}/">X</a> </td>
+                                    <td>{{ aplicacion.fecha_termino }}</td>
+                                    <td class="center"> <a href="/cursos/{{ curso.slug }}/grade-center/quizzes/{{ quiz }}/{{ aplicacion.id }}/"><i class="fa fa-eye fa-lg"></i></a> </td>
                                 </tr>
                                 {% endfor %}
  

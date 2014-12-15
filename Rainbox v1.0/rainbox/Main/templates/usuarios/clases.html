@@ -2,9 +2,14 @@
 
 {% block colright %}
     	<div class="main-img">
-            <img src="{{ STATIC_URL}}img/pic-2.jpg" alt="">
+            <img src="{{ MEDIA_URL}}{{ curso.imagen }}" alt="">
             <p class="lead">Tus clases</p>
         </div>  
+        {% if messages %}
+            {% for message in messages %}
+             <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
               
            
             
@@ -34,7 +39,7 @@
             
              <hr>
             
-            <p class="text-center"><a href="/cursos/{{ curso.slug }}/capitulos/nuevo/" class="button_large">Nuevo capítulo</a></p>
+            <!--<p class="text-center"><a href="/cursos/{{ curso.slug }}/capitulos/nuevo/" class="button_large">Nuevo capítulo</a></p>-->
             <p class="text-center"><a href="/cursos/{{ curso.slug }}/clases/nuevo/" class="button_large">Nueva clase</a></p>
 
 

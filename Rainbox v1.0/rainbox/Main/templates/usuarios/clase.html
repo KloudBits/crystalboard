@@ -2,9 +2,14 @@
 
 {% block colright %}
     	<div class="main-img">
-            <img src="{{ STATIC_URL }}cursos_files/pic-2.jpg" alt="">
-            <p class="lead">Desde este panel podrás administrar cada uno de tus cursos. </p>
+            <img src="{{ MEDIA_URL }}{{ curso.imagen }}" alt="">
+            <p class="lead">Clase: {{ clase.titulo }}, Capítulo: {{ clase.capitulo }}</p>
         </div>  
+        {% if messages %}
+        {% for message in messages %}
+         <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
 <div class="dropdown">
   <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
     Agregar Recurso
@@ -30,10 +35,12 @@
 	{% if recurso.tipo == 1 %}
 	<iframe src="//www.slideshare.net/slideshow/embed_code/{{ recurso.url }}" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
 	{% elif recurso.tipo == 2 %}
+  <i class="fa fa-dropbox fa-2x"></i>
 	<a href="{{ recurso.url }}" target="_blank">Abrir el archivo desde Dropbox</a>
 	{% elif recurso.tipo == 3 %}
 	     {{ recurso.url|safe }}
 	{% elif recurso.tipo == 4 %}
+  <i class="fa fa-external-link-square fa-2x"></i>
 	<a href="{{ recurso.url }}" target="_blank">Abrir el enlace web</a>
 	{% endif %}
   <br>
