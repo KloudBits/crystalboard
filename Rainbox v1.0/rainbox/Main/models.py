@@ -135,11 +135,11 @@ class UserProfile( models.Model ):
         ( 2, 'Miembro' ),
     )
     user = models.OneToOneField( User ) # ID del usuario de Django
-    web = models.URLField( blank = True ) # Página Web del usuario
-    twitter = models.CharField( max_length = 30, blank = True ) # Cuenta de twitter
-    facebook = models.CharField(max_length = 30, blank = True ) # Cuenta de facebook
+    web = models.URLField( blank = True, null=True ) # Página Web del usuario
+    twitter = models.CharField( max_length = 30, blank = True, null=True ) # Cuenta de twitter
+    facebook = models.CharField(max_length = 30, blank = True, null=True ) # Cuenta de facebook
     bio = models.TextField( blank = True ) # Pequeña biografía del usuaria
-    foto = models.ImageField( upload_to = 'perfiles', blank = True ) # foto que se muestra
+    foto = models.ImageField( upload_to = 'perfiles', blank = True, null=True ) # foto que se muestra
     tipo = models.IntegerField( default = 1, choices = TIPO_CHOICES ) # Tipo de perfil del usuario
     
     def __str__( self ):

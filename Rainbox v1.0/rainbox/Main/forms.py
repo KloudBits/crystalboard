@@ -30,6 +30,9 @@ class nuevaClaseFormulario(ModelForm):
 		exclude = ('slug',)
 
 class editarPerfilFormulario(ModelForm):
+	web = forms.CharField(required=False,label="Página web", widget=forms.TextInput(attrs={'class':'form-control'}))
+	bio = forms.CharField(required=False,label="Biografía personal", widget=forms.Textarea(attrs={'class':'form-control'}))
+
 	class Meta:
 		model = UserProfile
 		exclude = ('user','tipo',)

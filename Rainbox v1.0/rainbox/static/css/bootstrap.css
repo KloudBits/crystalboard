@@ -1106,7 +1106,7 @@ input[type="color"],
 input,
 textarea,
 .uneditable-input {
-  width: 206px;
+  width: 100%;
 }
 
 textarea {
@@ -1397,7 +1397,8 @@ textarea.span4,
 input.span3,
 textarea.span3,
 .uneditable-input.span3 {
-  width: 206px;
+  /*width: 206px;*/
+  width: 100%;
 }
 
 input.span2,
