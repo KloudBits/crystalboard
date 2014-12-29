@@ -2,11 +2,33 @@
 
 {% block colright %}
     	  <div class="main-img">
-            <img src="{{ STATIC_URL}}img/pic-2.jpg" alt="">
-            <p class="lead">A continuación puedes dejar un comentario o pegar tu enlace de dropbox. Puedes consultar la guía para enviar tareas <a href="#">aquí</a></p>
+            <img src="{{ MEDIA_URL }}{{ curso.imagen }}" alt="">
+            <p class="lead">Tarea: {{ tarea }}</p>
         </div>  
+
+        {% if entregas %}
+        <div class="alert alert-error" role="alert">Esta tarea ya la enviaste. Si la envías nuevamente se va a sobreescribir tu último envío.</div>
+
+        <div>
+        {% for entrega in entregas %}
+          <p>Comentarios:</p>
+          <p>{{ entrega.comentarios }}</p>
+          <hr>
+          <p>Enlace de dropbox:</p>
+          <p>{{ entrega.link_dp }}</p>
+
+        {% endfor %}
+
+        
+        </div>
+        {% endif %}
+        
+
               
         <hr>
+        <p>Descripción de la tarea: {{ tarea.descripcion }}</p>
+        <hr>
+        <p>A continuación encontrarás un recuadro para realizar comentarios o responder tu tarea, según las indicaciones. Debajo encontrarás un campo para insertar el enlace de dropbox para adjuntar un archivo si tu tarea lo requiere.</p>
 
         <form method="post" action="" enctype="multipart/form-data">{% csrf_token %}
         {% for field in formulario %}

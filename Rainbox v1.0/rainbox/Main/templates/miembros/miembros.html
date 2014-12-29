@@ -3,7 +3,7 @@
 {% block colright %}
 
     	<div class="main-img">
-            <img src="{{ STATIC_URL }}img/pic-2.jpg" alt="">
+            <img src="{{ MEDIA_URL }}{{ curso.imagen }}" alt="">
             <p class="lead">Ellos son quienes te acompañarán durante este curso</p>
         </div>
         
@@ -29,7 +29,7 @@
                                 {% for miembro in miembros %}
                                 <tr>
                                     <td>{{ miembro.first_name }} {{ miembro.last_name }}</td>
-                                    <td>{{ miembro }}</td>
+                                    <td>{{ miembro.email }}</td>
                                 </tr>
                                 {% endfor %}
  

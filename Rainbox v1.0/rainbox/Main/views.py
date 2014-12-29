@@ -17,6 +17,7 @@ from Main.models import Entrega_Tarea, Quiz_Aplicar, Quiz_Respuesta, Quiz_Pregun
 from Main.forms import nuevoEntregaTareaFormulario, nuevoTareaFormulario, nuevoRecursoFormulario, nuevaRespuestaFormulario, nuevaPreguntaFormulario, nuevoQuizFormulario, comentarForoFormulario, nuevoCursoFormulario, nuevaClaseFormulario, nuevoCapituloFormulario, nuevoForoFormulario, nuevoAvisoFormulario, registrationForm, editarPerfilFormulario, nuevoCanalCursoFormulario
 import urllib
 import json
+import datetime
 
 ########################## LOGEO #######################################
 def ingreso_usuario( request ):
@@ -457,11 +458,22 @@ def quizes(request, curso):
 	else:
 		perfil = UserProfile.objects.get( user = request.user )
 		cur = get_object_or_404(Curso, slug = curso)
-		quizes = Quiz.objects.filter(curso = cur)
 		if request.user.get_profile().tipo == 1:
+			quizes = Quiz.objects.filter(curso = cur)
 			return render(request, "usuarios/quizes.html", {"perfil":perfil, "curso":cur, "quizes":quizes})	
 		else:
-			return render(request, "miembros/quizes.html", {"perfil":perfil, "curso":cur, "quizes":quizes})
+			aplicaciones = Quiz.objects.filter(quiz_aplicar__usuario=request.user)
+			quizos = Quiz.objects.filter(curso = cur, fecha_limite__gte=datetime.datetime.now())
+			quizes = set()
+			for q in quizos:
+				entregado = 0
+				for a in aplicaciones:
+					if q == a:
+						entregado = 1
+				if entregado == 0:
+					quizes.add(q) 
+
+			return render(request, "miembros/quizes.html", {"perfil":perfil, "curso":cur, "quizes":quizes, "aplicaciones":aplicaciones})
 
 def nuevoQuiz(request, curso):
 	if not request.user.is_authenticated():
@@ -484,10 +496,16 @@ def quiz(request, curso, quiz):
 	if not request.user.is_authenticated():
 		raise Http404
 	else:
+		entregas = Quiz_Aplicar.objects.filter(quiz=q, usuario=request.user)
+		if entregas > 0:
+			messages.add_message(request, messages.ERROR, "No puedes realizar esta prueba, ya la hiciste anteriormente.")
+			return redirect('/cursos/'+ curso +'/quizzes/')
+
 		cur = get_object_or_404(Curso, slug = curso)
 		q = get_object_or_404(Quiz, id = quiz)
 		preguntas = Quiz_Pregunta.objects.filter(prueba = q)
 		perfil = UserProfile.objects.get(user = request.user)
+
 		if request.user.get_profile().tipo == 1:
 			return render(request, "usuarios/quiz.html", {"perfil":perfil, "curso":cur, "quiz":q, "preguntas":preguntas})
 		else:
@@ -507,11 +525,10 @@ def quiz(request, curso, quiz):
 					formulario.feedback = ''
 					formulario.save()
 
-				
-
 				return redirect('/cursos/'+ curso +'/')
 			else:
-				return render(request, "miembros/quiz.html", {"perfil":perfil, "curso":cur, "quiz":q, "preguntas":preguntas})
+
+				return render(request, "miembros/quiz.html", {"perfil":perfil, "curso":cur, "quiz":q, "preguntas":preguntas, "entregas":entregas })
 
 def borrarQuiz(request, curso, quiz):
 	if not request.user.is_authenticated():
@@ -697,10 +714,11 @@ def tareas(request, curso):
 		raise Http404
 
 	c = get_object_or_404(Curso, slug=curso)
-	t = Tarea.objects.filter(curso=c)
 	if request.user.get_profile().tipo == 1:
+		t = Tarea.objects.filter(curso=c)
 		return render(request, 'usuarios/tareas.html', { 'tareas':t, 'curso':c })
 	else:
+		t = Tarea.objects.filter(curso=c, fecha_limite__gte=datetime.datetime.now())
 		return render(request, 'miembros/tareas.html', { 'tareas':t, 'curso':c })	
 
 def nuevoTarea(request, curso):
@@ -726,18 +744,27 @@ def tarea(request, curso, tarea):
 		raise Http404
 
 	c = get_object_or_404(Curso, slug=curso)
+	t = get_object_or_404(Tarea, id=tarea)
+
+	entregas = Entrega_Tarea.objects.filter(tarea=tarea,alumno=request.user)
+
 	if request.method == "POST":
 		formulario = nuevoEntregaTareaFormulario(request.POST)
 		if formulario.is_valid():
 			f = formulario.save(commit=False)
-			t = get_object_or_404(Tarea, id=tarea)
-			f.tarea = t
-			f.alumno = request.user
-			f.save()
+			if entregas > 0:
+				entrega = get_object_or_404(Entrega_Tarea, id=entregas[0].pk)
+				entrega.comentarios = f.comentarios
+				entrega.link_dp = f.link_dp
+				entrega.save()
+			else:	
+				f.tarea = t
+				f.alumno = request.user
+				f.save()
 			return HttpResponseRedirect("/cursos/" + curso + "/tareas/")
 	else:
 		formulario = nuevoEntregaTareaFormulario()
-	return render(request, 'miembros/nuevoTarea.html', {'formulario':formulario, 'curso':c})
+	return render(request, 'miembros/nuevoTarea.html', {'formulario':formulario, 'curso':c, 'tarea':t, 'entregas':entregas })
 
 def gradecenter(request, curso):
 	if not request.user.is_authenticated():

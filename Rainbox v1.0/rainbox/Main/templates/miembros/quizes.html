@@ -7,11 +7,31 @@
         </div>
         
        
+        <h5>Ya has participado en las siguientes evaluaciones:</h5>
+        {% for quiz in aplicaciones %}
+       
+        <div class="strip-staff">
+                <div class="row">
+                    <div class="span2 pic-teacher">
+                        <div class="borders"><img src="{{ STATIC_URL }}img/quiz.jpg" alt="" class=" img-rounded"></div>
+                    </div>
+                    <div class="span5">
+                        <h4>{{ quiz }} <em>{{ quiz.fecha_creacion }}</em></h4>
+                        <p>
+                            {{ quiz.intentos }}
+                        </p>
+                        <ul class="data-staff">
+                            <p><a href="/cursos/{{ curso.slug }}/quizzes/{{ quiz.id }}/" class="button_red_small" title="staff">Entrar</a></p>
+                        </ul>
+                    </div>
+                </div>
+            </div><!-- End Strip staff -->
+        {% endfor %}
+
         
-        
-        
-      
+       <h5>Tienes pendientes las siguientes evaluaciones:</h5>
        {% for quiz in quizes %}
+
         <div class="strip-staff">
                 <div class="row">
                     <div class="span2 pic-teacher">

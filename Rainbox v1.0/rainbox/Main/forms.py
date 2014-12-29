@@ -6,6 +6,8 @@ from Main.models import UserProfile,Curso, Clase, Capitulo, Recurso, Aviso, Avis
 from django.contrib.auth.forms import UserCreationForm
 
 class nuevoEntregaTareaFormulario(ModelForm):
+	comentarios = forms.CharField(required=False,label="Recuadro de respuesta o comentarios:", widget=forms.Textarea(attrs={'class':'form-control'}))
+	link_dp = forms.CharField(required=False, label="Enlace de dropbox")
 	class Meta:
 		model = Entrega_Tarea
 		exclude = ('alumno','tarea', 'feedback', )
@@ -54,6 +56,7 @@ class nuevoAvisoFormulario(ModelForm):
 		exclude = ('curso',)
 
 class comentarForoFormulario(ModelForm):
+	comentario = forms.CharField(required=True,label="Tu participación en este foro:", widget=forms.Textarea(attrs={'class':'form-control'}))
 	class Meta:
 		model = Foro_Comentario
 		fields = ('comentario',)
