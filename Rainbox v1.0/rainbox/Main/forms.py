@@ -26,7 +26,6 @@ class nuevoCursoFormulario(ModelForm):
 		exclude = ('usuario', 'miembros','slug','canal', 'chat',)
 
 class nuevaClaseFormulario(ModelForm):
-
 	class Meta:
 		model = Clase
 		exclude = ('slug',)

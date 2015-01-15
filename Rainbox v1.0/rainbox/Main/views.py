@@ -18,6 +18,7 @@ from Main.forms import nuevoEntregaTareaFormulario, nuevoTareaFormulario, nuevoR
 import urllib
 import json
 import datetime
+from django import forms
 
 ########################## LOGEO #######################################
 def ingreso_usuario( request ):
@@ -48,7 +49,7 @@ def egreso_usuario( request ):
 ############################## Home  ####################################
 def home( request ):
 	if not request.user.is_authenticated( ):
-		raise Http404
+		return render(request, 'index.html')
 	else: 
 		perfil = UserProfile.objects.get( user = request.user )
 		if perfil.tipo == 1: # Tipo de perfil Usuario ( Admin ) 
@@ -190,7 +191,8 @@ def nuevaClase( request, curso ):
 					return HttpResponseRedirect( '/cursos/'+curso+'/clases/' )
 			else: 
 				curso = get_object_or_404(Curso, slug=curso)
-				formulario = nuevaClaseFormulario( request.POST )
+				nuevaClaseFormulario.base_fields['capitulo'] = forms.ModelChoiceField(queryset= Capitulo.objects.filter(curso=curso))
+				formulario = nuevaClaseFormulario(  )
 			return  render( request, "usuarios/nuevaClase.html", { "formulario" : formulario, "curso":curso } )
 
 def editarClase( request, clase ):
@@ -496,11 +498,7 @@ def quiz(request, curso, quiz):
 	if not request.user.is_authenticated():
 		raise Http404
 	else:
-		entregas = Quiz_Aplicar.objects.filter(quiz=q, usuario=request.user)
-		if entregas > 0:
-			messages.add_message(request, messages.ERROR, "No puedes realizar esta prueba, ya la hiciste anteriormente.")
-			return redirect('/cursos/'+ curso +'/quizzes/')
-
+		entregas = Quiz_Aplicar.objects.filter(quiz=quiz, usuario=request.user)
 		cur = get_object_or_404(Curso, slug = curso)
 		q = get_object_or_404(Quiz, id = quiz)
 		preguntas = Quiz_Pregunta.objects.filter(prueba = q)
@@ -509,6 +507,10 @@ def quiz(request, curso, quiz):
 		if request.user.get_profile().tipo == 1:
 			return render(request, "usuarios/quiz.html", {"perfil":perfil, "curso":cur, "quiz":q, "preguntas":preguntas})
 		else:
+			if entregas.count() > 0:
+				messages.add_message(request, messages.ERROR, "No puedes realizar esta prueba, ya la hiciste anteriormente.")
+				return redirect('/cursos/'+ curso +'/quizzes/')
+
 			if request.method == 'POST':
 				aplicacion = Quiz_Aplicar()
 				aplicacion.usuario = request.user
@@ -712,7 +714,6 @@ def add_weblink(request, curso, clase):
 def tareas(request, curso):
 	if not request.user.is_authenticated():
 		raise Http404
-
 	c = get_object_or_404(Curso, slug=curso)
 	if request.user.get_profile().tipo == 1:
 		t = Tarea.objects.filter(curso=c)
@@ -752,7 +753,7 @@ def tarea(request, curso, tarea):
 		formulario = nuevoEntregaTareaFormulario(request.POST)
 		if formulario.is_valid():
 			f = formulario.save(commit=False)
-			if entregas > 0:
+			if entregas.count() > 0:
 				entrega = get_object_or_404(Entrega_Tarea, id=entregas[0].pk)
 				entrega.comentarios = f.comentarios
 				entrega.link_dp = f.link_dp
