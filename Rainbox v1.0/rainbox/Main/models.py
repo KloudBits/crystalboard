@@ -48,6 +48,8 @@ class Clase( models.Model ):
     titulo = models.CharField( max_length = 30 ) # Título de la clase
     resumen = models.TextField( blank = True ) # Información del curso
     slug = models.SlugField( )
+    fecha_inicio = models.DateField() # Fecha en la que se abre el acceso
+    fecha_limite = models.DateField() # Fecha limite de entrega la materia
     
     def __unicode__( self ):
         return self.titulo
@@ -100,11 +102,12 @@ class Aviso_Comentario( models.Model ):
 ################# TAREA ########################
 class Tarea( models.Model ):
     curso = models.ForeignKey( Curso ) # ID de la clase a la que pertenece la tarea
-    titulo = models.CharField( max_length = 30 ) # Título de la Tarea
+    titulo = models.CharField( max_length = 300 ) # Título de la Tarea
     descripcion = models.TextField( blank = True, null = True ) # Texto informativo sobre la tarea
+    link_dp = models.URLField( ) # Link de dropbox para compartir la tarea
     fecha_registro = models.DateField( auto_now = True, auto_now_add = True ) # Fecha en la que se registo la fecha
-    fecha_inicio = models.DateField( auto_now = False, auto_now_add = True ) # Fecha en la que se abre el acceso
-    fecha_limite = models.DateField( auto_now = False, auto_now_add = False) # Fecha limite de entrega la materia
+    fecha_inicio = models.DateField() # Fecha en la que se abre el acceso
+    fecha_limite = models.DateField() # Fecha limite de entrega la materia
     #puntos = models.IntegerField( blank = True, null = True ) # Puntos que otorga la tarea
     
     def __unicode__( self ):
@@ -119,7 +122,8 @@ class Entrega_Tarea( models.Model ):
     fecha = models.DateTimeField( auto_now = True, auto_now_add = True ) # Feha y hora de la entrega    
     link_dp = models.URLField( ) # Link de dropbox para compartir la tarea
     feedback  = models.TextField(blank=True)
-    
+    calificacion = models.DecimalField(max_digits=2, decimal_places=1)
+
     def __unicode__( self ):
         return self.link_dp
 
@@ -152,7 +156,8 @@ class Foro( models.Model ):
     fecha = models.DateField( auto_now = True, auto_now_add = True ) # Fecha en la que el foro es creado
     titulo = models.CharField( max_length = 100 ) # Titulo del foro
     texto = models.TextField( ) # Descripción del foro
-    visibilidad = models.BooleanField() # Opción de visibilidad
+    fecha_inicio = models.DateTimeField( ) # Fecha en la que se muestra el foro
+    fecha_limite = models.DateTimeField( ) # Fecha Limite de acceso
 
     def __unicode__( self ):
         return self.titulo
@@ -185,7 +190,8 @@ class Quiz( models.Model ):
 ################ QUIZ_PREGUNTA  ################
 class Quiz_Pregunta( models.Model ):    
     prueba = models.ForeignKey( Quiz ) # La pregunta le pertenece a la prueba x
-    nombre_pregunta = models.CharField( max_length = 100 ) # La Pregunta    
+    nombre_pregunta = models.CharField( max_length = 100 ) # La Pregunta   
+    ponderacion = models.IntegerField() 
 
     def obtener_respuestas( self ):
         return Quiz_Respuesta.objects.filter( pregunta = self.pk ) # Obtener todas las respuestas ha esta pregunta
@@ -229,6 +235,7 @@ class Quiz_Respuesta( models.Model ):
     pregunta = models.ForeignKey( Quiz_Pregunta ) # Pregunta que se contesta
     respuesta = models.TextField()
     feedback = models.TextField(blank=True)
+    correcto = models.BooleanField()
 
     def __unicode__(self):
         return "Respuestas: " + str(self.examen)

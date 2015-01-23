@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib import admin
 admin.autodiscover()
 
+
 urlpatterns = patterns('',
     #url(r'^$', 'principal.views.ingreso_usuario'),
     url(r'^admin/', include(admin.site.urls)),
