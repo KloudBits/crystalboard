@@ -13,7 +13,7 @@ from django.db.models import Avg, Count
 from django.template.defaultfilters import slugify
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, Http404
-from Main.models import Entrega_Tarea, Quiz_Aplicar, Quiz_Respuesta, Quiz_Pregunta, Quiz, UserProfile, Curso, Tarea, Clase, Recurso, Capitulo, Foro, Foro_Comentario, Aviso
+from Main.models import Entrega_Tarea, Quiz_Aplicar, Quiz_Respuesta,Aplicar_Respuesta, Quiz_Pregunta, Quiz, UserProfile, Curso, Tarea, Clase, Recurso, Capitulo, Foro, Foro_Comentario, Aviso
 from Main.forms import nuevoEntregaTareaFormulario, nuevoTareaFormulario, nuevoRecursoFormulario, nuevaRespuestaFormulario, nuevaPreguntaFormulario, nuevoQuizFormulario, comentarForoFormulario, nuevoCursoFormulario, nuevaClaseFormulario, nuevoCapituloFormulario, nuevoForoFormulario, nuevoAvisoFormulario, registrationForm, editarPerfilFormulario, nuevoCanalCursoFormulario
 import urllib
 import json
@@ -244,7 +244,7 @@ def nuevoCapitulo ( request, curso ):
 					nuevo_capitulo.curso = get_object_or_404(Curso, slug=curso)
 					nuevo_capitulo.save()
 
-					messages.add_message( request, messages.SUCCESS, "Registro de Capitulo exitoso" )
+					messages.add_message( request, messages.SUCCESS, "Se registró el módulo correctamente" )
 					return HttpResponseRedirect( '/cursos/'+ curso +'/capitulos/' )
 			else:
 				formulario = nuevoCapituloFormulario()
@@ -259,7 +259,7 @@ def borrarCapitulo (request, curso, capitulo):
 		if perfil.tipo != 1:
 			raise Http404
 		else:
-			messages.add_message( request, messages.SUCCESS, "Se eliminó correctamente el capítulo" )
+			messages.add_message( request, messages.SUCCESS, "Se eliminó el módulo correctamente" )
 			(get_object_or_404(Capitulo, pk = capitulo)).delete()
 			return HttpResponseRedirect( '/cursos/'+ curso +'/capitulos/' )
 ##############################################################################################################3
@@ -520,17 +520,16 @@ def quiz(request, curso, quiz):
 				aplicacion.save()
 
 				for pregunta in preguntas:
-					formulario = Quiz_Respuesta()
+					formulario = Aplicar_Respuesta()
 					formulario.examen = aplicacion
-					formulario.respuesta = request.POST['respuesta-'+str(pregunta.id)]
+					formulario.respuesta = get_object_or_404(Quiz_Respuesta,id=request.POST["pregunta["+str(pregunta.id)+"]"])
 					formulario.pregunta = pregunta
-					formulario.feedback = ''
 					formulario.save()
 
 				return redirect('/cursos/'+ curso +'/')
 			else:
 
-				return render(request, "miembros/quiz.html", {"perfil":perfil, "curso":cur, "quiz":q, "preguntas":preguntas, "entregas":entregas })
+				return render(request, "miembros/quiz.html", {"perfil":perfil, "curso":cur, "quiz":q, "preguntas":preguntas })
 
 def borrarQuiz(request, curso, quiz):
 	if not request.user.is_authenticated():
@@ -762,6 +761,7 @@ def tarea(request, curso, tarea):
 				f.tarea = t
 				f.alumno = request.user
 				f.save()
+			messages.add_message(request, messages.SUCCESS, "Tu tarea se entregó correctamente")
 			return HttpResponseRedirect("/cursos/" + curso + "/tareas/")
 	else:
 		formulario = nuevoEntregaTareaFormulario()
@@ -807,9 +807,12 @@ def gradequiz_aplicacion(request, curso, quiz, aplicacion):
 			respuestas = Quiz_Respuesta.objects.filter(examen=aplicacion)	
 			c = get_object_or_404(Curso, slug=curso)
 		else:
-			respuestas = Quiz_Respuesta.objects.filter(examen=aplicacion)	
-			c = get_object_or_404(Curso, slug=curso)
-		return render(request, 'usuarios/gradeaplicacion.html', { 'respuestas':respuestas, 'curso':c })
+			aplicacion = get_object_or_404(Quiz_Aplicar, id=aplicacion)
+			#Aunque filtra varias aplicaciones, esta hecho para sólo permitir una aplicación
+			respuestas = Aplicar_Respuesta.objects.filter(examen=aplicacion)
+			cur = get_object_or_404(Curso, slug = curso)
+
+		return render(request, 'usuarios/gradeaplicacion.html', { "curso":cur, "aplicacion":aplicacion, "respuestas":respuestas })
 
 def gradetarea_entrega(request, curso, tarea, entrega):
 	if not request.user.is_authenticated():
@@ -846,3 +849,16 @@ def embed_video(url):
 	video = json.loads(sock.read())['html']
 	sock.close()
 	return video
+
+def quiz_app(request, curso, quiz):
+	if not request.user.is_authenticated():
+		raise Http404
+
+	aplicaciones = Quiz_Aplicar.objects.filter(usuario=request.user, quiz=quiz)
+	#Aunque filtra varias aplicaciones, esta hecho para sólo permitir una aplicación
+	respuestas = Aplicar_Respuesta.objects.filter(examen=aplicaciones[0])
+
+	perfil = UserProfile.objects.get(user = request.user)
+	cur = get_object_or_404(Curso, slug = curso)
+
+	return render(request, "miembros/aplicacion.html", {"perfil":perfil, "curso":cur, "aplicaciones":aplicaciones, "respuestas":respuestas })

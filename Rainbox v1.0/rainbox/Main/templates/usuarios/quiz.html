@@ -3,7 +3,7 @@
 {% block colright %}
     	<div class="main-img">
             <img src="{{ MEDIA_URL }}{{ curso.imagen }}" alt="">
-            <p class="lead">Preguntas de la Evaluación: {{ quiz }}</p>
+            <p class="lead">Preguntas del cuestionario: {{ quiz }}</p>
         </div>
         
        
@@ -19,7 +19,7 @@
                             <thead>
                             <tr>                                
                                 <th>Pregunta</th>
-                                <!--<th>Ver</th>-->
+                                <th>Respuestas</th>
                                 <th>Eliminar</th>
                             </tr></thead>
                     
@@ -28,7 +28,7 @@
                                 {% for pregunta in preguntas %}
                                 <tr>
                                     <td>{{ pregunta }}</td>
-                                    <!--<td class="center"><a href="/cursos/{{ curso.slug }}/quizzes/{{ quiz.id }}/preguntas/{{ pregunta.id }}/"><i class="fa fa-eye fa-lg"></i></a></td>-->
+                                    <td class="center"><a href="/cursos/{{ curso.slug }}/quizzes/{{ quiz.id }}/preguntas/{{ pregunta.id }}/"><i class="fa fa-eye fa-lg"></i></a></td>
                                     <td class="center"><a href=""><i class="fa fa-minus-circle fa-lg"></i></a></td>
                                 </tr>
                                 {% endfor %}

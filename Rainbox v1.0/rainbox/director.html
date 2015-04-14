@@ -1,0 +1,116 @@
+
+<!DOCTYPE HTML>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Administrador</title>
+<!--[if lt IE 7]>
+<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE7.js"></script>
+<![endif]-->
+<!--[if lt IE 8]>
+<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE8.js"></script>
+<![endif]-->
+<!--[if lt IE 9]>
+<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
+<![endif]-->
+<link href="{{ STATIC_URL }}estilos.css" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Muli' rel='stylesheet' type='text/css'>
+<link href="{{ STATIC_URL }}css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="{{ STATIC_URL }}css/jquery.dataTables.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+.cke_textarea_inline
+{
+    padding: 10px;
+    height: 200px;
+    overflow: auto;
+    background-color: #fff;
+    text-align: left;
+
+    border: 1px solid gray;
+    -webkit-appearance: textfield;
+}
+</style>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jq19.js"></script>
+
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.dataTables.min.js"></script>
+<script src="{{ STATIC_URL }}ckeditor/ckeditor.js"></script>
+
+<script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+        $('#tabla').dataTable();
+        $('.datepicker').datepicker({
+          autoclose: true
+        });
+    } );
+</script>
+</head>
+<body>
+<div id="main">
+<header>
+  <div id="logo"><a href="/"><img src="{{ STATIC_URL }}images/logo.png"></a></div>
+  <div id="redes"><img src="{{ STATIC_URL }}images/logoFace.jpg"><img src="{{ STATIC_URL }}images/logoTw.jpg"></div>
+  <h1>UNIVERSIDAD DE CELAYA EGRESADOS </h1>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="/portal/perfil/">ACTUALIZA TUS DATOS</a></li>
+        <li><a href="/tramites/">AGILIZA TUS TRAMITES</a></li>
+        <li><a href="/empresas/">EMPRESAS</a></li>
+        <li><a href="/noticias/">NOTICIAS UNI</a></li>
+        <li><a href="/contacto/">CONTACTO</a></li>
+    </ul>
+</nav>
+
+<div id="line"></div>
+
+<section class="banner"><img src="{{ STATIC_URL }}images/bantmp.jpg"></section>
+
+<section class="titbar">
+	<h2>Director </h2>
+	<div class="username">
+	  <p>{{ user.first_name }} {{ user.last_name }}</p><p>&nbsp;</p><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/logout/">cerrar sesión</a> </p> 
+       <a href="portal/{{ user }}/passwd/">cambiar contraseña</a>
+	</div>
+</section>
+
+
+	<section class="mainB">
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <span{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</span>
+    </div>
+    {% endfor %}
+{% endif %}
+
+    <div class="submenu">
+            <a href="/portal/"><img src="{{ STATIC_URL }}images/egresados02.jpg"></a>
+            <a href="/portal/vacantes/"><img src="{{ STATIC_URL }}images/vacantes01.jpg"></a>
+            <a href="/portal/empresas/"><img src="{{ STATIC_URL }}images/empresas02.jpg"></a>
+            
+        </div>
+	  {% block content %} {% endblock %}
+        
+  </section>
+
+<footer>
+    <div id="menuPie">
+        <a href="#">ACTUALIZA TUS DATOS</a>
+        <a href="#">AGILIZA TUS TRAMITES</a>
+        <a href="empresa.php">EMPRESA</a>
+        <a href="#">EDUCACIÓN CONTINUA</a>
+        <a href="#">CONTACTO</a>
+    </div>
+    <p>Universidad de Celaya. 2013 Todos los derechos reservados </p>
+    <p style="float:right;"><a href="/static/aviso-privacidad.pdf" target="_blank">Aviso de Privaciad</a></p>
+</footer>
+</div>
+<script>
+    CKEDITOR.inline( 'descripcion' );
+</script>
+</body>
+</html>

@@ -22,8 +22,9 @@
                             <thead>
                             <tr>                                
                                 <th>Título</th>
-                                <th>Descripción</th>
+                                <th>Fecha inicio</th>
                                 <th>Fecha límite</th>
+                                <th>Eliminar</th>
                             </tr></thead>
                     
                             <tbody>
@@ -31,8 +32,9 @@
                                 {% for tarea in tareas %}
                                 <tr>
                                     <td>{{ tarea.titulo }}</td>
-                                    <td>{{ tarea.descripcion }}</td>
+                                    <td>{{ tarea.fecha_inicio }}</td>
                                     <td>{{ tarea.fecha_limite }}</td>
+                                    <td><a href="#">X</a></td>
                                 </tr>
                                 {% endfor %}
  

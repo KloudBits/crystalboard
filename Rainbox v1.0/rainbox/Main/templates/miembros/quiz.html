@@ -17,8 +17,9 @@
 
               <div class="row">
                 <div class="span6">
-                  <label>Respuesta:</label>
-                  <textarea name="respuesta-{{ pregunta.id }}" id="respuesta-{{ pregunta.id }}"></textarea>
+                  {% for respuesta in pregunta.quiz_respuesta_set.all %}
+                  <input type="radio" name="pregunta[{{ pregunta.id }}]" value="{{ respuesta.id }}"> {{ respuesta }}<br>
+                  {% endfor %}
                 </div>
               </div>
 

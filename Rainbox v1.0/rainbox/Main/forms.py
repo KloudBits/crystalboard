@@ -10,7 +10,7 @@ class nuevoEntregaTareaFormulario(ModelForm):
 	link_dp = forms.CharField(required=False, label="Enlace de dropbox")
 	class Meta:
 		model = Entrega_Tarea
-		exclude = ('alumno','tarea', 'feedback', )
+		exclude = ('alumno','tarea', 'feedback', 'calificacion', )
 
 
 class nuevoCanalCursoFormulario(ModelForm):
@@ -26,6 +26,8 @@ class nuevoCursoFormulario(ModelForm):
 		exclude = ('usuario', 'miembros','slug','canal', 'chat',)
 
 class nuevaClaseFormulario(ModelForm):
+	fecha_inicio = forms.CharField(widget=forms.TextInput(attrs={'class':'fechado'}))
+	fecha_limite = forms.CharField(widget=forms.TextInput(attrs={'class':'fechado'}))
 	class Meta:
 		model = Clase
 		exclude = ('slug',)
@@ -61,6 +63,8 @@ class comentarForoFormulario(ModelForm):
 		fields = ('comentario',)
 
 class nuevoForoFormulario(ModelForm):
+	fecha_inicio = forms.CharField(widget=forms.TextInput(attrs={'class':'fechado'}))
+	fecha_limite = forms.CharField(widget=forms.TextInput(attrs={'class':'fechado'}))
 	class Meta:
 		model = Foro
 		exclude = ('curso',)
@@ -90,6 +94,7 @@ class nuevoRecursoFormulario(ModelForm):
 		exclude = ('clase', 'tipo',)
 
 class nuevoTareaFormulario(ModelForm):
+	fecha_inicio = forms.CharField(widget=forms.TextInput(attrs={'class':'fechado'}))
 	fecha_limite = forms.CharField(widget=forms.TextInput(attrs={'class':'fechado'}))
 	class Meta:
 		model = Tarea

@@ -1,5 +1,5 @@
 """
-Django settings for CrystalBoard project.
+Django settings for candidatos project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/1.6/topics/settings/
@@ -13,13 +13,11 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
-AUTH_PROFILE_MODULE = 'Main.UserProfile'
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '7knd&w(^!)1#mn^5!5xezfx+rk^j$(9#noes@(e)jykk2a3oq+'
+SECRET_KEY = 'o@*+if+i@yx($6z5m6ng5c)h3n1ep+bwy*=e$t99srd*1(4&vj'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -38,7 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Main',
+    'home',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -50,9 +48,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'RainBox.urls'
+ROOT_URLCONF = 'candidatos.urls'
 
-WSGI_APPLICATION = 'RainBox.wsgi.application'
+WSGI_APPLICATION = 'candidatos.wsgi.application'
 
 
 # Database
@@ -60,13 +58,12 @@ WSGI_APPLICATION = 'RainBox.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        #'ENGINE'   : 'django.db.backends.mysql',
-        #'HOST'     : 'localhost',
-        #'NAME'     : 'crystalboards',
-        #'USER'     : 'root',
-        #'PASSWORD' : '',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'candidatosdb',
+        'USER': 'root',
+        'PASSWORD':'tyxf()98',
+        'HOST':'',
+        'PORT':''
     }
 }
 
@@ -83,16 +80,14 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
 
-
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-)
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 
 STATIC_URL = '/static/'

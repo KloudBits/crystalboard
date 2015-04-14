@@ -28,7 +28,10 @@
         <hr>
         <p>Descripción de la tarea: {{ tarea.descripcion }}</p>
         <hr>
-        <p>A continuación encontrarás un recuadro para realizar comentarios o responder tu tarea, según las indicaciones. Debajo encontrarás un campo para insertar el enlace de dropbox para adjuntar un archivo si tu tarea lo requiere.</p>
+        
+        {% if tarea.link_dp %}
+        <p><strong>Descargar el archivo adjunto:</strong><a href="{{ tarea.link_dp }}" target="_blank"> {{ tarea.link_dp }}</a></p>
+        {% endif %}
 
         <form method="post" action="" enctype="multipart/form-data">{% csrf_token %}
         {% for field in formulario %}

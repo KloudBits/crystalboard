@@ -1,13 +1,425 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<title>Rainbox | Plataforma de E-learning</title>
-</head>
-<body style="background: url('{{ STATIC_URL }}rainbg.jpg');">
-<div style="width:600px;margin: 200px auto;text-align:center;">
-	<img src="{{ STATIC_URL }}rainbox.png" width="200"><span style="font-size: 80px; position:relative; top:-80px;color:#fff;margin-left:20px;">Rainbox</span><br>
-	
-	<a href="/login/">Iniciar sesión</a>
+<html lang="es">
+    <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        
+
+        <title>Rainbox | Elearning</title>
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+        <link href="http://d386gdqyeczezy.cloudfront.net/framework.css?v=42" rel="stylesheet">
+
+        <link href="{{ STATIC_URL }}style.css" rel="stylesheet">
+        <link href="http://d6nsh56w9tokz.cloudfront.net/img/layout/i-icon.png?v=42" rel="apple-touch-icon-precomposed" />
+
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        
+        <meta name="robots" content="index,follow" />
+<meta name="revisit-after" content="2 days" />
+<meta name="audience" content="all" />
+<meta name="author" content="Kloud Bits" />
+
+        <link rel="icon" href="http://d6nsh56w9tokz.cloudfront.net/img/favicon.png?v=42" type="image/png">
+
+                   
+            </head>
+    <body class="">
+
+<div id="wrapper" class="pop-content pop-wrap inverted-header">
+
+    <div id="header" class="no-fill stick">
+        <div class="container clearfix">
+            <a href="index.html#" class="responsive-nav" id="dashboard-menu-toggle-button">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+
+	        <div class="logo"><a class="logo-medium-invert pull-left" href="index.html">Rainbox</a></div>
+           <ul class="nav nav-horizontal nav-invert pull-right">
+                 <!--<li>
+                    <a href="layers.html">Layers</a>
+                </li>
+                <li>
+                    <a href="themes.html">Themes</a>
+                    <ul class="sub-menu">
+                        <li><a href="themes.html">Entire collection</a></li>
+                        <li><a href="themes/business.html">Business themes</a></li>
+                        <li><a href="themes/ecommerce.html">eCommerce themes</a></li>
+                        <li><a href="themes/blogging.html">Blogging themes</a></li>
+                        <li><a href="themes/photography.html">Photography themes</a></li>
+                        <li><a href="themes/portfolio.html">Portfolio themes</a></li>
+                        <li><a href="all-themes-package.html">All Themes Package</a></li>
+                    </ul>
+                </li>
+                <li><a href="plugins.html">Plugins</a></li>
+                <li><a href="pricing/themes.html">Pricing</a></li>
+                <li>
+					                        <a href="http://kb.oboxthemes.com">Support</a>
+                                    </li>
+                <li><a href="http://blog.oboxthemes.com/" target="_blank">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                                    <li class="special first"><a href="auth/login-next=.html">Login</a></li>
+                    <li class="special last"><a href="auth/register.html">Sign Up</a></li>-->
+                            <li class="special first"><a href="/login/">Entrar</a></li>
+                            </ul><!-- nav -->
+
+        </div>
+    </div><!-- END / HEADER -->
+
+    <div class="landing landing-keyboard invert">
+        <video id="background_video" autoplay loop muted style="visibility:hidden;">
+            <source src="http://d6nsh56w9tokz.cloudfront.net/video/keyboard.mp4?v=42" type="video/mp4">
+            <source src="http://d6nsh56w9tokz.cloudfront.net/video/keyboard.webm?v=42" type="video/webm">
+            <source src="http://d6nsh56w9tokz.cloudfront.net/video/keyboard.ogv?v=42" type="video/ogv">
+        </video>
+
+        <div class="landing-overlay">
+            <div class="container title-hero-tops">
+                <h1>
+                    <small>Bienvenido a tu </small>
+                    Plataforma de elearning
+                </h1>
+                <!--<h5>Est. 2009 &ndash; 35 Themes &amp; Plugins &ndash; 100,000 Customers</h5>-->
+                <a class="down-arrow animate slide-to" href="index.html#page-content-top">Más detalles</a>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row sky basement layers invert" id="page-content-top">
+        <div class="section-title section-title-large section-centered">
+            <!--<small class="label label-secondary">CONOCE</small>-->
+            <h3>Rainbox</h3>
+            <p>La plataforma de elearning sencilla y ligera para ofrecer cursos en línea</p>
+        </div>
+
+        <div class="container push-bottom clearfix">
+
+            <div class="column span-4 marketing marketing-centered" style="text-align:center;">
+                <img src="{{ STATIC_URL }}img/calculadora.png">
+                <div class="marketing-body">
+                    <h4>Costo por alumno</h4>
+                    <p>Sólo paga por alumno que registres, olvídate de altas cuotas mensuales.</p>
+                </div>
+            </div>
+            <div class="column span-4 marketing marketing-centered" style="text-align:center;">
+                <img src="{{ STATIC_URL }}img/conexion.png">
+                <div class="marketing-body">
+                    <h4>Disponibilidad 24/7</h4>
+                    <p>Tus cursos disponibles 24 hrs los 7 días de la semana.</p>
+                </div>
+            </div>
+            <div class="column span-4 marketing marketing-centered" style="text-align:center;">
+                <img src="{{ STATIC_URL }}img/coffee.png">
+                <div class="marketing-body">
+                    <h4>Fácil e intuitiva</h4>
+                    <p>Cuenta justo con las características necesarias para mostrar lo grandioso de tu curso.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row t-center">
+            <a href="#" target="_blank" class="button btn-large btn-primary">Contáctanos y da de alta tu primer curso</a>
+        </div>
+    </div>
+
+    <!--<div class="row sky count">
+        <div class="container clearfix">
+            <div class="column span-8 browser-collection pull-right no-gutter">
+                <div class="browser browser-bottom">
+                    <a href="theme/capital.html">
+                        <img src="img/product/capital/thumbnail.jpg" alt="Capital Home Page" />
+                    </a>
+                </div>
+                <div class="browser browser-top">
+                    <a href="theme/the-writer.html">
+                        <img src="img/product/the-writer/thumbnail.jpg" alt="The Writer Home Page" />
+                    </a>
+                </div>
+            </div>
+            <div class="column span-4">
+                <div class="section-title section-hero clearfix">
+                    <h3>Over 30 Premium WordPress Themes</h3>
+                    <p>Choose from a huge variety of WordPress Themes meticulously designed by the Obox team.</p>
+                </div>
+                <a href="themes.html" class="button btn-large">Browse the full collection</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row sky count">
+        <div class="container clearfix">
+            <div class="column span-8 browser-collection ">
+                <div class="browser browser-bottom">
+                    <a href="theme/store.html">
+                        <img src="img/product/store/thumbnail.jpg" alt="Store Home Page" />
+                    </a>
+                </div>
+                <div class="browser browser-top">
+                    <a href="theme/department.html">
+                        <img src="img/product/department/thumbnail.jpg" alt="Department Home Page" />
+                    </a>
+                </div>
+            </div>
+            <div class="column span-4">
+                <div class="section-title section-hero clearfix">
+                    <h3>Sell whatever you want with our eCommerce Themes</h3>
+                    <p>Looking for the perfect WooCommerce theme to sell products? Look no further than our extensive collection.</p>
+                </div>
+                <a href="themes/ecommerce.html" class="button btn-large">Browse the full collection</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row sky count">
+        <div class="container clearfix">
+            <div class="column span-8 browser-collection pull-right no-gutter">
+                <div class="browser browser-bottom">
+                    <a href="theme/express.html">
+                        <img src="img/product/express/thumbnail.jpg" alt="Express Home Page" />
+                    </a>
+                </div>
+                <div class="browser browser-top">
+                    <a href="theme/capital.html">
+                        <img src="img/product/capital/thumbnail.jpg" alt="Capital Home Page" />
+                    </a>
+                </div>
+            </div>
+            <div class="column span-4">
+                <div class="section-title section-hero clearfix">
+                    <h3>Get your company online with our Business Themes</h3>
+                    <p>Showcase your services, team, portfolio and product features with our feature-rich business theme collection.</p>
+                </div>
+                <a href="themes/business.html" class="button btn-large">Browse the full collection</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row sky basement count invert" style=" background: url('img/atp-bg.jpg') center no-repeat; background-size: cover;">
+        <div class="section-title section-title-large section-centered">
+            <small class="label label-secondary">NEW</small>
+            <h3>All Themes Package</h3>
+            <p>Kick-start your web design process or eliminate it completely. Switch between nearly 40 different themes, experiment with modifications and save time, money and energy getting websites online.</p>
+        </div>
+
+        <div class="container push-bottom clearfix">
+
+            <div class="column span-4 marketing marketing-centered">
+                <div class="marketing-icon">
+                    <i class="icon icon-block-large themes-large"></i>
+                </div>
+                <div class="marketing-body">
+                    <h4>Every Obox Theme &amp; Plugin</h4>
+                    <p>Get access to the entire Obox collection of nearly 40+ themes, including future releases and updates.</p>
+                </div>
+            </div>
+
+            <div class="column span-4 marketing marketing-centered">
+                <div class="marketing-icon">
+                    <i class="icon icon-block-large support-large"></i>
+                </div>
+                <div class="marketing-body">
+                    <h4>Prioritised Support</h4>
+                    <p>Friendly, knowledgeable staff are just a click away to help you solve challenges, answer questions and find solutions.</p>
+                </div>
+            </div>
+
+            <div class="column span-4 marketing marketing-centered">
+                <div class="marketing-icon">
+                    <i class="icon icon-block-large kb-large"></i>
+                </div>
+                <div class="marketing-body">
+                    <h4>Amazing Resources</h4>
+                    <p>From meticulous, user-friendly guides, tutorials and videos, to a great selection of tried-and-true extensions.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row t-center">
+            <a href="all-themes-package.html" class="button btn-large btn-invert">View the All Themes Package</a>
+        </div>
+    </div>
+-->
+    
+
+   <!-- <div class="row t-center sky basement">
+        <div class="container">
+            <div class="section-title tiny">
+                <h4 class="heading">You can also find our themes on these great sites</h4>
+            </div>
+            <div class="row span-8 middled push-bottom">
+                <div class="column span-4">
+                    <a target="_blank" href="http://www.tumblr.com/themes/by/oboxdesign" class="icon logo-tumblr animate">tumblr.com</a>
+                </div>
+                <div class="column span-4">
+                    <a target="_blank" href="http://theme.wordpress.com/themes/by/obox-themes/" class="icon logo-wordpress animate">WordPress.com</a>
+                </div>
+                <div class="column span-4">
+                    <a target="_blank" href="http://themeforest.net/user/obox" class="icon logo-envato animate">Themeforest.net</a>
+                </div>
+            </div>
+        </div>
+    </div>-->
+
+    <div id="back-to-top">
+        <a href="index.html#top">Ir arriba</a>
+    </div>
+
+    <div id="footer">
+        <div class="container content-main clearfix">
+            <div class="row clearfix technical-support">
+                <div class="column span-9">
+                    <div class="marketing">
+                        <div class="marketing-icon">
+                            <i class="icon icon-block-large support-large"></i>
+                        </div>
+                        <div class="marketing-body">
+                            <h4>¿Tiene alguna duda?</h4>
+                            <p>Envíenos un mensaje, con gusto le respondemos a la brevedad posible.</p>
+                        </div> <!-- marketing-body -->
+                    </div> <!-- marketing -->
+                </div> <!-- column -->
+                <div class="column span-3">
+                    <a href="auth/login-next=forum%7Cpost.html" class="button btn-large btn-full btn-urgent" id="button_support_modal">Obtener ayuda</a>
+                </div> <!-- column -->
+            </div> <!-- row -->
+
+            <div class="row">
+                <div class="column span-4 offset-1 collapse">
+                    <a href="index.html" class="logo-medium-bajo push-bottom">Obox Themes</a>
+                    <p>Rainbox es una plataforma de elearning con la que buscamos ofrecer el mejor diseño, la mejor navegación e interacción para que más que aprender, los usuarios se lleven una gran experiencia del aprendizaje en línea, aprovechando las ventajas que hoy nos ofrece la tecnología.</p>
+                    <p class="push-top">
+                        <a class="icon icon-medium twitter-small" href="https://twitter.com/Oboxthemes" rel="publisher" target="_blank">Twitter</a>
+                        <a class="icon icon-medium facebook-small" href="https://www.facebook.com/OboxThemes" target="_blank">Facebook</a>
+                        <a class="icon icon-medium google-plus-small" href="https://plus.google.com/+Obox-design" rel="publisher" target="_blank">Google+</a>
+                    </p>
+                </div> <!-- column -->
+
+                <div class="column span-3">
+                    <h5 class="section-nav-title">Enlaces de interés</h5>
+                    <ul class="link-list">
+                        <!--<li><a href="pricing/themes.html">Pricing</a></li>
+                        <li><a href="themes.html">WordPress Themes</a></li>
+                        <li><a href="plugins.html">WordPress Plugins</a></li>
+                        <li><a href="business.html">WordPress Business Themes</a></li>
+                        <li><a href="ecommerce.html">WordPress eCommerce Themes</a></li>
+                        <li><a href="portfolio.html">WordPress Portfolio Themes</a></li>
+                        <li><a href="blogging.html">Blogging WordPress Themes</a></li>
+                        <li><a href="responsive.html">Responsive WordPress Themes</a></li>
+                        <li><a href="http://www.layerswp.com/" target="_blank">Layers</a></li>-->
+                    </ul> <!-- link-list -->
+                </div> <!-- column -->
+                <div class="column span-2">
+                    <h5 class="section-nav-title">Soporte técnico</h5>
+                    <ul class="link-list">
+                        <li><a href="#">Soporte</a></li>
+                        <li><a href="#" target="_blank">Documentación</a></li>
+                        <li><a href="#">Términos y condiciones</a></li>
+                        <li><a href="#">Contacto</a></li>
+                    </ul> <!-- link-list -->
+                </div> <!-- column -->
+
+                <div class="column span-2 collapse no-gutter">
+                    <h5 class="section-nav-title">Recomendamos</h5>
+                    <ul class="link-list">
+                        <!--<li><a href="suppliers/view/modifiers.html">Theme Modifiers</a></li>
+                        <li><a href="suppliers/view/hosting.html">WordPress Hosting</a></li>
+                        <li><a href="affiliate.html">Become an Affiliate</a></li>
+                        <li><a href="http://theme.wordpress.com/themes/by/obox-themes/">WordPress.com</a></li>-->
+                    </ul> <!-- link-list -->
+                </div> <!-- column -->
+            </div> <!-- row -->
+
+            <div class="row copyright">
+                <div class="column span-6">
+                    <p class="madeinafrica">Hecho en <a href="http://kloudbits.mx" target="_blank">Kloud Bits</a> &copy; 2015</p>
+                </div> <!-- column -->
+
+                <!--<div class="column span-6 clearfix t-right">
+                     <ul class="nav nav-horizontal pull-right">
+                        <li><a href="http://kb.oboxthemes.com">Help</a></li>
+                        <li><a href="refunds.html">Refunds</a></li>
+                        <li><a href="terms.html">Legal</a></li>
+                    </ul> 
+                </div> --><!-- column -->
+            </div> <!-- row -->
+            <!--<div class="row">
+            	<p><small>All our WordPress themes are licensed under the <a href="http://www.gnu.org/licenses/gpl.html">GNU general public license</a>.</small></p>
+            </div>-->
+        </div> <!-- container -->
+    </div> <!-- footer -->
+
+</div> <!-- wrapper -->
+
+<div class="dashboard-menu pop-menu desktop-collapse">
+	<h4 class="section-nav-title">Menu</h4>
+	<ul class="nav nav-vertical">
+        <li><a href="themes.html">Themes</a></li>
+        <li><a href="plugins.html">Plugins</a></li>
+        <li><a href="instant.html">Instant</a></li>
+        <li><a href="pricing/themes.html">Pricing</a></li>
+        <li>
+                            <a href="http://kb.oboxthemes.com">Support</a>
+                    </li>
+        <li><a href="affiliate.html">Affiliates</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="http://blog.oboxthemes.com/" target="_blank">Blog</a></li>
+                    <li><a href="auth/login-next=.html">Login</a></li>
+            <li><a href="auth/register.html">Sign Up</a></li>
+            </ul>
 </div>
-</body>
+<div class="modal modal-hide" id="support_modal">
+    <div class="container content-main">
+    <div class="row clearfix">
+        <div class="column span-4 marketing marketing-centered">
+            <div class="marketing-icon">
+                <i class="icon icon-block-large support-large"></i>
+            </div>
+            <div class="marketing-body">
+                <h4><span>I have a</span> Technical question</h4>
+                <p>If you own an Obox theme, tell us about your problem here. Our dedicated team is ready to help you.</p>
+                	                <a href="http://kb.oboxthemes.com" class="button btn-medium btn-secondary">Submit a ticket</a>
+                            </div> <!-- marketing-body -->
+        </div> <!-- column -->
+
+        <div class="column span-4 marketing marketing-centered">
+            <div class="marketing-icon">
+                <i class="icon icon-block-large kb-large"></i>
+            </div>
+            <div class="marketing-body">
+                <h4><span>I have a</span> Basic question</h4>
+                <p>Do you have a question about our themes and plugins? You're likely to find the answer in here.</p>
+                <a href="http://kb.oboxthemes.com/" class="button btn-medium btn-secondary">Visit our knowledgebase</a>
+            </div> <!-- marketing-body -->
+        </div> <!-- column -->
+
+        <div class="column span-4 marketing marketing-centered">
+            <div class="marketing-icon">
+                <i class="icon icon-block-large support-large"></i>
+            </div>
+            <div class="marketing-body">
+                <h4><span>I have a</span> Sales question</h4>
+                <p>Need to ask a question about our themes &amp; plugins before you buy? Hit the button below.</p>
+                <a href="contact/form.html" class="button btn-medium btn-secondary">Send us a mail</a>
+            </div> <!-- marketing-body -->
+        </div> <!-- column -->
+    </div> <!-- row -->
+</div> <!-- container -->
+</div> <!-- support modal -->
+
+        <script src="http://d6nsh56w9tokz.cloudfront.net/js/lib/jquery-2.0.3.min.js?v=42"></script>
+        <script src="http://d386gdqyeczezy.cloudfront.net/js/framework.js?v=42"></script>
+
+                    <script src="http://d6nsh56w9tokz.cloudfront.net/js/videoloader.js?v=42"></script>
+                    <script src="http://d6nsh56w9tokz.cloudfront.net/js/lib/jqModal.min.js?v=42"></script>
+                    <script src="http://d6nsh56w9tokz.cloudfront.net/js/support_modal.js?v=42"></script>
+        
+        <script type="text/javascript" src="http://use.typekit.net/oha7hkx.js"></script>
+        <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+                    
+            </body>
 </html>

@@ -1,12 +1,18 @@
-{% extends "usuarios/base-usuario.html" %}
+{% extends "miembros/base-miembro.html" %}
 
 {% block colright %}
     	<div class="main-img">
-            <img src="{{ MEDIA_URL }}{{ curso.imagen }}" alt="">
-            <p class="lead">Aplicación: {{ aplicacion.usuario.first_name }} {{ aplicacion.usuario.last_name }}</p>
-        </div>                
+            <img src="{{ STATIC_URL }}img/pic-4.jpg" alt="">
+            <p class="lead">Tibique dolores adversarium ne vel. At vide errem duo, vis luptatum menandri ullamcorper id. </p>
+        </div>
         
-    {% for respuesta in respuestas %}
+       
+        
+        
+        <p>Haz realizado este cuestionario {{ aplicaciones|length }} vez</p>
+
+
+        {% for respuesta in respuestas %}
         
             <p><strong>{{ respuesta.pregunta }}</strong></p>
 
@@ -40,6 +46,10 @@
                   </div>
 
             {% endfor %}
+
+         
+        
+       
 					
         
     

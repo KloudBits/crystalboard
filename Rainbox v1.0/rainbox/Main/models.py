@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 ####################################
-####  Ultima edición 7-19-2014  ####
+####  Ultima edición 25-03-2015 ####
 ####################################
 
 from django.db import models
@@ -35,7 +35,7 @@ class Curso( models.Model ):
 ################## CAPITULO ####################
 class Capitulo( models.Model ):
     curso = models.ForeignKey( Curso ) # ID del curso al que pertenece
-    nombre = models.CharField( max_length = 30 ) # Nombre del capitulo
+    nombre = models.CharField( max_length = 100 ) # Nombre del capitulo
     resumen = models.TextField( blank = True ) # Información del Capítulo
 
     def __unicode__( self ):
@@ -44,8 +44,8 @@ class Capitulo( models.Model ):
 
 #################### CLASE #####################
 class Clase( models.Model ):
-    capitulo = models.ForeignKey( Capitulo ) # ID del capitulo al que pertenece la clase
-    titulo = models.CharField( max_length = 30 ) # Título de la clase
+    capitulo = models.ForeignKey( Capitulo, verbose_name=u"Módulo" ) # ID del capitulo al que pertenece la clase
+    titulo = models.CharField( max_length = 100 ) # Título de la clase
     resumen = models.TextField( blank = True ) # Información del curso
     slug = models.SlugField( )
     fecha_inicio = models.DateField() # Fecha en la que se abre el acceso
@@ -71,9 +71,9 @@ class Recurso( models.Model ):
         ( 4, 'Weblink')
     )
     clase = models.ForeignKey( Clase ) # ID de la clase a la que pertenece la tarea
-    titulo = models.CharField( max_length = 60 ) # Titulo del recurso
+    titulo = models.CharField( max_length = 100 ) # Titulo del recurso
     url = models.CharField( max_length = 200 ) # URL de ubicación web    
-    descripcion = models.TextField( ) # Resumen del contenido del recurso
+    descripcion = models.TextField(blank=True,null=True) # Resumen del contenido del recurso
     tipo = models.IntegerField( default = 2, choices = TIPO_CHOICES ) # Tipo de recurso que se va agregar
     
 ################################################
@@ -82,7 +82,7 @@ class Recurso( models.Model ):
 class Aviso( models.Model ):
     fecha = models.DateField(auto_now=True)
     curso = models.ForeignKey( Curso ) # ID del Curso al que pertenece el Aviso
-    titulo = models.CharField( max_length = 30 ) # Titulo del aviso
+    titulo = models.CharField( max_length = 100 ) # Titulo del aviso
     texto = models.TextField( ) # Información del Aviso
 
     def __unicode__( self ):
@@ -104,7 +104,7 @@ class Tarea( models.Model ):
     curso = models.ForeignKey( Curso ) # ID de la clase a la que pertenece la tarea
     titulo = models.CharField( max_length = 300 ) # Título de la Tarea
     descripcion = models.TextField( blank = True, null = True ) # Texto informativo sobre la tarea
-    link_dp = models.URLField( ) # Link de dropbox para compartir la tarea
+    link_dp = models.URLField(blank = True, null = True) # Link de dropbox para compartir la tarea
     fecha_registro = models.DateField( auto_now = True, auto_now_add = True ) # Fecha en la que se registo la fecha
     fecha_inicio = models.DateField() # Fecha en la que se abre el acceso
     fecha_limite = models.DateField() # Fecha limite de entrega la materia
@@ -120,9 +120,9 @@ class Entrega_Tarea( models.Model ):
     alumno = models.ForeignKey( User ) # ID del alumno que entrega la tarea
     comentarios = models.TextField( blank = True ) # Comentarios del alumno sobre la tarea
     fecha = models.DateTimeField( auto_now = True, auto_now_add = True ) # Feha y hora de la entrega    
-    link_dp = models.URLField( ) # Link de dropbox para compartir la tarea
+    link_dp = models.URLField(blank = True, null = True) # Link de dropbox para compartir la tarea
     feedback  = models.TextField(blank=True)
-    calificacion = models.DecimalField(max_digits=2, decimal_places=1)
+    calificacion = models.DecimalField(max_digits=2, decimal_places=1, blank=True, null=True)
 
     def __unicode__( self ):
         return self.link_dp
@@ -140,8 +140,8 @@ class UserProfile( models.Model ):
     )
     user = models.OneToOneField( User ) # ID del usuario de Django
     web = models.URLField( blank = True, null=True ) # Página Web del usuario
-    twitter = models.CharField( max_length = 30, blank = True, null=True ) # Cuenta de twitter
-    facebook = models.CharField(max_length = 30, blank = True, null=True ) # Cuenta de facebook
+    twitter = models.CharField( max_length = 100, blank = True, null=True ) # Cuenta de twitter
+    facebook = models.CharField(max_length = 100, blank = True, null=True ) # Cuenta de facebook
     bio = models.TextField( blank = True ) # Pequeña biografía del usuaria
     foto = models.ImageField( upload_to = 'perfiles', blank = True, null=True ) # foto que se muestra
     tipo = models.IntegerField( default = 1, choices = TIPO_CHOICES ) # Tipo de perfil del usuario
@@ -177,7 +177,7 @@ class Foro_Comentario( models.Model ):
 ################## QUIZ  ########################
 class Quiz( models.Model ):
     curso = models.ForeignKey( Curso ) # A que curso pertenece
-    nombre = models.CharField( max_length = 150 ) # Nombre del quiz
+    nombre = models.CharField( max_length = 300 ) # Nombre del quiz
     fecha_creacion = models.DateTimeField( auto_now = True, auto_now_add = True ) # Fecha en la que se creo el quiz
     fecha_inicio = models.DateTimeField( ) # Fecha en la que se muestra el quiz
     fecha_limite = models.DateTimeField( ) # Fecha Limite de acceso
@@ -187,11 +187,10 @@ class Quiz( models.Model ):
         return self.nombre
 ################################################
 
-################ QUIZ_PREGUNTA  ################
+################ QUIZ_PREGUNTA DE TEXTO  ################
 class Quiz_Pregunta( models.Model ):    
     prueba = models.ForeignKey( Quiz ) # La pregunta le pertenece a la prueba x
-    nombre_pregunta = models.CharField( max_length = 100 ) # La Pregunta   
-    ponderacion = models.IntegerField() 
+    nombre_pregunta = models.CharField( max_length = 300 ) # La Pregunta   
 
     def obtener_respuestas( self ):
         return Quiz_Respuesta.objects.filter( pregunta = self.pk ) # Obtener todas las respuestas ha esta pregunta
@@ -200,14 +199,15 @@ class Quiz_Pregunta( models.Model ):
         return self.nombre_pregunta
 ################################################
 
-# ############## QUIZ_RESPUESTA ##################
-# class Quiz_Respuesta( models.Model ):
-#     pregunta = models.ForeignKey( Quiz_Pregunta ) # La pregunta a la que pertenece la respuesta
-#     respuesta = models.CharField( max_length = 100 ) # Opción de la pregunta
-#     correcta = models.BooleanField( ) # es la respuesta es correcta
+
+# ############## QUIZ_RESPUESTA_OPCION ##################
+class Quiz_Respuesta(models.Model ):
+    pregunta = models.ForeignKey( Quiz_Pregunta ) # La pregunta a la que pertenece la respuesta
+    respuesta = models.CharField( max_length = 300 ) # Opción de la pregunta
+    correcta = models.BooleanField( ) # es la respuesta es correcta
     
-#     def __unicode__( self ):
-#         return self.respuesta
+    def __unicode__( self ):
+        return self.respuesta
 # ################################################
 
 ############### QUIZ_Aplicar ###################
@@ -223,24 +223,8 @@ class Quiz_Aplicar( models.Model ):
 ################################################
 
 # ############ APLICAR_RESPUESTA ##################
-# class Aplicar_Respuesta( models.Model ):
-#     examen = models.ForeignKey( Quiz_Aplicar ) # Quiz que se esta contestando
-#     pregunta = models.ForeignKey( Quiz_Pregunta ) # Pregunta que se contesta
-#     respuesta = models.ForeignKey( Quiz_Respuesta ) # Respuesta seleccionada
-# #################################################
-
-############ APLICAR_RESPUESTA ##################
-class Quiz_Respuesta( models.Model ):
-    examen = models.ForeignKey( Quiz_Aplicar )
+class Aplicar_Respuesta( models.Model ):
+    examen = models.ForeignKey( Quiz_Aplicar ) # Quiz que se esta contestando
     pregunta = models.ForeignKey( Quiz_Pregunta ) # Pregunta que se contesta
-    respuesta = models.TextField()
-    feedback = models.TextField(blank=True)
-    correcto = models.BooleanField()
-
-    def __unicode__(self):
-        return "Respuestas: " + str(self.examen)
-
-    def tieneFeedback(self):
-        return len(self.feedback) > 0
-
-#################################################
+    respuesta = models.ForeignKey( Quiz_Respuesta ) # Respuesta seleccionada
+# #################################################
