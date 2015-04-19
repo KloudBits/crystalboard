@@ -1,6 +1,51 @@
 {% extends "usuarios/base-usuario.html" %}
 
+{% block extraheader %}
+<script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="nhilmxavflnk5dh"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+options = {
+
+    // Required. Called when a user selects an item in the Chooser.
+    success: function(files) {
+        $("#id_url").val(files[0].link)
+        //alert("Here's the file link: " + files[0].link)
+    },
+
+    // Optional. Called when the user closes the dialog without selecting a file
+    // and does not include any parameters.
+    cancel: function() {
+
+    },
+
+    // Optional. "preview" (default) is a preview link to the document for sharing,
+    // "direct" is an expiring link to download the contents of the file. For more
+    // information about link types, see Link types below.
+    linkType: "preview", // or "direct"
+
+    // Optional. A value of false (default) limits selection to a single file, while
+    // true enables multiple file selection.
+    multiselect: false, // or true
+
+    // Optional. This is a list of file extensions. If specified, the user will
+    // only be able to select files with these extensions. You may also specify
+    // file types, such as "video" or "images" in the list. For more information,
+    // see File types below. By default, all extensions are allowed.
+    extensions: ['.pdf', '.doc', '.docx'],
+};
+var button = Dropbox.createChooseButton(options);
+$("#dropbutton").append(button);
+
+});
+</script>
+
+{% endblock %}
+
 {% block colright %}
+ <button class="btn btn-warning" onClick="community(true)" id="flateral">Preguntas</button>
+
     	  <div class="main-img">
             <img src="{{ MEDIA_URL}}{{ curso.imagen }}" alt="">
             <p class="lead">Nuevo recurso</p>
@@ -9,6 +54,17 @@
         <hr>
 
         <form method="post" action="" enctype="multipart/form-data">{% csrf_token %}
+          {% if tipo == "dropbox" %}
+          <div class="row">
+            <div class="span6">
+              <label>Selecciona el archivo de dropbox:</label>
+              
+               <div id="dropbutton"></div>
+              
+            </div>
+          </div>
+          {% endif %}
+                    
         {% for field in formulario %}
 
              

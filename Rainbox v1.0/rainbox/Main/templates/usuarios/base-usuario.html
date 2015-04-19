@@ -8,7 +8,35 @@
 
 
 <!-- =========================Start Col left section ============================= -->
-<aside class="span4 ">
+<aside id="comunidad" style="display:none;" class="span4">
+    <div class="col-left">
+        <h3>Comunidad</h3>
+        <p>Si tienes una duda, la puedes dejar aquí</p>
+        <form action="" method="POST">{% csrf_token %}
+            {% for field in nuevapregunta %}
+                <label>{{ field.label }}</label><br>
+                {{ field }}<br>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+
+        {% for pregunta in curso.pregunta_set.all %}
+        <a href="/cursos/{{ curso.slug }}/preguntas/{{ pregunta.id }}/" target="_blank">
+        <div class="strip-courses">
+         <div class="title-course">
+           <h5>{{ pregunta }}</h5>
+         </div>
+            <div class="description">
+                <p>{{ pregunta.descripcion }}</p>
+            </div>
+        </div><!-- end strip-->
+        </a>
+        {% endfor %}
+    </div>
+</aside>
+
+
+<aside id="menuu" class="span4 ">
 	<div class="col-left">
     	<h3>Menú</h3>
             <ul class="submenu-col">         

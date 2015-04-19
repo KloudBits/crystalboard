@@ -1,6 +1,8 @@
 {% extends "miembros/base-miembro.html" %}
 
 {% block colright %}
+ <button class="btn btn-warning" onClick="community(true)" id="flateral">Preguntas</button>
+
     	<div class="main-img">
             <img src="{{ MEDIA_URL }}{{ curso.imagen }}" alt="">
             <p class="lead">Clase: {{ clase }}</p>

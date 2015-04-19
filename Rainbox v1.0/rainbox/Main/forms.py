@@ -2,7 +2,7 @@
 from django.forms import ModelForm
 from django import forms
 from django.contrib.auth.models import User
-from Main.models import UserProfile,Curso, Clase, Capitulo, Recurso, Aviso, Aviso_Comentario, Tarea, Entrega_Tarea, Foro, Foro_Comentario, Quiz, Quiz_Pregunta, Quiz_Respuesta, Quiz_Aplicar
+from Main.models import Pregunta, Pregunta_Comentario, UserProfile,Curso, Clase, Capitulo, Recurso, Aviso, Aviso_Comentario, Tarea, Entrega_Tarea, Foro, Foro_Comentario, Quiz, Quiz_Pregunta, Quiz_Respuesta, Quiz_Aplicar
 from django.contrib.auth.forms import UserCreationForm
 
 class nuevoEntregaTareaFormulario(ModelForm):
@@ -49,6 +49,17 @@ class nuevoCapituloFormulario(ModelForm):
 class nuevoForoFormulario(ModelForm):
 	class Meta:
 		model = Foro
+
+class nuevoPreguntaFormulario(ModelForm):
+	class Meta:
+		model = Pregunta
+		exclude = ('creador', 'curso',)
+
+class comentarPreguntaFormulario(ModelForm):
+	comentario = forms.CharField(required=True,label="Comentar:", widget=forms.Textarea(attrs={'class':'form-control'}))
+	class Meta:
+		model = Pregunta_Comentario
+		fields = ('comentario',)
 
 
 class nuevoAvisoFormulario(ModelForm):

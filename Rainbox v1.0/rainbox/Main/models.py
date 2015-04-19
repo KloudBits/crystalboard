@@ -150,6 +150,29 @@ class UserProfile( models.Model ):
         return "%s's perfil" % self.user
 #################################################
 
+#################### PREGUNTA ###################
+class Pregunta(models.Model):
+    fecha = models.DateTimeField(auto_now=True)
+    curso = models.ForeignKey(Curso)
+    creador = models.ForeignKey(User)
+    titulo = models.CharField(max_length=300)
+    descripcion = models.TextField(blank=True, null=True)
+
+    def __unicode__(self):
+        return self.titulo
+#################################################
+
+############ COMENTARIO DE LA PREGUNTA ################
+class Pregunta_Comentario( models.Model ):
+    pregunta = models.ForeignKey( Pregunta ) # ID del Foro que fue comentado 
+    usuario = models.ForeignKey( User ) # ID del usuario que comento
+    fecha = models.DateTimeField( auto_now = True, auto_now_add = True ) # Fecha en la que fue creado el comentado  
+    comentario = models.TextField( ) # Texto del comentario
+
+    def __unicode__( self ):
+        return self.comentario
+#################################################
+
 #################### FORO #######################
 class Foro( models.Model ):
     curso = models.ForeignKey( Curso ) # ID del curso al que pertenece

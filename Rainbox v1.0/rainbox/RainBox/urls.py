@@ -21,6 +21,7 @@ urlpatterns = patterns('',
 	url(r'^login/$', 'Main.views.ingreso_usuario'),
 	
 	#url(r'^cursos/nuevo/$', 'Main.views.nuevoCurso'),
+	url(r'^cursos/(?P<curso>[a-z-0-9]+)/preguntas/(?P<preg>[0-9]+)/$', 'Main.views.pregunta'),
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/tareas/$', 'Main.views.tareas'),
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/tareas/(?P<tarea>[0-9]+)/$', 'Main.views.tarea'),
 	url(r'^cursos/(?P<curso>[a-z-0-9]+)/tareas/nuevo/$', 'Main.views.nuevoTarea'),

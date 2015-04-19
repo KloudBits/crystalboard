@@ -3,7 +3,7 @@
 
 <!-- Basic Page Needs -->
 <meta>
-<title>Rainbox</title>
+<title>Preguntas Rainbox</title>
 <meta name="description" content="Plataforma de educación en línea">
 <meta name="author" content="Kloud Bits">
 
@@ -74,28 +74,13 @@ form input, form textarea {
   <link rel="stylesheet" href="{{ STATIC_URL }}css/font-awesome-ie7.min.css">
 <![endif]-->
 
-<script type="text/javascript">
-function community(para) {
-    if (para) {
-        $("aside#menuu").hide();
-        $("aside#comunidad").show();
-        $("#flateral").attr("onClick","community(false)");
-        $("#flateral").html("Menú");
-    }
-    else {
-        $("aside#comunidad").hide();
-        $("aside#menuu").show();
-        $("#flateral").attr("onClick","community(true)");
-        $("#flateral").html("Comunidad");
-    }
-    
-}
-</script>
+
 {% block extraheader %}{% endblock %}
 </head>             
                 
 <body>
-<!--[if !IE]><!--><script>if(/*@cc_on!@*/false){document.documentElement.className +=' ie10';}</script><!--<![endif]--> <!-- Border radius fixed IE10-->
+<!--[if !IE]><!--><script>if(/*@cc_on!@*/false){document.documentElement.className+=' ie10';}</script><!--<![endif]--> <!-- Border radius fixed IE10-->
+
 
 <header>
 	<div class="container">
@@ -121,13 +106,36 @@ function community(para) {
 </div>
 </nav>
 
-{% block contenido %}
+<div class="container">
+        <div class="strip-courses">
+         <div class="title-course">
+           <h5>{{ pregunta }}</h5>
+         </div>
+            <div class="description">
+                <p>{{ pregunta.descripcion }}</p>
+            </div>
+        </div><!-- end strip-->
 
+     {% for p in pregunta.pregunta_comentario_set.all %}
+        <div class="strip-courses gray">
+            <div class="title-course">
+               <h5>Respuesta de:{{ p.usuario }} el {{ p.fecha }}</h5>
+            </div>
+            <div class="description">
+                <p>{{ p.comentario }}</p>
+            </div>
+        </div><!-- end strip-->
+    {% endfor %}
 
+    <form action="" method="POST">{% csrf_token %}
+        {% for field in formulario %}
+            <label>{{ field.label }}</label><br>
+            {{ field }}
+        {% endfor %}
+        <button class="btn btn-primary">Enviar</button>
+    </form>
 
-
-  
-  {% endblock %}
+</div>
 
   <footer>
   <div class="container">
