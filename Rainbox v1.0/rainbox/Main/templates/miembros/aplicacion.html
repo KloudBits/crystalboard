@@ -21,7 +21,7 @@
 
                       {% for res in respuesta.pregunta.quiz_respuesta_set.all %}
                     
-                          {% if res.id == respuesta.id %}
+                          {% if res == respuesta %}
                             {% if res.correcta %}
                             <span style="color:green;"><strong>{{ res }}</strong></span><br>
                             {% else %}
